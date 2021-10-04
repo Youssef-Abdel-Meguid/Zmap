@@ -1,0 +1,107 @@
+﻿@model Zmap.Dtos.RegisterDto
+
+<div class="log-in-pop">
+    <div class="log-in-pop-left">
+        <h1>مرحبا</h1>
+        <p>ليس لديك حساب؟ سجل الان</p>
+        <h4>التسجيل عن طريق وسائل الاتصال الاجتماعى</h4>
+        <ul>
+            <li>
+                <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-google"></i> Google+</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+            </li>
+        </ul>
+    </div>
+    <div class="log-in-pop-right">
+        <h4>مستخدم جديد</h4>
+        <p>ليس لديك حساب؟ سجل الان</p>
+        <section id="loginForm">
+            @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "red-text" })
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="text" data-ng-model="name" class="validate">*@
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        <label>الاسم الاول</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="text" data-ng-model="name" class="validate">*@
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        <label>اسم العائلة</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="text" data-ng-model="name" class="validate">*@
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                        <label>اسم المستخدم</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="text" data-ng-model="name" class="validate">*@
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        <label>البريد الالكترونى</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="text" data-ng-model="name" class="validate">*@
+                        @Html.TextBoxFor(m => m.Phonenumber, new { @class = "form-control" })
+                        <label>رقم التليفون</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="text" data-ng-model="name" class="validate">*@
+                        @Html.TextBoxFor(m => m.BirthOfDate, new { @class = "form-control", @type = "date" })
+                        <label>تاريخ الميلاد</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="password" class="validate">*@
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        <label>كلمة المرور</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="password" class="validate">*@
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        <label>تأكيد كلمة المرور</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="s12 log-ch-bx">
+                        <p>
+                            <input type="checkbox" id="test5" />
+                            <label for="test5">تذكرنى</label>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s4">
+                        <input type="submit" value="تسجيل الدخول" class="waves-effect waves-light log-in-btn">
+                    </div>
+                </div>
+            }
+            @*<div>
+            <div class="input-field s12">
+                <a href="#" data-dismiss="modal" data-toggle="modal"
+                   data-target="#modal3">نسيت كلمة المرور</a> | <a href="#" data-dismiss="modal"
+                                                                   data-toggle="modal" data-target="#modal2">انشاء حساب جديد</a>
+            </div>
+        </div>*@
+        </section>
+    </div>
+</div>

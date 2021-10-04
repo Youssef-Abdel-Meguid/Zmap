@@ -1,0 +1,113 @@
+﻿@model Zmap.Dtos.PageDto
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة الموقع</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                عن الشركة
+            </h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Header Title</th>
+                    <th>Header Details</th>
+                    <th>Body Title</th>
+                    <th>Body Details</th>
+                    <th>Photo</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(m => m.AboutUs.HeaderTitle)</td>
+                    <td>@Html.DisplayFor(m => m.AboutUs.HeaderDetails)</td>
+                    <td>@Html.DisplayFor(m => m.AboutUs.BodyTitle)</td>
+                    <td>@Html.DisplayFor(m => m.AboutUs.BodyDetails1)</td>
+                    <td>@Html.DisplayFor(m => m.AboutUs.BodyDetails2)</td>
+                    <td><img width="50" height="50" src="~/images/Admin/About/@Model.AboutUs.PhotoUrl" /></td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Admin", new { id = Model.AboutUs.Id })" class="btn-floating waves-effect waves-light orange">
+                            <i class="material-icons">edit</i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                اتصل بنا
+            </h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Title</th>
+                    <th>Details</th>
+                    <th>Zmap</th>
+                    <th>Address</th>
+                    <th>Contact</th>
+                    <th> Website</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(m => m.ContactUs.Title)</td>
+                    <td>@Html.DisplayFor(m => m.ContactUs.Details)</td>
+                    <td>@Html.DisplayFor(m => m.ContactUs.Zmap)</td>
+                    <td>@Html.DisplayFor(m => m.ContactUs.Address)</td>
+                    <td>@Html.DisplayFor(m => m.ContactUs.Contact)</td>
+                    <td>@Html.DisplayFor(m => m.ContactUs.Website)</td>
+                    <td>
+                        <a href="@Url.Action("ContactEdit", "Admin", new { id = Model.ContactUs.Id })" class="btn-floating waves-effect waves-light orange">
+                            <i class="material-icons">edit</i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                خدماتنا
+            </h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Title</th>
+                    <th>Details</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(m => m.OurService.Title)</td>
+                    <td>@Html.DisplayFor(m => m.OurService.Details)</td>
+                    <td>
+                        <a href="@Url.Action("ServiceEdit", "Admin", new { id = Model.OurService.Id })" class="btn-floating waves-effect waves-light orange">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <a href="@Url.Action("SevicesDetails", "Admin", new { id = Model.OurService.Id })" class="btn-floating waves-effect waves-light-sm green">
+                            <i class="material-icons">info</i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>

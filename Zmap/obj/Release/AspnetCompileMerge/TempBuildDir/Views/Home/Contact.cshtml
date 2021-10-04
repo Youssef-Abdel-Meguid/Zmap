@@ -1,0 +1,43 @@
+﻿@model Zmap.Models.ContactU
+
+<div class="inn-body-section">
+    <div class="container">
+        <div class="row">
+            <div class="page-head">
+                <h2>@Model.Title</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+                <p>@Model.Details</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12 new-con">
+                <h2>Z <span>Map</span></h2>
+                <p>@Model.Zmap</p>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 new-con">
+                <img src="~/images/icon/20.png" alt="">
+                <h4>Address</h4>
+                <p>@Model.Address</p>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 new-con">
+                <img src="~/images/icon/22.png" alt="">
+                <h4>CONTACT INFO:</h4>
+                <p>@Model.Contact</p>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 new-con">
+                <img src="~/images/icon/21.png" alt="">
+                <h4>Website</h4>
+                <p>@Model.Website</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="contact-map">
+        <iframe src="@Model.Location" allowfullscreen></iframe>
+    </div>
+</div>

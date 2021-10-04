@@ -1,0 +1,308 @@
+﻿@{
+    string userType = Session["UserType"] == null ? null : Session["UserType"].ToString();
+}}
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <title>ZMAP - Hotel Booking and Room Booking Online </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/icon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Poppins%7CQuicksand:500,700" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <link href="~/Content/materialize.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/responsive.css" rel="stylesheet">
+    <link href="~/Content/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/owl.theme.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/sweetalert.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css" />
+
+    @*@Styles.Render("~/Content/css")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+
+</head>
+<body>
+
+    <div class="mm">
+        <div class="mm-inn">
+            <div class="mm-logo">
+                <a href="main.html">
+                    <img src="~/Images/logo.png" alt="">
+                </a>
+            </div>
+            <div class="mm-icon">
+                <span><i class="fa fa-bars show-menu" aria-hidden="true"></i></span>
+            </div>
+            <div class="mm-menu">
+                <div class="mm-close">
+                    <span><i class="fa fa-times hide-menu" aria-hidden="true"></i></span>
+                </div>
+                <ul>
+
+                    @if (string.IsNullOrEmpty(userType))
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">الرئيسية</a></li>
+                    }
+
+                    @if (string.IsNullOrEmpty(userType) || userType == "5")
+                    {
+                        <li><a href="#">خطط رحلتك</a></li>
+                        <li>@Html.ActionLink("رحلات المابرز", "Trips", "Home")</li>
+                        <li>@Html.ActionLink("خدماتنا", "Services", "Home")</li>
+                        <li>@Html.ActionLink("المدونة", "Blogs", "Home")</li>
+                    }
+
+                    @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "2"))
+                    {
+                        <li>@Html.ActionLink("ادارة الفنادق", "Index", "Hotels")</li>
+                    }
+
+                    @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "3"))
+                    {
+                        <li>@Html.ActionLink("ادارة النقل", "Index", "Transportation")</li>
+                    }
+                    @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "4"))
+                    {
+                        <li>@Html.ActionLink("ادارة الانشطة", "Index", "Activites")</li>
+                    }
+
+                    @if (!string.IsNullOrEmpty(userType) && userType == "1")
+                    {
+                        <li>@Html.ActionLink("ادارة المستخدمين", "Index", "Users")</li>
+                        <li>@Html.ActionLink("ادارة المدونة", "Index", "Blogs")</li>
+                        <li>@Html.ActionLink("ادارة الموقع", "Index", "Admin")</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-section">
+        <div class="container">
+            <div class="row">
+                <div class="top-bar">
+                    <ul>
+                        <li>
+                            <a class='dropdown-button' href='#' data-activates='dropdown1'>
+                                حسابي <i class="fa fa-angle-down"></i>
+                            </a>
+                        </li>
+                        @if (string.IsNullOrEmpty(userType) || userType == "5")
+                        {
+                            <li><a href="#">فنادقنا</a></li>
+                        }
+                        <li><a href="@Url.Action("About", "Home")">عن الشركة</a></li>
+                        <li><a href="@Url.Action("Contact", "Home")">إتصل بنا</a></li>
+                        <li><a href="#">خدمة العملاء: (+20) 12 06 11 8888</a></li>
+                    </ul>
+                </div>
+                <div class="all-drop-down">
+                    <ul id='dropdown1' class='dropdown-content drop-con-man'>
+
+                        @if (!string.IsNullOrEmpty(userType))
+                        {
+                            <li>
+                                <a href="#"><img src="~/images/icon/15.png" alt=""> حسابي</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Logout", "Account")"><img src="~/images/icon/db8.png" alt=""> تسجيل الخروج</a>
+                            </li>
+                            if (userType == "5")
+                            {
+                                <li>
+                                    <a href="db-#"><img src="~/images/icon/16.png" alt=""> حجوزاتي</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+
+                            <li>
+                                <a href="@Url.Action("Register", "Account")">
+                                    <img src="~/images/icon/5.png"
+                                         alt=""> مستخدم جديد
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Login", "Account")">
+                                    <img src="~/images/icon/6.png"
+                                         alt=""> تسجيل دخول
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Images/logo.png" alt="" />
+                    </a>
+                </div>
+                <div class="menu-bar">
+                    <ul>
+
+                        @if (string.IsNullOrEmpty(userType))
+                        {
+                            <li><a href="@Url.Action("Index", "Home")">الرئيسية</a></li>
+                        }
+
+                        @if (string.IsNullOrEmpty(userType) || userType == "5")
+                        {
+                            <li><a href="#">خطط رحلتك</a></li>
+                            <li>@Html.ActionLink("رحلات المابرز", "Trips", "Home")</li>
+                            <li>@Html.ActionLink("خدماتنا", "Services", "Home")</li>
+                            <li>@Html.ActionLink("المدونة", "Blogs", "Home")</li>
+                        }
+
+                        @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "2"))
+                        {
+                            <li>@Html.ActionLink("ادارة الفنادق", "Index", "Hotels")</li>
+                        }
+
+                        @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "3"))
+                        {
+                            <li>@Html.ActionLink("ادارة النقل", "Index", "Transportation")</li>
+                        }
+                        @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "4"))
+                        {
+                            <li>@Html.ActionLink("ادارة الانشطة", "Index", "Activites")</li>
+                        }
+
+                        @if (!string.IsNullOrEmpty(userType) && userType == "1")
+                        {
+                            <li>@Html.ActionLink("ادارة المستخدمين", "Index", "Users")</li>
+                            <li>@Html.ActionLink("ادارة المدونة", "Index", "Blogs")</li>
+                            <li>@Html.ActionLink("ادارة الموقع", "Index", "Admin")</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <footer class="site-footer clearfix">
+        <div class="sidebar-container">
+            <div class="sidebar-inner">
+                <div class="widget-area clearfix">
+                    <div class="widget widget_azh_widget">
+                        <div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 foot-logo">
+                                        <img src="~/images/logo1.png" alt="logo">
+                                        <p class="hasimg">المنصة الأولى لتخطيط الرحلات</p>
+                                        <p class="hasimg">خدمات سياحية على أعلى مستوى.</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3">
+                                        <h4>الدعم و المساعدة</h4>
+                                        <ul class="two-columns">
+                                            <li>
+                                                <a href="contact-us.html">إتصل بنا</a>
+                                            </li>
+                                            <li>
+                                                <a href="about-us.html">عن الشركة</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="blog.html">المدونة</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3">
+                                        <h4>مدن نغطيها</h4>
+                                        <ul class="two-columns">
+                                            <li>
+                                                <a href="#!">شرم الشيخ</a>
+                                            </li>
+                                            <li>
+                                                <a href="#!">الغردقة</a>
+                                            </li>
+                                            <li>
+                                                <a href="#!">دهب </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3">
+                                        <h4>العنوان</h4>
+                                        <p>شيراتون المطار - طريق العروبة</p>
+                                        <p>
+                                            <span class="foot-phone">الهاتف: </span> <span class="foot-phone">
+                                                +01 1245
+                                                2541
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="foot-sec2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">
+                                        <h4>خيارات الدفع</h4>
+                                        <p class="hasimg"> <img src="~/images/payment.png" alt="payment"> </p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <h4>إشترك الأن</h4>
+                                        <form>
+                                            <ul class="foot-subsc">
+                                                <li>
+                                                    <input type="text" placeholder="البريد الإلكتروني">
+                                                </li>
+                                                <li>
+                                                    <input type="submit" value="إشتراك">
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-12 col-md-5 foot-social">
+                                        <h4>تابعنا</h4>
+                                        <p>تابعنا على الشبكات الإجتماعية</p>
+                                        <ul>
+                                            <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+                                            <li>
+                                                <a href="#!"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                            </li>
+                                            <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+                                            <li><a href="#!"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+                                            <li><a href="#!"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+                                            <li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/bootstrap.js" type="text/javascript"></script>
+    <script src="~/Scripts/materialize.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.mixitup.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/custom.js"></script>
+    <script src="~/Scripts/sweetalert2.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

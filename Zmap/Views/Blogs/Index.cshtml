@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Zmap.Models.Post>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارةالمدونة</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("Create", "Blogs")">
+                <i class="material-icons">add</i>
+            </a>
+            <h2>
+                جميع البوستات
+            </h2>
+            <table class="table table-bordered display" id="blogs">
+                
+                <thead>
+                    <tr>
+                        <th>العنوان</th>
+                        <th>التفاصيل</th>
+                        <th>عدد المشاهدات</th>
+                        <th>الصورة</th>
+                        <th>تاريخ الانشاء</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Details)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Views)</td>
+                            <td><img width="50" height="50" src="~/Images/Blogs/@item.PostPhotoUrl" /></td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                            <td>
+                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("Delete", "Blogs", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#blogs').DataTable();
+        });
+    </script>
+}

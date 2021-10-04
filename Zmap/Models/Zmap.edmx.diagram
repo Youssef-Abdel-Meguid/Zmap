@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ba6d3c73be03465eb737f719d67da217" Name="Diagram1">
+        <EntityTypeShape EntityType="ZmapModel.Activity" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.ActivityCategory" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.AddsOn" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.BusAddOn" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.BusCategory" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Bus" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.BusSeatsMap" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.City" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Company" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Contact" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.FAQ" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Gallery" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.HotelAddsOn" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Hotel" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.LineBus" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.LineStation" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.PaymentStatu" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Review" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.RoomAvailability" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.RoomReservationCancellation" Width="1.5" PointX="12.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Room" Width="1.5" PointX="6.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.RoomStatu" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Station" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.TripType" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.UserHobby" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.UserReservation" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.User" Width="1.5" PointX="10.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.UserTripActivity" Width="1.5" PointX="12.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.UserTrip" Width="1.5" PointX="14.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.UserType" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZmapModel.Accommodation" Width="1.5" PointX="17.375" PointY="3.75" />
+        <EntityTypeShape EntityType="ZmapModel.RoomAddsOn" Width="1.5" PointX="17.375" PointY="10.75" />
+        <EntityTypeShape EntityType="ZmapModel.RoomType" Width="1.5" PointX="17.375" PointY="14.75" />
+        <EntityTypeShape EntityType="ZmapModel.RoomView" Width="1.5" PointX="17.375" PointY="17.75" />
+        <EntityTypeShape EntityType="ZmapModel.ErrorLogger" Width="1.5" PointX="5.375" PointY="18.75" />
+        <EntityTypeShape EntityType="ZmapModel.TransportationCompanyLine" Width="1.5" PointX="7.375" PointY="18.75" />
+        <EntityTypeShape EntityType="ZmapModel.BusTripSchedule" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZmapModel.PostCategory" Width="1.5" PointX="3.75" PointY="14.75" />
+        <EntityTypeShape EntityType="ZmapModel.Post" Width="1.5" PointX="0.75" PointY="19.75" />
+        <EntityTypeShape EntityType="ZmapModel.PostsCategory" Width="1.5" PointX="2.75" PointY="19.75" />
+        <EntityTypeShape EntityType="ZmapModel.AboutU" Width="1.5" PointX="19.375" PointY="5.75" />
+        <EntityTypeShape EntityType="ZmapModel.ContactU" Width="1.5" PointX="19.375" PointY="9.75" />
+        <EntityTypeShape EntityType="ZmapModel.OurService" Width="1.5" PointX="19.375" PointY="13.75" />
+        <EntityTypeShape EntityType="ZmapModel.Service" Width="1.5" PointX="19.375" PointY="16.75" />
+        <EntityTypeShape EntityType="ZmapModel.SubArea" Width="1.5" PointX="17.375" PointY="20.75" />
+        <EntityTypeShape EntityType="ZmapModel.Attachment" Width="1.5" PointX="19.375" PointY="20.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

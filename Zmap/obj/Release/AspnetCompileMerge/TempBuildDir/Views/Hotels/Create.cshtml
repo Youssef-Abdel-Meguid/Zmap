@@ -1,0 +1,140 @@
+﻿@model Zmap.Dtos.HotelDto
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("Index", "Hotels")" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>اضافة فندق جديد</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات الفندق</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("Create", "Hotels", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required" } })*@
+                                                <input type="text" name="Name" required class="validate"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>اسم الفندق</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("CityId", new SelectList(ViewBag.Cities, "Id", "ArabicCityName"), new { @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>المدينة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "validate" }, @data_val = "true", @required = "required" })*@
+                                                <textarea class="form-control" required name="Description"></textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>وصف الفندق</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Conditions, new { htmlAttributes = new { @class = "validate" }, @data_val = "true", @required = "required" })*@
+                                                <textarea class="form-control" required name="Conditions"></textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>شروط الفندق</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.WebsiteUrl, new { htmlAttributes = new { @class = "validate" } })*@
+                                                <input type="text" name="WebsiteUrl" class="validate" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>الموقع الالكترونى</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.GoogleMapLocation, new { htmlAttributes = new { @class = "validate" } })*@
+                                                <input type="text" name="GoogleMapLocation" required class="validate" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>خريطة جوجل</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.PrivacyPolicy, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required" } })*@
+                                                <input class="form-control" required name="ManagerEmail" type="email"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>البريد الالكترونى للمسؤول</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.PrivacyPolicy, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required" } })*@
+                                                <input class="form-control" required name="ManagerPhonenumber" type="text"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>رقم تليفون السؤول</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="file" name="uploadFile" class="validate" required />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label for="uploadFile">صورة للفندق</label>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

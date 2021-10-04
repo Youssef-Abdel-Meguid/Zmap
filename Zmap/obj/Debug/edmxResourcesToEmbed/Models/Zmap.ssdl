@@ -1,0 +1,703 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ZmapModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AboutUs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HeaderTitle" Type="nvarchar" MaxLength="50" />
+    <Property Name="HeaderDetails" Type="nvarchar" MaxLength="150" />
+    <Property Name="BodyTitle" Type="nvarchar" MaxLength="50" />
+    <Property Name="BodyDetails1" Type="nvarchar" MaxLength="150" />
+    <Property Name="BodyDetails2" Type="nvarchar(max)" />
+    <Property Name="PhotoUrl" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Accommodations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ArabicName" Type="nvarchar" MaxLength="100" />
+    <Property Name="EnglishName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Activities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActivityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CostWithTransportation" Type="float" />
+    <Property Name="Morning" Type="bit" />
+    <Property Name="Evening" Type="bit" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="ActivityCategoryId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" />
+    <Property Name="CostWithoutTrasnportation" Type="float" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="ActivityDate" Type="datetime" />
+    <Property Name="SubAreaId" Type="int" />
+  </EntityType>
+  <EntityType Name="ActivityCategories">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="AddsOn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ArabicName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="EnglishName" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsBus" Type="bit" />
+    <Property Name="IsHotel" Type="bit" />
+    <Property Name="IsRoom" Type="bit" />
+  </EntityType>
+  <EntityType Name="Attachments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="SavedFileName" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="BusAddOn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusId" Type="int" Nullable="false" />
+    <Property Name="AddOnId" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="OtherValue" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BusCategories">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Buses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="int" Nullable="false" />
+    <Property Name="SeatsMapId" Type="int" Nullable="false" />
+    <Property Name="BusNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="BusSeatsMap">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MapName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MapPhotoUrl" Type="nvarchar" MaxLength="255" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="BusTripSchedule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusId" Type="int" Nullable="false" />
+    <Property Name="DepartureTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ArrivalTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="StationFromId" Type="int" Nullable="false" />
+    <Property Name="StationToId" Type="int" Nullable="false" />
+    <Property Name="IsCompleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="ArrivalDate" Type="date" Nullable="false" />
+    <Property Name="DepartureDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ArabicCityName" Type="nvarchar" MaxLength="50" />
+    <Property Name="EnglishCityName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Companies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="About" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="PrivacyPolicy" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsExternal" Type="bit" />
+    <Property Name="IsInternal" Type="bit" />
+    <Property Name="IsActivity" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="IsConfirmed" Type="bit" />
+    <Property Name="ManagerPhonenumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ManagerEmail" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Contacts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="StationId" Type="int" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="ContactUs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="Details" Type="nvarchar" MaxLength="150" />
+    <Property Name="Address" Type="nvarchar" MaxLength="150" />
+    <Property Name="Contact" Type="nvarchar" MaxLength="150" />
+    <Property Name="Website" Type="nvarchar" MaxLength="150" />
+    <Property Name="Zmap" Type="nvarchar" MaxLength="150" />
+    <Property Name="Location" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="ErrorLogger">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="ActionName" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="Error" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="FAQs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Question" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Answer" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Gallery">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PhotoUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="StationId" Type="int" />
+    <Property Name="BusId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="IsMain" Type="bit" />
+  </EntityType>
+  <EntityType Name="HotelAddsOn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HotelId" Type="int" Nullable="false" />
+    <Property Name="AddOnId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="OtherValue" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Hotels">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="WebsiteUrl" Type="nvarchar" MaxLength="255" />
+    <Property Name="GoogleMapLocation" Type="nvarchar" MaxLength="255" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" />
+    <Property Name="Conditions" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreateByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="IsConfirmed" Type="bit" />
+    <Property Name="ManagerPhonenumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ManagerEmail" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="LineBuses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineId" Type="int" Nullable="false" />
+    <Property Name="BusId" Type="int" Nullable="false" />
+    <Property Name="SeatPrice" Type="float" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="ArrivalTime" Type="datetime" />
+    <Property Name="DepartureTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LineStations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoppinByOrder" Type="int" Nullable="false" />
+    <Property Name="LineId" Type="int" Nullable="false" />
+    <Property Name="StationId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="OurServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="Details" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="PaymentStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PaymentStatus" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PostCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" />
+    <Property Name="Details" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="Views" Type="int" />
+    <Property Name="PostPhotoUrl" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="PostsCategories">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostId" Type="int" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Reviews">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Review" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ReviewedByClienId" Type="int" />
+    <Property Name="Replay" Type="nvarchar(max)" />
+    <Property Name="ReplaiedByAdminId" Type="int" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="StationId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ReplayDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RoomAccommodations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="AccommodationId" Type="int" />
+    <Property Name="OtherValue" Type="nvarchar" MaxLength="50" />
+    <Property Name="PricePerNight" Type="money" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="RoomAddsOn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="AddOnId" Type="int" />
+    <Property Name="OtherValue" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="RoomAvailabilities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DayFrom" Type="int" />
+    <Property Name="MonthFrom" Type="int" />
+    <Property Name="YearFrom" Type="int" />
+    <Property Name="TimeFrom" Type="time" Precision="7" />
+    <Property Name="DayTo" Type="int" />
+    <Property Name="MonthTo" Type="int" />
+    <Property Name="YearTo" Type="int" />
+    <Property Name="TimeTo" Type="time" Precision="7" />
+    <Property Name="DateFrom" Type="datetime" Nullable="false" />
+    <Property Name="DateTo" Type="datetime" Nullable="false" />
+    <Property Name="RoomId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="RoomReservationCancellations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserTripReservationId" Type="int" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="IsApproved" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="HotleId" Type="int" Nullable="false" />
+    <Property Name="RoomTypeId" Type="int" />
+    <Property Name="RoomViewId" Type="int" />
+    <Property Name="StatusId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="RoomStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomStatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="RoomTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ArabicName" Type="nvarchar" MaxLength="50" />
+    <Property Name="EnglishName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="RoomView">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EnglishName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ArabicName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Services">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="Details" Type="nvarchar(max)" />
+    <Property Name="PhotoUrl" Type="nvarchar" MaxLength="255" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreateByUserId" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="OurServiceId" Type="int" />
+  </EntityType>
+  <EntityType Name="Stations">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="GoogleMapLocation" Type="nvarchar" MaxLength="255" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubAreas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="TransportationCompanyLines">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LineStartStationId" Type="int" Nullable="false" />
+    <Property Name="LineEndStationId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="HomeCityId" Type="int" />
+    <Property Name="DestinationCityId" Type="int" />
+  </EntityType>
+  <EntityType Name="TripTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TripType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserHobbies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Hobby" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserReservations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="TransportationCompanyId" Type="int" />
+    <Property Name="BusId" Type="int" />
+    <Property Name="StationId" Type="int" />
+    <Property Name="ActivityCompanyId" Type="int" />
+    <Property Name="NumberOfSeats" Type="int" />
+    <Property Name="AccommodationCost" Type="float" />
+    <Property Name="TransportationCost" Type="float" />
+    <Property Name="ActivityCost" Type="float" />
+    <Property Name="TotalCost" Type="float" />
+    <Property Name="DateFrom" Type="datetime" Nullable="false" />
+    <Property Name="DateTo" Type="datetime" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="RoomAvailabilityId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="PyamentStatusId" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProfilePhotoUrl" Type="nvarchar" MaxLength="255" />
+    <Property Name="BirthDate" Type="datetime" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="Longtiude" Type="float" />
+    <Property Name="Latitude" Type="float" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="CurrentJob" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaritalStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="FamilyMembersNumber" Type="int" />
+    <Property Name="UserTypeId" Type="int" Nullable="false" />
+    <Property Name="PasswordHash" Type="varbinary(max)" Nullable="false" />
+    <Property Name="PasswordSalt" Type="varbinary(max)" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserTripActivities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="UserTripId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserTrips">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="TripTitle" Type="nvarchar" MaxLength="50" />
+    <Property Name="TripDescription" Type="nvarchar(max)" />
+    <Property Name="Home" Type="nvarchar" MaxLength="50" />
+    <Property Name="Destination" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="DateFrom" Type="datetime" />
+    <Property Name="DateTo" Type="datetime" />
+    <Property Name="Cost" Type="float" />
+    <Property Name="TripDays" Type="int" />
+    <Property Name="TripNights" Type="int" />
+    <Property Name="TripTypeId" Type="int" />
+    <Property Name="NumberOfAdults" Type="int" />
+    <Property Name="NumberOfKids" Type="int" />
+    <Property Name="NumberOfBoys" Type="int" />
+    <Property Name="NuumberOfGirls" Type="int" />
+    <Property Name="IsGroup" Type="bit" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityContainer Name="ZmapModelStoreContainer">
+    <EntitySet Name="AboutUs" EntityType="Self.AboutUs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Accommodations" EntityType="Self.Accommodations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActivityCategories" EntityType="Self.ActivityCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AddsOn" EntityType="Self.AddsOn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Attachments" EntityType="Self.Attachments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusAddOn" EntityType="Self.BusAddOn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusCategories" EntityType="Self.BusCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusSeatsMap" EntityType="Self.BusSeatsMap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusTripSchedule" EntityType="Self.BusTripSchedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContactUs" EntityType="Self.ContactUs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ErrorLogger" EntityType="Self.ErrorLogger" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FAQs" EntityType="Self.FAQs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Gallery" EntityType="Self.Gallery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HotelAddsOn" EntityType="Self.HotelAddsOn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LineBuses" EntityType="Self.LineBuses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LineStations" EntityType="Self.LineStations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OurServices" EntityType="Self.OurServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PaymentStatus" EntityType="Self.PaymentStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostCategory" EntityType="Self.PostCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostsCategories" EntityType="Self.PostsCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomAccommodations" EntityType="Self.RoomAccommodations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomAddsOn" EntityType="Self.RoomAddsOn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomAvailabilities" EntityType="Self.RoomAvailabilities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomReservationCancellations" EntityType="Self.RoomReservationCancellations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomStatus" EntityType="Self.RoomStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomTypes" EntityType="Self.RoomTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomView" EntityType="Self.RoomView" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Stations" EntityType="Self.Stations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubAreas" EntityType="Self.SubAreas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransportationCompanyLines" EntityType="Self.TransportationCompanyLines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TripTypes" EntityType="Self.TripTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserHobbies" EntityType="Self.UserHobbies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserReservations" EntityType="Self.UserReservations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserTripActivities" EntityType="Self.UserTripActivities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserTrips" EntityType="Self.UserTrips" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

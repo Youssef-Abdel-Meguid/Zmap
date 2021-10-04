@@ -1,0 +1,95 @@
+﻿@model Zmap.Models.Station
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("Details", "Transportation", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>اضافة محطة جديد</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات المحطة</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("CreateStation", "Transportation", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @data_val = "true", @required = "required" } })*@
+                                                <input name="Name" required class="form-control"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>اسم المحطة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("CityId", new SelectList(ViewBag.Cities, "Id", "ArabicCityName"), "", new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>المدينة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @data_val = "true", @required = "required" } })*@
+                                                <input name="Address" required class="form-control" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>العنوان</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.GoogleMapLocation, new { htmlAttributes = new { @class = "form-control", @data_val = "true", @required = "required" } })*@
+                                                <input name="GoogleMapLocation" required class="form-control" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>موقع خريطة جوجل</label>
+                                            </div>
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.CompanyId)
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>

@@ -1,0 +1,130 @@
+﻿@model Zmap.Dtos.StationDto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="page-head">
+            <h2>ادارة @Model.Name</h2>
+            <div class="head-title">
+                <div class="hl-1"></div>
+                <div class="hl-2"></div>
+                <div class="hl-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="head-typo typo-com">
+                <div class="room">
+                    <div class="col-md-6 portfolio-wrapper">
+                        @if (Model.Photos.Count > 0)
+                        {
+                            <img src="~/Images/Transportation/Stations/@Model.Photos[0].PhotoUrl" />
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <div dir="rtl">
+                            <hr />
+                            <ul>
+                                <li><label>اسم المحطة: @Html.DisplayFor(model => model.Name)</label></li>
+                                <li><label>عنوان المحطة: @Html.DisplayFor(model => model.Address)</label></li>
+                                <li><label>المدينة: @Html.DisplayFor(model => model.City)</label></li>
+                                <li><label>موقع خريطة جوجل: @Html.DisplayFor(model => model.GoogleMapLocation)</label></li>
+                                <li><label>تاريخ الاضافة : @Html.DisplayFor(model => model.CreatedDate)</label></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="head-typo typo-com collap-expand">
+                    <h2>ادارة موارد المحطة</h2>
+                    <p>اضافة, تعديل, حذف موارد ,و معلومات المحطة</p>
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons"></i>صور المحطة</div>
+                            <div class="collapsible-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="head-typo typo-com">
+                                            <a style="margin-bottom: 10px"
+                                               class="btn-floating btn-large waves-effect waves-light red"
+                                               href="@Url.Action("CreateStationPhoto", "Transportation", new { Id = Model.Id })">
+                                                <i class="material-icons">add</i>
+                                            </a>
+                                            <table class="table table-bordered">
+                                                @foreach (var item in Model.Photos)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <img width="50" height="50" src="~/Images/Transportation/Stations/@item.PhotoUrl" />
+                                                        </td>
+                                                        <td>
+                                                            <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteStationPhoto", "Transportation", new { id = item.Id })">
+                                                                <i class="material-icons">
+                                                                    delete
+                                                                </i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons"></i>ارقام المحطة</div>
+                            <div class="collapsible-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="head-typo typo-com">
+                                            <a style="margin-bottom: 10px"
+                                               class="btn-floating btn-large waves-effect waves-light red"
+                                               href="@Url.Action("CreateStationContact", "Transportation", new { Id = Model.Id })">
+                                                <i class="material-icons">add</i>
+                                            </a>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th>رقم التليفون</th>
+                                                    <th></th>
+                                                </tr>
+                                                @foreach (var item in Model.Contacts)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                                        </td>
+                                                        <td>
+                                                            <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteStationContact", "Transportation", new { id = item.Id })">
+                                                                <i class="material-icons">
+                                                                    delete
+                                                                </i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a href="@Url.Action("Details", "Transportation", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        </div>
+    </div>
+
+</div>

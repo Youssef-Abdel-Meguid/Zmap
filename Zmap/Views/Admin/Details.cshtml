@@ -1,0 +1,67 @@
+﻿@model Zmap.Models.AboutU
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AboutU</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HeaderTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HeaderTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HeaderDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HeaderDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BodyTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BodyTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BodyDetails1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BodyDetails1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BodyDetails2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BodyDetails2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotoUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhotoUrl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

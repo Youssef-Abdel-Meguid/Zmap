@@ -1,0 +1,81 @@
+﻿@*@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}*@
+<!--<div class="log-in-pop">
+    <div class="log-in-pop-left">
+        <h1>مرحبا</h1>
+        <p>ليس لديك حساب؟ سجل الان</p>
+        <h4>التسجيل عن طريق وسائل الاتصال الاجتماعى</h4>
+        <ul>
+            <li>
+                <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-google"></i> Google+</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+            </li>
+        </ul>
+    </div>
+    <div class="log-in-pop-right">
+        <a href="#" class="pop-close" data-dismiss="modal">
+            <img src="~/images/cancel.png" alt="" />
+        </a>
+        <h4>تسجيل الدخول</h4>
+        <p>ليس لديك حساب؟ سجل الان</p>
+        <form class="s12">
+            <div>
+                <div class="input-field s12">
+                    <input type="text" data-ng-model="name" class="validate">
+                    <label>user name</label>
+                </div>
+            </div>
+            <div>
+                <div class="input-field s12">
+                    <input type="password" class="validate">
+                    <label>كلمة المرور</label>
+                </div>
+            </div>
+            <div>
+                <div class="s12 log-ch-bx">
+                    <p>
+                        <input type="checkbox" id="test5" />
+                        <label for="test5">تذكرنى</label>
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div class="input-field s4">
+                    <input type="submit" value="تسجيل الدخول" class="waves-effect waves-light log-in-btn">
+                </div>
+            </div>
+            <div>
+                <div class="input-field s12">
+                    <a href="#" data-dismiss="modal" data-toggle="modal"
+                       data-target="#modal3">نسيت كلمة المرور</a> | <a href="#" data-dismiss="modal"
+                                                                       data-toggle="modal" data-target="#modal2">انشاء حساب جديد</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>-->

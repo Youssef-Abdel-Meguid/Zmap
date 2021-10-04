@@ -1,0 +1,59 @@
+﻿@model Zmap.Dtos.BlogsDto
+@{
+    ViewBag.Title = "Blogs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="inn-body-section pad-bot-50">
+    <div class="container">
+        <div class="row inn-page-com">
+            <div class="page-head">
+                <h2>المدونة</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+            <!--SERVICES SECTION-->
+            <div class="col-md-8">
+                @foreach (var item in Model.BlogDetails)
+                {
+                    <div class="row inn-services in-blog">
+                        <div class="col-md-4"> <img src="~/Images/Blogs/@item.PhotoUrl" alt="" /> </div>
+                        <div class="col-md-8">
+                            <h3>@item.Title</h3> <span class="blog-date">التاريخ: @item.CreatedDate</span> <span class="blog-author">المؤلف: @item.Username</span>
+                            <p>@item.Details</p> <a href="@Url.Action("ReadMore", "Blogs", new { id = item.Id})" class="waves-effect waves-light inn-re-mo-btn">قرأة المزيد</a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-4">
+                @using (Html.BeginForm("Blogs", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="head-typo typo-com rec-post">
+                        <h3>بحث</h3>
+
+                        <ul>
+                            @for (int i = 0; i < Model.Categories.CategorList.Count; i++)
+                            {
+                                <li>
+                                    <div class="rec-po-title">
+                                        @Html.CheckBoxFor(m => Model.Categories.CategorList[i].IsChecked, new { Style = "left: 28px; opacity: 1; top: -1px" })
+                                        @Model.Categories.CategorList[i].Name
+                                        @Html.HiddenFor(m => Model.Categories.CategorList[i].Id)
+                                        @Html.HiddenFor(m => Model.Categories.CategorList[i].Name)
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <input type="submit" value="ابحث" class="btn btn-success" />
+                }
+            </div>
+            <!--END SERVICES SECTION-->
+        </div>
+    </div>
+</div>
+

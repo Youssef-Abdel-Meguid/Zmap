@@ -1,0 +1,41 @@
+﻿@model Zmap.Dtos.BlogDetailsDto
+
+
+
+<div class="inn-body-section inn-detail inn-hotel-1" style="background: url(../../Images/Blogs/@Model.PhotoUrl) no-repeat; background-attachment: fixed; background-size: 40%">
+    <div class="container">
+        <div class="row">
+            <div class="inn-bod">
+                <div class="inn-detail-p1 inn-com">
+                    <h2>@Model.Title</h2>
+                    <div>
+                        <span class="blog-date">التاريخ: @Model.CreatedDate</span>
+                    </div>
+                    <div >
+                        <span class="blog-author">المؤلف: @Model.Username</span>
+                    </div>
+                    <div>
+                        <p>@Model.Details</p>
+                    </div>
+                </div>
+                <div class="inn-detail-p1 room-soc-share">
+                    <div class="detail-title">
+                        <h2>مشاركة</h2>
+                    </div>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i> فيسبوك</a> </li>
+                        <li>
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> تويتر</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i> لينكد إن</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i> واتس اب</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,684 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ZmapModelStoreContainer" CdmEntityContainer="ZmapEntities">
+    <EntitySetMapping Name="Activities">
+      <EntityTypeMapping TypeName="ZmapModel.Activity">
+        <MappingFragment StoreEntitySet="Activities">
+          <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+          <ScalarProperty Name="CostWithTransportation" ColumnName="CostWithTransportation" />
+          <ScalarProperty Name="Morning" ColumnName="Morning" />
+          <ScalarProperty Name="Evening" ColumnName="Evening" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="ActivityCategoryId" ColumnName="ActivityCategoryId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CostWithoutTrasnportation" ColumnName="CostWithoutTrasnportation" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActivityCategories">
+      <EntityTypeMapping TypeName="ZmapModel.ActivityCategory">
+        <MappingFragment StoreEntitySet="ActivityCategories">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AddsOns">
+      <EntityTypeMapping TypeName="ZmapModel.AddsOn">
+        <MappingFragment StoreEntitySet="AddsOn">
+          <ScalarProperty Name="IsRoom" ColumnName="IsRoom" />
+          <ScalarProperty Name="IsHotel" ColumnName="IsHotel" />
+          <ScalarProperty Name="IsBus" ColumnName="IsBus" />
+          <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+          <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusAddOns">
+      <EntityTypeMapping TypeName="ZmapModel.BusAddOn">
+        <MappingFragment StoreEntitySet="BusAddOn">
+          <ScalarProperty Name="OtherValue" ColumnName="OtherValue" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BusId" ColumnName="BusId" />
+          <ScalarProperty Name="AddOnId" ColumnName="AddOnId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusCategories">
+      <EntityTypeMapping TypeName="ZmapModel.BusCategory">
+        <MappingFragment StoreEntitySet="BusCategories">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Buses">
+      <EntityTypeMapping TypeName="ZmapModel.Bus">
+        <MappingFragment StoreEntitySet="Buses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
+          <ScalarProperty Name="SeatsMapId" ColumnName="SeatsMapId" />
+          <ScalarProperty Name="BusNumber" ColumnName="BusNumber" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusSeatsMaps">
+      <EntityTypeMapping TypeName="ZmapModel.BusSeatsMap">
+        <MappingFragment StoreEntitySet="BusSeatsMap">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MapName" ColumnName="MapName" />
+          <ScalarProperty Name="MapPhotoUrl" ColumnName="MapPhotoUrl" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="ZmapModel.City">
+        <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ArabicCityName" ColumnName="ArabicCityName" />
+          <ScalarProperty Name="EnglishCityName" ColumnName="EnglishCityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="ZmapModel.Company">
+        <MappingFragment StoreEntitySet="Companies">
+          <ScalarProperty Name="ManagerEmail" ColumnName="ManagerEmail" />
+          <ScalarProperty Name="ManagerPhonenumber" ColumnName="ManagerPhonenumber" />
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="About" ColumnName="About" />
+          <ScalarProperty Name="PrivacyPolicy" ColumnName="PrivacyPolicy" />
+          <ScalarProperty Name="IsExternal" ColumnName="IsExternal" />
+          <ScalarProperty Name="IsInternal" ColumnName="IsInternal" />
+          <ScalarProperty Name="IsActivity" ColumnName="IsActivity" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="ZmapModel.Contact">
+        <MappingFragment StoreEntitySet="Contacts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="StationId" ColumnName="StationId" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FAQs">
+      <EntityTypeMapping TypeName="ZmapModel.FAQ">
+        <MappingFragment StoreEntitySet="FAQs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Question" ColumnName="Question" />
+          <ScalarProperty Name="Answer" ColumnName="Answer" />
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Galleries">
+      <EntityTypeMapping TypeName="ZmapModel.Gallery">
+        <MappingFragment StoreEntitySet="Gallery">
+          <ScalarProperty Name="IsMain" ColumnName="IsMain" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+          <ScalarProperty Name="StationId" ColumnName="StationId" />
+          <ScalarProperty Name="BusId" ColumnName="BusId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelAddsOns">
+      <EntityTypeMapping TypeName="ZmapModel.HotelAddsOn">
+        <MappingFragment StoreEntitySet="HotelAddsOn">
+          <ScalarProperty Name="OtherValue" ColumnName="OtherValue" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+          <ScalarProperty Name="AddOnId" ColumnName="AddOnId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hotels">
+      <EntityTypeMapping TypeName="ZmapModel.Hotel">
+        <MappingFragment StoreEntitySet="Hotels">
+          <ScalarProperty Name="ManagerEmail" ColumnName="ManagerEmail" />
+          <ScalarProperty Name="ManagerPhonenumber" ColumnName="ManagerPhonenumber" />
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="WebsiteUrl" ColumnName="WebsiteUrl" />
+          <ScalarProperty Name="GoogleMapLocation" ColumnName="GoogleMapLocation" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Conditions" ColumnName="Conditions" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreateByUserId" ColumnName="CreateByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LineBuses">
+      <EntityTypeMapping TypeName="ZmapModel.LineBus">
+        <MappingFragment StoreEntitySet="LineBuses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LineId" ColumnName="LineId" />
+          <ScalarProperty Name="BusId" ColumnName="BusId" />
+          <ScalarProperty Name="SeatPrice" ColumnName="SeatPrice" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+          <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LineStations">
+      <EntityTypeMapping TypeName="ZmapModel.LineStation">
+        <MappingFragment StoreEntitySet="LineStations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoppinByOrder" ColumnName="StoppinByOrder" />
+          <ScalarProperty Name="LineId" ColumnName="LineId" />
+          <ScalarProperty Name="StationId" ColumnName="StationId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentStatus">
+      <EntityTypeMapping TypeName="ZmapModel.PaymentStatu">
+        <MappingFragment StoreEntitySet="PaymentStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reviews">
+      <EntityTypeMapping TypeName="ZmapModel.Review">
+        <MappingFragment StoreEntitySet="Reviews">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Review1" ColumnName="Review" />
+          <ScalarProperty Name="ReviewedByClienId" ColumnName="ReviewedByClienId" />
+          <ScalarProperty Name="Replay" ColumnName="Replay" />
+          <ScalarProperty Name="ReplaiedByAdminId" ColumnName="ReplaiedByAdminId" />
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="StationId" ColumnName="StationId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ReplayDate" ColumnName="ReplayDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomAvailabilities">
+      <EntityTypeMapping TypeName="ZmapModel.RoomAvailability">
+        <MappingFragment StoreEntitySet="RoomAvailabilities">
+          <ScalarProperty Name="OtherValue" ColumnName="OtherValue" />
+          <ScalarProperty Name="PricePerNght" ColumnName="PricePerNght" />
+          <ScalarProperty Name="AccommodationId" ColumnName="AccommodationId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomReservationCancellations">
+      <EntityTypeMapping TypeName="ZmapModel.RoomReservationCancellation">
+        <MappingFragment StoreEntitySet="RoomReservationCancellations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserTripReservationId" ColumnName="UserTripReservationId" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rooms">
+      <EntityTypeMapping TypeName="ZmapModel.Room">
+        <MappingFragment StoreEntitySet="Rooms">
+          <ScalarProperty Name="RoomViewId" ColumnName="RoomViewId" />
+          <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="HotleId" ColumnName="HotleId" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomStatus">
+      <EntityTypeMapping TypeName="ZmapModel.RoomStatu">
+        <MappingFragment StoreEntitySet="RoomStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RoomStatusName" ColumnName="RoomStatusName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stations">
+      <EntityTypeMapping TypeName="ZmapModel.Station">
+        <MappingFragment StoreEntitySet="Stations">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="GoogleMapLocation" ColumnName="GoogleMapLocation" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TripTypes">
+      <EntityTypeMapping TypeName="ZmapModel.TripType">
+        <MappingFragment StoreEntitySet="TripTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TripType1" ColumnName="TripType" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserHobbies">
+      <EntityTypeMapping TypeName="ZmapModel.UserHobby">
+        <MappingFragment StoreEntitySet="UserHobbies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Hobby" ColumnName="Hobby" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserReservations">
+      <EntityTypeMapping TypeName="ZmapModel.UserReservation">
+        <MappingFragment StoreEntitySet="UserReservations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+          <ScalarProperty Name="TransportationCompanyId" ColumnName="TransportationCompanyId" />
+          <ScalarProperty Name="BusId" ColumnName="BusId" />
+          <ScalarProperty Name="StationId" ColumnName="StationId" />
+          <ScalarProperty Name="ActivityCompanyId" ColumnName="ActivityCompanyId" />
+          <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
+          <ScalarProperty Name="AccommodationCost" ColumnName="AccommodationCost" />
+          <ScalarProperty Name="TransportationCost" ColumnName="TransportationCost" />
+          <ScalarProperty Name="ActivityCost" ColumnName="ActivityCost" />
+          <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="RoomAvailabilityId" ColumnName="RoomAvailabilityId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="PyamentStatusId" ColumnName="PyamentStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ZmapModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ProfilePhotoUrl" ColumnName="ProfilePhotoUrl" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Longtiude" ColumnName="Longtiude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="CurrentJob" ColumnName="CurrentJob" />
+          <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+          <ScalarProperty Name="FamilyMembersNumber" ColumnName="FamilyMembersNumber" />
+          <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTripActivities">
+      <EntityTypeMapping TypeName="ZmapModel.UserTripActivity">
+        <MappingFragment StoreEntitySet="UserTripActivities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="UserTripId" ColumnName="UserTripId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTrips">
+      <EntityTypeMapping TypeName="ZmapModel.UserTrip">
+        <MappingFragment StoreEntitySet="UserTrips">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TripTitle" ColumnName="TripTitle" />
+          <ScalarProperty Name="TripDescription" ColumnName="TripDescription" />
+          <ScalarProperty Name="Home" ColumnName="Home" />
+          <ScalarProperty Name="Destination" ColumnName="Destination" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="TripDays" ColumnName="TripDays" />
+          <ScalarProperty Name="TripNights" ColumnName="TripNights" />
+          <ScalarProperty Name="TripTypeId" ColumnName="TripTypeId" />
+          <ScalarProperty Name="NumberOfAdults" ColumnName="NumberOfAdults" />
+          <ScalarProperty Name="NumberOfKids" ColumnName="NumberOfKids" />
+          <ScalarProperty Name="NumberOfBoys" ColumnName="NumberOfBoys" />
+          <ScalarProperty Name="NuumberOfGirls" ColumnName="NuumberOfGirls" />
+          <ScalarProperty Name="IsGroup" ColumnName="IsGroup" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTypes">
+      <EntityTypeMapping TypeName="ZmapModel.UserType">
+        <MappingFragment StoreEntitySet="UserTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accommodations">
+      <EntityTypeMapping TypeName="ZmapModel.Accommodation">
+        <MappingFragment StoreEntitySet="Accommodations">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+          <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomAddsOns">
+      <EntityTypeMapping TypeName="ZmapModel.RoomAddsOn">
+        <MappingFragment StoreEntitySet="RoomAddsOn">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="OtherValue" ColumnName="OtherValue" />
+          <ScalarProperty Name="AddOnId" ColumnName="AddOnId" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomTypes">
+      <EntityTypeMapping TypeName="ZmapModel.RoomType">
+        <MappingFragment StoreEntitySet="RoomTypes">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+          <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomViews">
+      <EntityTypeMapping TypeName="ZmapModel.RoomView">
+        <MappingFragment StoreEntitySet="RoomView">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+          <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ErrorLoggers">
+      <EntityTypeMapping TypeName="ZmapModel.ErrorLogger">
+        <MappingFragment StoreEntitySet="ErrorLogger">
+          <ScalarProperty Name="Error" ColumnName="Error" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransportationCompanyLines">
+      <EntityTypeMapping TypeName="ZmapModel.TransportationCompanyLine">
+        <MappingFragment StoreEntitySet="TransportationCompanyLines">
+          <ScalarProperty Name="DestinationCityId" ColumnName="DestinationCityId" />
+          <ScalarProperty Name="HomeCityId" ColumnName="HomeCityId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LineEndStationId" ColumnName="LineEndStationId" />
+          <ScalarProperty Name="LineStartStationId" ColumnName="LineStartStationId" />
+          <ScalarProperty Name="LineName" ColumnName="LineName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusTripSchedules">
+      <EntityTypeMapping TypeName="ZmapModel.BusTripSchedule">
+        <MappingFragment StoreEntitySet="BusTripSchedule">
+          <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+          <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="StationToId" ColumnName="StationToId" />
+          <ScalarProperty Name="StationFromId" ColumnName="StationFromId" />
+          <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+          <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+          <ScalarProperty Name="BusId" ColumnName="BusId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostCategories">
+      <EntityTypeMapping TypeName="ZmapModel.PostCategory">
+        <MappingFragment StoreEntitySet="PostCategory">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="ZmapModel.Post">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="PostPhotoUrl" ColumnName="PostPhotoUrl" />
+          <ScalarProperty Name="Views" ColumnName="Views" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostsCategories">
+      <EntityTypeMapping TypeName="ZmapModel.PostsCategory">
+        <MappingFragment StoreEntitySet="PostsCategories">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AboutUs">
+      <EntityTypeMapping TypeName="ZmapModel.AboutU">
+        <MappingFragment StoreEntitySet="AboutUs">
+          <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />
+          <ScalarProperty Name="BodyDetails2" ColumnName="BodyDetails2" />
+          <ScalarProperty Name="BodyDetails1" ColumnName="BodyDetails1" />
+          <ScalarProperty Name="BodyTitle" ColumnName="BodyTitle" />
+          <ScalarProperty Name="HeaderDetails" ColumnName="HeaderDetails" />
+          <ScalarProperty Name="HeaderTitle" ColumnName="HeaderTitle" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContactUs">
+      <EntityTypeMapping TypeName="ZmapModel.ContactU">
+        <MappingFragment StoreEntitySet="ContactUs">
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Zmap" ColumnName="Zmap" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+          <ScalarProperty Name="Contact" ColumnName="Contact" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OurServices">
+      <EntityTypeMapping TypeName="ZmapModel.OurService">
+        <MappingFragment StoreEntitySet="OurServices">
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Services">
+      <EntityTypeMapping TypeName="ZmapModel.Service">
+        <MappingFragment StoreEntitySet="Services">
+          <ScalarProperty Name="OurServiceId" ColumnName="OurServiceId" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreateByUserId" ColumnName="CreateByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubAreas">
+      <EntityTypeMapping TypeName="ZmapModel.SubArea">
+        <MappingFragment StoreEntitySet="SubAreas">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Attachments">
+      <EntityTypeMapping TypeName="ZmapModel.Attachment">
+        <MappingFragment StoreEntitySet="Attachments">
+          <ScalarProperty Name="SavedFileName" ColumnName="SavedFileName" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

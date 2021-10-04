@@ -1,0 +1,61 @@
+﻿@model Zmap.Models.Attachment
+
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("Details", "Activites", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>اضافة ملف للشركة</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات الشركة</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("CreateAttachment", "Activites", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="file" name="uploadFile" class="validate" required />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label for="uploadFile">اضافة ملف</label>
+                                            </div>
+                                        </div>
+                                        @Html.HiddenFor(m => m.CompanyId)
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

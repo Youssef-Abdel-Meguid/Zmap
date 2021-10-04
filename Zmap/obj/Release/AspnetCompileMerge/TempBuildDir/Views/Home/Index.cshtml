@@ -1,0 +1,432 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    string userType = Session["UserType"] == null ? null : Session["UserType"].ToString();
+}
+
+@*<div class="jumbotron">
+        <p>لا توجد حجوزات</p>
+    </div>*@
+
+@if (string.IsNullOrEmpty(userType)|| userType == "5")
+{
+
+    <section>
+        <div class="inn-body-section inn-booking">
+            <div class="container">
+                <div class="row">
+                    <!--TYPOGRAPHY SECTION-->
+                    <div class="col-md-6">
+                        <div class="book-title">
+                            <h2>خطط رحلتك</h2>
+                            <p style="color: white;">
+                                كل حجوزاتك في مره واحده اقامات - انتقالات -انشطه - مواصلات
+                                داخليه
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="book-form inn-com-form">
+                            <form class="col s12" style="direction: ltr;">
+
+
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <!-- <input type="text" class="validate"> -->
+                                        <label>الوجهة</label>
+                                        <select>
+                                            <option value="" disabled selected>الوجهة</option>
+                                            <option value="1">شرم الشيخ</option>
+                                            <option value="2">الغردقة</option>
+                                            <option value="3">دهب</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <label>بداية الرحلة</label>
+                                        <select>
+                                            <option value="" disabled selected>بداية الرحلة</option>
+                                            <option value="1">القاهرة</option>
+                                            <option value="2">الأسكندرية</option>
+                                            <option value="3">بورسعيد</option>
+                                            <option value="4">الإقصر</option>
+                                            <option value="5">بنها </option>
+                                            <option value="6">سوهاج</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <input type="text" id="to" name="to">
+                                        <label for="to">تاريخ المغادرة</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input type="text" id="from" name="from">
+                                        <label for="from">تاريخ الوصول</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <a href="#" class="form-btn">خطط رحلتك</a>
+                                        <!-- <input type="submit" value="خطط رحلتك" > -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--END TYPOGRAPHY SECTION-->
+                </div>
+            </div>
+        </div>
+        <!--CHECK AVAILABILITY FORM-->
+        <!--END CHECK AVAILABILITY FORM-->
+        <!--End Check Availability SECTION-->
+        <div class="blog hom-com pad-bot-0">
+            <div class="container">
+                <div class="row">
+                    <div class="hom1-title">
+                        <h2>إكتشف مصر</h2>
+                        <div class="head-title">
+                            <div class="hl-1"></div>
+                            <div class="hl-2"></div>
+                            <div class="hl-3"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div class="col-md-3 n2-event">
+                            <!--event IMAGE-->
+                            <div class="n21-event hovereffect">
+                                <img src="~/Images/event/1.jpg" alt="">
+                                <div class="overlay">
+                                    <a href="#"><span class="ev-book">المزيد</span></a>
+                                </div>
+                            </div>
+                            <!--event DETAILS-->
+                            <div class="n22-event">
+                                <a href="#!">
+                                    <h4>متعة السفر لدهب</h4>
+                                </a>
+                                <!-- <span class="event-date">Capacity: 500,</span> <span class="event-by"> Price:
+                                    $900</span> -->
+                                <p>
+                                    اللي شاف مصر من فوق عارف أد إيه هي جميلة. واللي شافها من تحت البحر عرف إنها أجمل
+                                    .
+                                    مينفعش تروح دهب و متشوفش أجمل أماكن الغطس. رحلات الغطس في دهب رحلات لا تنسى.
+                                </p>
+                                <!--event SHARE-->
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 n2-event">
+                            <!--event IMAGE-->
+                            <div class="n21-event hovereffect">
+                                <img src="~/Images/event/2.jpg" alt="">
+                                <div class="overlay">
+                                    <a href="#"><span class="ev-book">المزيد</span></a>
+                                </div>
+                            </div>
+                            <!--event DETAILS-->
+                            <div class="n22-event">
+                                <a href="#!">
+                                    <h4>
+                                        فيها حاجات كتير حلوة وأحلى ما فيها ناسها.
+                                    </h4>
+                                </a>
+                                <p>
+                                    حضر شنطتك واستعد لرحلة من أجمل الرحلات في جميع أنحاء مصر هتكتشف تنوع ثقافات
+                                    أهلها.
+                                </p>
+                                <!--event SHARE-->
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 n2-event">
+                            <!--event IMAGE-->
+                            <div class="n21-event hovereffect">
+                                <img src="~/Images/event/3.jpg" alt="">
+                                <div class="overlay">
+                                    <a href="#"><span class="ev-book">المزيد</span></a>
+                                </div>
+                            </div>
+                            <!--event DETAILS-->
+                            <div class="n22-event">
+                                <a href="#!">
+                                    <h4>
+                                        على إسم مصر التاريخ يقدر يقول ما شاء
+                                    </h4>
+                                </a>
+                                <p>
+                                    الجمال و الحضارة... التاريخ و المغامرة.. الخلطة اللي مش موجودة إلا في مصر.
+                                </p>
+                                <!--event SHARE-->
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 n2-event">
+                            <!--event IMAGE-->
+                            <div class="n21-event hovereffect">
+                                <img src="~/Images/event/4.jpg" alt="">
+                                <div class="overlay">
+                                    <a href="#"><span class="ev-book">المزيد</span></a>
+                                </div>
+                            </div>
+                            <!--event DETAILS-->
+                            <div class="n22-event">
+                                <a href="#!">
+                                    <h4>
+                                        سحر البحر الأحمر
+                                    </h4>
+                                </a>
+                                <p>
+                                    الاستجمام و الأنشطة و المغامرة فى مكان واحد من أجمل أماكن البحر الاحمر.. شرم
+                                    الشيخ
+                                </p>
+                                <!--event SHARE-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--HOTEL ROOMS SECTION-->
+        <div class="hom1 hom-com pad-bot-40">
+            <div class="container">
+
+
+
+
+
+                <div class="row">
+                    <div class="hom1-title">
+                        <h2>😍 رحلات المابرز 😍</h2>
+                        <div class="head-title">
+                            <div class="hl-1"></div>
+                            <div class="hl-2"></div>
+                            <div class="hl-3"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="to-ho-hotel">
+                        <!-- HOTEL GRID -->
+                        <div class="col-md-4">
+                            <div class="to-ho-hotel-con">
+                                <div class="to-ho-hotel-con-1">
+                                    <div class="hom-hot-av-tic"> إضافة إلى المفضلة </div> <img src="~/Images/room/3.jpg"
+                                                                                               alt="">
+                                </div>
+                                <div class="to-ho-hotel-con-23">
+                                    <div class="to-ho-hotel-con-2">
+                                        <a href="events.html">
+                                            <h4>إسم المكان</h4>
+                                            <h4>بواسطة : AbdelMeguid</h4>
+                                        </a>
+                                    </div>
+                                    <div class="to-ho-hotel-con-3">
+                                        <ul>
+                                            <li>
+                                                البلد - المدينة
+                                                <div class="dir-rat-star ho-hot-rat-star">
+                                                    التقييم: <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                             aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                       aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                                                 aria-hidden="true"></i><i class="fa fa-star-o"
+                                                                                                                                                                                           aria-hidden="true"></i>
+                                                </div>
+                                            </li>
+                                            <li><span class="ho-hot-pri">1230 جنيه</span> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- HOTEL GRID -->
+                        <div class="col-md-4">
+                            <div class="to-ho-hotel-con">
+                                <div class="to-ho-hotel-con-1">
+                                    <div class="hom-hot-av-tic"> Available Tickets: 520 </div> <img src="~/Images/room/1.jpg" alt="">
+                                </div>
+                                <div class="to-ho-hotel-con-23">
+                                    <div class="to-ho-hotel-con-2">
+                                        <a href="events.html">
+                                            <h4>إسم المكان</h4>
+                                            <h4>بواسطة : Youssef</h4>
+                                        </a>
+                                    </div>
+                                    <div class="to-ho-hotel-con-3">
+                                        <ul>
+                                            <li>
+                                                البلد - المدينة
+                                                <div class="dir-rat-star ho-hot-rat-star">
+                                                    التقييم: <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                             aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                       aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                                                 aria-hidden="true"></i><i class="fa fa-star-o"
+                                                                                                                                                                                           aria-hidden="true"></i>
+                                                </div>
+                                            </li>
+                                            <li><span class="ho-hot-pri">4350 جنيه</span> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- HOTEL GRID -->
+                        <div class="col-md-4">
+                            <div class="to-ho-hotel-con">
+                                <div class="to-ho-hotel-con-1">
+                                    <div class="hom-hot-av-tic"> إضافة إلى المفضلة </div> <img src="~/Images/room/2.jpg"
+                                                                                               alt="">
+                                </div>
+                                <div class="to-ho-hotel-con-23">
+                                    <div class="to-ho-hotel-con-2">
+                                        <a href="events.html">
+                                            <h4>إسم المكان</h4>
+                                            <h4>بواسطة : خالد عابد</h4>
+                                        </a>
+                                    </div>
+                                    <div class="to-ho-hotel-con-3">
+                                        <ul>
+                                            <li>
+                                                البلد - المدينة
+                                                <div class="dir-rat-star ho-hot-rat-star">
+                                                    التقييم: <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                             aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                       aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                                                 aria-hidden="true"></i><i class="fa fa-star-o"
+                                                                                                                                                                                           aria-hidden="true"></i>
+                                                </div>
+                                            </li>
+                                            <li><span class="ho-hot-pri">5110 جنيه</span> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- HOTEL GRID -->
+                        <div class="col-md-4">
+                            <div class="to-ho-hotel-con">
+                                <div class="to-ho-hotel-con-1">
+                                    <div class="hom-hot-av-tic"> Available Tickets: 42 </div> <img src="~/Images/room/4.jpg" alt="">
+                                </div>
+                                <div class="to-ho-hotel-con-23">
+                                    <div class="to-ho-hotel-con-2">
+                                        <a href="events.html">
+                                            <h4>إسم المكان</h4>
+                                            <h4>بواسطة : Samah Sayed</h4>
+                                        </a>
+                                    </div>
+                                    <div class="to-ho-hotel-con-3">
+                                        <ul>
+                                            <li>
+                                                البلد - المدينة
+                                                <div class="dir-rat-star ho-hot-rat-star">
+                                                    التقييم: <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                             aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                       aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                                                 aria-hidden="true"></i><i class="fa fa-star-o"
+                                                                                                                                                                                           aria-hidden="true"></i>
+                                                </div>
+                                            </li>
+                                            <li><span class="ho-hot-pri">730 جنيه</span> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- HOTEL GRID -->
+                        <div class="col-md-4">
+                            <div class="to-ho-hotel-con">
+                                <div class="to-ho-hotel-con-1">
+                                    <div class="hom-hot-av-tic"> Available Tickets: 520 </div> <img src="~/Images/room/5.jpg" alt="">
+                                </div>
+                                <div class="to-ho-hotel-con-23">
+                                    <div class="to-ho-hotel-con-2">
+                                        <a href="events.html">
+                                            <h4>إسم المكان</h4>
+                                            <h4>بواسطة : Maged Hamza</h4>
+                                        </a>
+                                    </div>
+                                    <div class="to-ho-hotel-con-3">
+                                        <ul>
+                                            <li>
+                                                البلد - المدينة
+                                                <div class="dir-rat-star ho-hot-rat-star">
+                                                    التقييم: <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                             aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                       aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                                                 aria-hidden="true"></i><i class="fa fa-star-o"
+                                                                                                                                                                                           aria-hidden="true"></i>
+                                                </div>
+                                            </li>
+                                            <li><span class="ho-hot-pri">5330 جنيه</span> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- HOTEL GRID -->
+                        <div class="col-md-4">
+                            <div class="to-ho-hotel-con">
+                                <div class="to-ho-hotel-con-1">
+                                    <div class="hom-hot-av-tic"> إضافة إلى المفضلة </div> <img src="~/Images/room/6.jpg"
+                                                                                               alt="">
+                                </div>
+                                <div class="to-ho-hotel-con-23">
+                                    <div class="to-ho-hotel-con-2">
+                                        <a href="events.html">
+                                            <h4>إسم المكان</h4>
+                                            <h4>بواسطة : AbdelMeguid</h4>
+                                        </a>
+                                    </div>
+                                    <div class="to-ho-hotel-con-3">
+                                        <ul>
+                                            <li>
+                                                البلد - المدينة
+                                                <div class="dir-rat-star ho-hot-rat-star">
+                                                    التقييم: <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                             aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                       aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                                                                                 aria-hidden="true"></i><i class="fa fa-star-o"
+                                                                                                                                                                                           aria-hidden="true"></i>
+                                                </div>
+                                            </li>
+                                            <li><span class="ho-hot-pri">1230 جنيه</span> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <div class="input-field col s12">
+                                <input type="submit" value="المزيد" class="form-btn">
+                            </div>
+                        </center>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END HOTEL ROOMS-->
+        <!--TOP SECTION-->
+    </section>
+}
+else
+{
+    <div class="container">
+
+        <div class="inn-body-section pad-bot-55">
+            <div class="jumbotron">
+                <p>لا توجد حجوزات</p>
+            </div>
+        </div>
+    </div>
+}

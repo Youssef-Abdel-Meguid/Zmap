@@ -1,0 +1,85 @@
+﻿@model Zmap.Models.User
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("Index", "Users")" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>تعديل @Model.UserName</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات الفندق</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("Edit", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("UserTypeId", new SelectList(ViewBag.UserTypes, "Id", "Name"), new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>نوع المستخدم</label>
+                                            </div>
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.Id)
+                                        @Html.HiddenFor(m => m.UserName)
+                                        @Html.HiddenFor(m => m.FirstName)
+                                        @Html.HiddenFor(m => m.LastName)
+                                        @Html.HiddenFor(m => m.Email)
+                                        @Html.HiddenFor(m => m.PhoneNumber)
+                                        @Html.HiddenFor(m => m.Gender)
+                                        @Html.HiddenFor(m => m.Active)
+                                        @Html.HiddenFor(m => m.BirthDate)
+                                        @Html.HiddenFor(m => m.City)
+                                        @Html.HiddenFor(m => m.Country)
+                                        @Html.HiddenFor(m => m.CreatedDate)
+                                        @Html.HiddenFor(m => m.CurrentJob)
+                                        @Html.HiddenFor(m => m.FamilyMembersNumber)
+                                        @Html.HiddenFor(m => m.Latitude)
+                                        @Html.HiddenFor(m => m.Longtiude)
+                                        @Html.HiddenFor(m => m.MaritalStatus)
+                                        @Html.HiddenFor(m => m.ModifiedDate)
+                                        @Html.HiddenFor(m => m.PasswordHash)
+                                        @Html.HiddenFor(m => m.PasswordSalt)
+                                        @Html.HiddenFor(m => m.ProfilePhotoUrl)
+
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

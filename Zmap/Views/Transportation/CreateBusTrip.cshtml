@@ -1,0 +1,109 @@
+﻿@model Zmap.Models.BusTripSchedule
+
+@{
+    ViewBag.Title = "CreateRoomAvailability";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("BusDetails", "Transportation", new { id = Model.BusId })" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>اضافة مواعيد الاتوبيس</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات الاتوبيس</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("CreateBusTrip", "Transportation"))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.DateFrom, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required", @id="from", @name="from" } })*@
+                                                <input type="time" name="DepartureTime" required>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>الوقت من</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9 m4">
+                                                @*@Html.EditorFor(model => model.DateTo, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required", @id = "to", @name = "to" } })*@
+                                                <input type="time" name="ArrivalTime" required>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>الوقت الى</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.DateFrom, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required", @id="from", @name="from" } })*@
+                                                <input type="date" name="DepartureDate" required>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>التاريخ من</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col l9 m4">
+                                                @*@Html.EditorFor(model => model.DateTo, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required", @id = "to", @name = "to" } })*@
+                                                <input type="date" name="ArrivalDate" required>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>التاريخ الى</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("StationFromId", new SelectList(ViewBag.Stations, "Id", "Name"), "", new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>المغادرة من</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("StationToId", new SelectList(ViewBag.Stations, "Id", "Name"), "", new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>الوصول الى</label>
+                                            </div>
+                                        </div>
+                                        @Html.HiddenFor(m => m.BusId)
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

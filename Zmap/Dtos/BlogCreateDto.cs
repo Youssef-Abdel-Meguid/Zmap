@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Zmap.Dtos
+{
+    public class BlogCreateDto
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Details { get; set; }
+        public string PhotoUrl { get; set; }
+        public Categories Categories { get; set; }
+    }
+}

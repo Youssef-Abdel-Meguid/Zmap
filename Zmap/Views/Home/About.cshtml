@@ -1,0 +1,33 @@
+﻿@model Zmap.Models.AboutU
+
+<div class="inn-body-section">
+    <div class="container">
+        <div class="row">
+            <div class="page-head">
+                <h2>@Model.HeaderTitle</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+                <p>@Model.HeaderDetails</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="about-left">
+                    <h2>@Model.BodyTitle</h2>
+                    <h4>
+                       @Model.BodyDetails1
+                    </h4>
+                    <p>
+                        @Model.BodyDetails2
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about-right"> <img src="~/Images/Admin/About/@Model.PhotoUrl" alt=""> </div>
+            </div>
+        </div>
+    </div>
+</div>

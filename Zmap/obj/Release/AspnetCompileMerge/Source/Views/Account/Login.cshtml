@@ -1,0 +1,96 @@
+﻿@model Zmap.Dtos.LoginDto
+
+<div class="log-in-pop">
+    <div class="log-in-pop-left">
+        <h1>مرحبا</h1>
+        <p>ليس لديك حساب؟ سجل الان</p>
+        <h4>التسجيل عن طريق وسائل الاتصال الاجتماعى</h4>
+        <ul>
+            <li>
+                <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-google"></i> Google+</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+            </li>
+        </ul>
+    </div>
+    <div class="log-in-pop-right">
+        <h4>تسجيل الدخول</h4>
+        <p>ليس لديك حساب؟ سجل الان</p>
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="text" data-ng-model="name" class="validate">*@
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                        <label>اسم المستخدم</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-field s12">
+                        @*<input type="password" class="validate">*@
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        <label>كلمة المرور</label>
+                    </div>
+                </div>
+                @*<div>
+                    <div class="s12 log-ch-bx">
+                        <p>
+                            <input type="checkbox" id="test5" />
+                            <label for="test5">تذكرنى</label>
+                        </p>
+                    </div>
+                </div>*@
+                <div>
+                    <div class="input-field s4">
+                        <input type="submit" value="تسجيل الدخول" class="waves-effect waves-light log-in-btn">
+                    </div>
+                </div>
+            }
+            @*<div>
+                <div class="input-field s12">
+                    <a href="#" data-dismiss="modal" data-toggle="modal"
+                       data-target="#modal3">نسيت كلمة المرور</a> | <a href="#" data-dismiss="modal"
+                                                                       data-toggle="modal" data-target="#modal2">انشاء حساب جديد</a>
+                </div>
+            </div>*@
+        </section>
+    </div>
+</div>
+
+
+@*@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Log in" class="btn btn-default" />
+            </div>
+        </div>
+        <p>
+            @Html.ActionLink("Register as a new user", "Register")
+        </p>
+    }*@

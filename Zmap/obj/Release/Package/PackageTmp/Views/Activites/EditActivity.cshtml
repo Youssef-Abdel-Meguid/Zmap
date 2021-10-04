@@ -1,0 +1,137 @@
+﻿@model Zmap.Models.Activity
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("Details", "Activites", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>تعديل نشاط جديد</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات النشاط</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("EditActivity", "Activites", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="col l6">
+                                                <div class="switch">
+                                                    @*@Html.EditorFor(model => model.Morning, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required", @type = "radio" } })*@
+                                                    <label> صباحى<input type="checkbox" name="Morning" value="true" id="Morning" @((bool)Model.Morning ? "checked=\"checked\"" : "")> <span class="lever"></span> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col l6">
+                                                <div class="switch">
+                                                    @*@Html.EditorFor(model => model.Morning, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required", @type = "radio" } })*@
+                                                    <label> مسائى<input type="checkbox" name="Evening" value="true" id="Evening" @((bool)Model.Evening ? "checked=\"checked\"" : "")> <span class="lever"></span>  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.ActivityName, new { htmlAttributes = new { @class = "form-control", @data_val = "true", @required = "required" } })*@
+                                                <input class="form-control" required value="@Model.ActivityName" name="ActivityName"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>اسم النشاط</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("SubAreaId", new SelectList(ViewBag.SubAreas, "Id", "Name"), "", new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>مكان النشاط</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("ActivityCategoryId", new SelectList(ViewBag.Cat, "Id", "CategoryName"), "", new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>نوع النشاط</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="text" id="from" name="ActivityDate" required value="@Model.CreatedDate" autocomplete="off">
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>تاريخ النشاط</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l7">
+                                                @*@Html.EditorFor(model => model.CostWithoutTrasnportation, new { htmlAttributes = new { @class = "form-control", @data_val = "true", @required = "required" } })*@
+                                                <input type="number" step="0.01" required class="form-control" name="CostWithoutTrasnportation" value="@Model.CostWithoutTrasnportation"/>
+                                            </div>
+                                            <div class="input-field col l5">
+                                                <label>سعر النشاط بدون انتقالات</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.CostWithTransportation, new { htmlAttributes = new { @class = "form-control", @data_val = "true", @required = "required" } })*@
+                                                <input type="number" step="0.01" required class="form-control" name="CostWithTransportation" value="@Model.CostWithTransportation" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>سعر النشاط بالانتقالات</label>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @data_val = "true", @required = "required" } })*@
+                                                <textarea class="form-control" required name="Description">@Model.Description</textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>وصف النشاط</label>
+                                            </div>
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.CompanyId)
+                                        @Html.HiddenFor(m => m.CreatedDate)
+                                        @Html.HiddenFor(m => m.CreatedByUserId)
+                                        @Html.HiddenFor(m => m.Active)
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

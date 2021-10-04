@@ -1,0 +1,125 @@
+﻿@model Zmap.Dtos.NewUserDto
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("Index", "Users")" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>اضافة مستخدم حديد</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات المستخدم</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("Create", "Users", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        @Html.ValidationSummary("", new { @class = "red-text" })
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input class="validate" required name="FirstName" type="text" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>الاسم الاول</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input class="validate" required name="LastName" type="text" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>اسم العائلة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("UserTypeId", new SelectList(ViewBag.Types, "Id", "Name"), "", new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>نوع المستخدم</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input class="validate" required name="BirthOfDate" type="date" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>تاريخ الميلاد</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input class="validate" required name="Phonenumber" type="text" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>رقم التليفون</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input class="validate" required name="Email" type="email" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>البريد الالكترونى</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input class="validate" required name="Username" type="text" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>اسم المستخدم</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input class="validate" required name="Password" type="password" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>كلمة المرور</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

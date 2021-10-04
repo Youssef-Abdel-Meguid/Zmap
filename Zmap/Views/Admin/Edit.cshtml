@@ -1,0 +1,107 @@
+﻿@model Zmap.Models.AboutU
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("Index", "Admin")" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>Edit About Us</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>Page Data</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input required class="validate" name="HeaderTitle" value="@Model.HeaderTitle"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>Header Title</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <textarea class="validate" required name="HeaderDetails">@Model.HeaderDetails</textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>Header Details</label>
+                                            </div>
+                                        </div>
+
+                                         <div class="row">
+                                            <div class="input-field col l9">
+                                                <input required class="validate" name="BodyTitle" value="@Model.BodyTitle"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>Body Title</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <textarea class="validate" required name="BodyDetails1">@Model.BodyDetails1</textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>Body Details 1</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <textarea class="validate" required name="BodyDetails2">@Model.BodyDetails2</textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>Body Details 2</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="file" name="uploadFile" class="validate" required />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label for="uploadFile">Photo</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                        @Html.HiddenFor(m => m.Id)
+                                        @Html.HiddenFor(m => m.PhotoUrl)
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

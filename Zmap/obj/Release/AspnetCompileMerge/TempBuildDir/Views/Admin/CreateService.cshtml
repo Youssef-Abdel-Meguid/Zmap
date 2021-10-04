@@ -1,0 +1,80 @@
+﻿@model Zmap.Models.Service
+
+@*@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+
+<div class="container">
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("SevicesDetails", "Admin", new { id = Model.OurServiceId})" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>Add New Service</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>Page Data</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("CreateService", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input required class="validate" name="Title" value="@Model.Title" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>Title</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <textarea class="validate" required name="Details">@Model.Details</textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>Details</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="file" name="uploadFile" class="validate" required />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label for="uploadFile">Photo</label>
+                                            </div>
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.OurServiceId)
+
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

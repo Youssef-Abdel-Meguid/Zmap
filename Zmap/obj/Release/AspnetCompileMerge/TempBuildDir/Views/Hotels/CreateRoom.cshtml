@@ -1,0 +1,109 @@
+﻿@model Zmap.Models.Room
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("Details", "Hotels", new { id = Model.HotleId })" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>اضافة غرفة جديدة</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات الغرفة</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("CreateRoom", "Hotels", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required" } })*@
+                                                <input name="Name" required type="text" class="validate"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>اسم الغرفة</label>
+                                            </div>
+                                        </div>
+                                        @Html.HiddenFor(m => Model.HotleId)
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "validate" }, @data_val = "true", @required = "required" })*@
+                                                <input name="Number" required type="text" class="validate" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>رقم الغرفة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("StatusId", new SelectList(ViewBag.Status, "Id", "RoomStatusName"), new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>حالة الغرفة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("RoomTypeId", new SelectList(ViewBag.RoomTypes, "Id", "ArabicName"), new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>نوع الغرفة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("RoomViewId", new SelectList(ViewBag.RoomViews, "Id", "ArabicName"), new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>فيو الغرفة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "validate" }, @data_val = "true", @required = "required" })*@
+                                                <textarea class="form-control" required name="Description"></textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>وصف الغرفة</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

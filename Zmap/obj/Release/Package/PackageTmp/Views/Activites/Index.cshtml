@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Zmap.Models.Company>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string userType = Session["UserType"] == null ? null : Session["UserType"].ToString();
+}
+
+
+<div class="container">
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة شركات الانشطة</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("Create", "Activites")">
+                <i class="material-icons">add</i>
+            </a>
+            <h2>
+                جميع شركات الانشطة
+            </h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        الاسم
+                    </th>
+                    <th>
+                        عن الشركة
+                    </th>
+                    <th>
+                        سياسة الخصوصية
+                    </th>
+                    <th>
+                        تاريخ الاضافة
+                    </th>
+                    <th>موافقة الادمن</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.About)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PrivacyPolicy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            @if (userType == "1")
+                            {
+                                if (item.IsConfirmed != true)
+                                {
+                                    <a onclick="return confirm('هل تريد تأكيد اضافة الشركة؟')" href="@Url.Action("Confirm", "Activites", new { id = item.Id, isConfirm = true })" class="btn-floating waves-effect waves-light red">
+                                        <i class="material-icons">
+                                            thumb_down
+                                        </i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a onclick="return confirm('هل تريد عدم تأكيد اضافة الشركة؟')" href="@Url.Action("Confirm", "Activites", new { id = item.Id, isConfirm = false })" class="btn-floating waves-effect waves-light green">
+                                        <i class="material-icons">
+                                            thumb_up
+                                        </i>
+                                    </a>
+                                }
+                            }
+                            else
+                            {
+                                if (item.IsConfirmed != true)
+                                {
+                                   <a href="#" class="btn-floating waves-effect waves-light red" onclick="alert('لم يتم الموافقة بعد')">
+                                        <i class="material-icons">
+                                            thumb_down
+                                        </i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="btn-floating waves-effect waves-light green" onclick="alert('تمت الموافقة')">
+                                        <i class="material-icons">
+                                            thumb_up
+                                        </i>
+                                    </a>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light orange">
+                                <i class="material-icons">
+                                    edit
+                                </i>
+                            </a>
+                            <a href="@Url.Action("Details", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm green">
+                                <i class="material-icons">
+                                    info
+                                </i>
+                            </a>
+
+                            <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("Delete", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
+                                <i class="material-icons">
+                                    delete
+                                </i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
