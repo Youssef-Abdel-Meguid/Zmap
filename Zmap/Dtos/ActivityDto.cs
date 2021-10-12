@@ -19,6 +19,6 @@ namespace Zmap.Dtos
         public string City { get; set; }
         public int SubAreaId { get; set; }
         public string SubArea { get; set; }
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
     }
 }

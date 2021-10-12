@@ -17,7 +17,6 @@ namespace Zmap.Models
         public int Id { get; set; }
         public int CompanyId { get; set; }
         public string Name { get; set; }
-        public int NumberOfSeats { get; set; }
         public int SeatsMapId { get; set; }
         public string BusNumber { get; set; }
         public int CategoryId { get; set; }

@@ -28,5 +28,6 @@ namespace Zmap.Models
         public Nullable<bool> Active { get; set; }
         public System.DateTime ArrivalDate { get; set; }
         public System.DateTime DepartureDate { get; set; }
+        public string TripName { get; set; }
     }
 }

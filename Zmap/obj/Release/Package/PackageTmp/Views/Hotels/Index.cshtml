@@ -31,92 +31,98 @@
             <h2>
                 جميع الفنادق
             </h2>
-            <table class="table table-bordered">
-                <tr>
-                    <th>الاسم</th>
-                    <th>الموقع الالكترونى</th>
-                    <th>موقع خريطة جوجل</th>
-                    <th>الوصف</th>
-                    <th>الشروط</th>
-                    <th>تاريخ الاضافة</th>
-                    <th>المدينة</th>
-                    <th>موافقة الادمن</th>
-                    <th></th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
+            <table class="table table-bordered" id="hotels">
+                <thead>
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.WebsiteUrl)</td>
-                        <td>@Html.DisplayFor(modelItem => item.GoogleMapLocation)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Conditions)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.City)</td>
-                        <td>
-                            @if (userType == "1")
-                            {
-                                if (item.IsConfirmed != true)
-                                {
-                                    <a onclick="return confirm('هل تريد تأكيد اضافة الفندق؟')" href="@Url.Action("Confirm", "Hotels", new { id = item.Id, isConfirm = true })" class="btn-floating waves-effect waves-light red">
-                                        <i class="material-icons">
-                                            thumb_down
-                                        </i>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a onclick="return confirm('هل تريد عدم تأكيد اضافة الفندق؟')" href="@Url.Action("Confirm", "Hotels", new { id = item.Id, isConfirm = false })" class="btn-floating waves-effect waves-light green">
-                                        <i class="material-icons">
-                                            thumb_up
-                                        </i>
-                                    </a>
-                                }
-                            }
-                            else
-                            {
-                                if (item.IsConfirmed != true)
-                                {
-                                   <a href="#" class="btn-floating waves-effect waves-light red" onclick="alert('لم يتم الموافقة بعد')">
-                                        <i class="material-icons">
-                                            thumb_down
-                                        </i>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a href="#" class="btn-floating waves-effect waves-light green" onclick="alert('تمت الموافقة')">
-                                        <i class="material-icons">
-                                            thumb_up
-                                        </i>
-                                    </a>
-                                }
-                            }
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Edit", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light orange">
-                                <i class="material-icons">
-                                    edit
-                                </i>
-                            </a>
-                            <a href="@Url.Action("Details", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm green">
-                                <i class="material-icons">
-                                    info
-                                </i>
-                            </a>
-
-                            <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("Delete", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
-                                <i class="material-icons">
-                                    delete
-                                </i>
-                            </a>
-                        </td>
+                        <th>الاسم</th>
+                        <th>تاريخ الاضافة</th>
+                        <th>المدينة</th>
+                        <th>موافقة الادمن</th>
+                        <th></th>
                     </tr>
-                }
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.City)</td>
+                            <td>
+                                @if (userType == "1")
+                                {
+                                    if (item.IsConfirmed != true)
+                                    {
+                                        <a onclick="return confirm('هل تريد تأكيد اضافة الفندق؟')" href="@Url.Action("Confirm", "Hotels", new { id = item.Id, isConfirm = true })" class="btn-floating waves-effect waves-light red">
+                                            <i class="material-icons">
+                                                thumb_down
+                                            </i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a onclick="return confirm('هل تريد عدم تأكيد اضافة الفندق؟')" href="@Url.Action("Confirm", "Hotels", new { id = item.Id, isConfirm = false })" class="btn-floating waves-effect waves-light green">
+                                            <i class="material-icons">
+                                                thumb_up
+                                            </i>
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    if (item.IsConfirmed != true)
+                                    {
+                                        <a href="#" class="btn-floating waves-effect waves-light red" onclick="alert('لم يتم الموافقة بعد')">
+                                            <i class="material-icons">
+                                                thumb_down
+                                            </i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" class="btn-floating waves-effect waves-light green" onclick="alert('تمت الموافقة')">
+                                            <i class="material-icons">
+                                                thumb_up
+                                            </i>
+                                        </a>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light orange action">
+                                    <i class="material-icons">
+                                        edit
+                                    </i>
+                                </a>
+                                <a href="@Url.Action("Details", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm green action">
+                                    <i class="material-icons">
+                                        info
+                                    </i>
+                                </a>
+
+                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("Delete", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple action">
+                                    <i class="material-icons">
+                                        delete
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 
             </table>
         </div>
     </div>
 
 </div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#hotels').DataTable();
+        });
+    </script>
+}

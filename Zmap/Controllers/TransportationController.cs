@@ -10,11 +10,13 @@ using System.Web.Mvc;
 using Zmap.Models;
 using Zmap.Dtos;
 
+
 namespace Zmap.Controllers
 {
     public class TransportationController : Controller
     {
         private ZmapEntities db = new ZmapEntities();
+        private ZmapEntities logger = new ZmapEntities();
 
         private int? userType = 0;
         private int? userId = 0;
@@ -31,7 +33,6 @@ namespace Zmap.Controllers
             }
         }
 
-        // GET: Transportation
         public async Task<ActionResult> Index()
         {
             SetIdenitiy();
@@ -56,13 +57,12 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(companies);
         }
 
-        // GET: Transportation/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             SetIdenitiy();
@@ -92,17 +92,54 @@ namespace Zmap.Controllers
                     return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
                 }
 
-                var lines = await db.TransportationCompanyLines.Where(l => l.Active == true && l.CompanyId == company.Id).ToListAsync();
-                var companyPhotos = await db.Galleries.Where(g => g.Active == true && g.CompanyId == company.Id).ToListAsync();
-                var companyContacts = await db.Contacts.Where(c => c.Active == true && c.CompanyId == company.Id).ToListAsync();
-                var faq = await db.FAQs.Where(f => f.Active == true && f.CompanyId == company.Id).ToListAsync();
-                var buses = await db.Buses.Where(b => b.Active == true && b.CompanyId == company.Id).ToListAsync();
-                var stations = await db.Stations.Where(s => s.Active == true && s.CompanyId == company.Id).ToListAsync();
+                companyDto = new TransportationDetailsDto()
+                {
+                    About = company.About,
+                    CreatedDate = company.CreatedDate,
+                    Id = company.Id,
+                    Name = company.Name,
+                    PrivacyPolicy = company.PrivacyPolicy,
+                    Photo = await db.Galleries.Where(g => g.Active == true && g.CompanyId == id).FirstOrDefaultAsync(),
+                    IsConfirmed = company.IsConfirmed,
+                    ManagerEmail = company.ManagerEmail,
+                    ManagerPhonenumber = company.ManagerPhonenumber
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
 
+            return View(companyDto);
+        }
+
+        public async Task<ActionResult> Buses(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var busDetails = new BusDetailsDto();
+
+            try
+            {
+                var buses = await db.Buses.Where(b => b.Active == true && b.CompanyId == id).ToListAsync();
                 var busDto = new List<BusDto>();
-
                 foreach (var bus in buses)
                 {
+                    var seatMap = await db.BusSeatsMaps.FindAsync(bus.SeatsMapId);
                     var cat = await db.BusCategories.FindAsync(bus.CategoryId);
                     busDto.Add(new BusDto()
                     {
@@ -110,16 +147,52 @@ namespace Zmap.Controllers
                         CreatedDate = bus.CreatedDate,
                         Id = bus.Id,
                         Name = bus.Name,
-                        NumberOfSeats = bus.NumberOfSeats,
                         CategoryId = bus.CategoryId,
                         Category = cat.CategoryName,
                         BusSeatMapId = bus.SeatsMapId,
+                        BusSeatMap = seatMap.MapName,
                         CompanyId = bus.CompanyId
                     });
                 }
 
-                var stationDto = new List<StationDto>();
+                busDetails = new BusDetailsDto()
+                {
+                    CompanyId = id,
+                    Buses = busDto
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
 
+            return View(busDetails);
+        }
+
+        public async Task<ActionResult> Stations(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var stationDetails = new StationDetailsDto();
+
+            try
+            {
+                var stations = await db.Stations.Where(s => s.Active == true && s.CompanyId == id).ToListAsync();
+                var stationDto = new List<StationDto>();
                 foreach (var station in stations)
                 {
                     var city = await db.Cities.FindAsync(station.CityId);
@@ -136,8 +209,44 @@ namespace Zmap.Controllers
                     });
                 }
 
-                var lineDto = new List<LineDto>();
+                stationDetails = new StationDetailsDto()
+                {
+                    CompanyId = id,
+                    Stations = stationDto
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
 
+            return View(stationDetails);
+        }
+
+        public async Task<ActionResult> Lines(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var lineDetails = new LineDetailsDto();
+
+            try
+            {
+                var lines = await db.TransportationCompanyLines.Where(l => l.Active == true && l.CompanyId == id).ToListAsync();
+                var lineDto = new List<LineDto>();
                 foreach (var line in lines)
                 {
                     var home = await db.Cities.FindAsync(line.HomeCityId);
@@ -160,31 +269,192 @@ namespace Zmap.Controllers
                     });
                 }
 
-                companyDto = new TransportationDetailsDto()
+                lineDetails = new LineDetailsDto()
                 {
-                    About = company.About,
-                    Contacts = companyContacts,
-                    CreatedDate = company.CreatedDate,
-                    FAQs = faq,
-                    Id = company.Id,
-                    Name = company.Name,
-                    PrivacyPolicy = company.PrivacyPolicy,
-                    Buses = busDto,
-                    Photos = companyPhotos,
-                    Stations = stationDto,
-                    Lines = lineDto,
-                    IsConfirmed = company.IsConfirmed,
-                    Attachments = await db.Attachments.Where(a => a.Active == true && a.CompanyId == company.Id).ToListAsync(),
-                    ManagerEmail = company.ManagerEmail,
-                    ManagerPhonenumber = company.ManagerPhonenumber
+                    CompanyId = id,
+                    Lines = lineDto
                 };
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return View(companyDto);
+            return View(lineDetails);
+        }
+
+        public async Task<ActionResult> Gallery(int? id, int flag = 0)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var photoDetails = new PhotoDetailsDto();
+
+            try
+            {
+                if (flag == 0)
+                {
+                    photoDetails = new PhotoDetailsDto()
+                    {
+                        CompanyId = id,
+                        Photos = await db.Galleries.Where(g => g.Active == true && g.CompanyId == id).ToListAsync()
+                    };
+                }
+                else if (flag == 1)
+                {
+                    photoDetails = new PhotoDetailsDto()
+                    {
+                        BusId = id,
+                        Photos = await db.Galleries.Where(g => g.Active == true && g.BusId == id).ToListAsync()
+                    };
+                }
+                else if (flag == 2)
+                {
+                    photoDetails = new PhotoDetailsDto()
+                    {
+                        StationId = id,
+                        Photos = await db.Galleries.Where(g => g.Active == true && g.StationId == id).ToListAsync()
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(photoDetails);
+        }
+
+        public async Task<ActionResult> Contacts(int? id, bool isCompany = true)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var contacts = new ContactDetailsDto();
+
+            try
+            {
+                if (isCompany == true)
+                {
+                    contacts = new ContactDetailsDto()
+                    {
+                        Contacts = await db.Contacts.Where(c => c.Active == true && c.CompanyId == id).ToListAsync(),
+                        CompanyId = id
+                    };
+                }
+                else
+                {
+                    contacts = new ContactDetailsDto()
+                    {
+                        Contacts = await db.Contacts.Where(c => c.Active == true && c.StationId == id).ToListAsync(),
+                        StationId = id
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(contacts);
+        }
+
+        public async Task<ActionResult> Files(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var files = new FilesDetailsDto();
+
+            try
+            {
+                files = new FilesDetailsDto()
+                {
+                    Files = await db.Attachments.Where(a => a.Active == true && a.CompanyId == id).ToListAsync(),
+                    CompanyId = id
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(files);
+        }
+
+        public async Task<ActionResult> FAQs(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var faqs = new FAQDetailsDto();
+
+            try
+            {
+                faqs = new FAQDetailsDto()
+                {
+                    FAQs = await db.FAQs.Where(f => f.Active == true && f.CompanyId == id).ToListAsync(),
+                    CompanyId = id
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(faqs);
         }
 
         public async Task<ActionResult> LineDetails(int? id)
@@ -218,12 +488,56 @@ namespace Zmap.Controllers
 
                 var home = await db.Cities.FindAsync(line.HomeCityId);
                 var destination = await db.Cities.FindAsync(line.DestinationCityId);
-                var lineBuses = await db.LineBuses.Where(l => l.Active == true && l.LineId == line.Id).ToListAsync();
-                var lineStations = await db.LineStations.Where(s => s.Active == true && s.LineId == line.Id).ToListAsync();
+                var lineStart = await db.Stations.FindAsync(line.LineStartStationId);
+                var lineEnd = await db.Stations.FindAsync(line.LineEndStationId);
 
+                lineDto = new LineDto()
+                {
+                    CompanyId = line.CompanyId,
+                    HomeCityId = line.HomeCityId,
+                    CreatedDate = line.CreatedDate,
+                    Destination = destination.ArabicCityName,
+                    Home = home.ArabicCityName,
+                    Id = line.Id,
+                    LineStart = lineStart.Name,
+                    DestinationCityId = line.DestinationCityId,
+                    LineEnd = lineEnd.Name,
+                    LineName = line.LineName,
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
+
+
+            return View(lineDto);
+        }
+
+        public async Task<ActionResult> LineBuses(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var lineBusDetails = new LineBusDetailsDto();
+
+            try
+            {
                 var lineBusesDto = new List<LineBusDto>();
-                var lineStationsDto = new List<LineStationDto>();
-
+                var lineBuses = await db.LineBuses.Where(l => l.Active == true && l.LineId == id).ToListAsync();
                 foreach (var lineBus in lineBuses)
                 {
                     var bus = await db.Buses.FindAsync(lineBus.BusId);
@@ -242,45 +556,70 @@ namespace Zmap.Controllers
                     });
                 }
 
+                lineBusDetails = new LineBusDetailsDto()
+                {
+                    LineId = id,
+                    Buses = lineBusesDto
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(lineBusDetails);
+        }
+
+        public async Task<ActionResult> LineStations(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var lineStationDetails = new LineStationDetailsDto();
+
+            try
+            {
+                var lineStationsDto = new List<LineStationDto>();
+                var lineStations = await db.LineStations.Where(s => s.Active == true && s.LineId == id).ToListAsync();
+
                 foreach (var lineStation in lineStations)
                 {
                     var station = await db.Stations.FindAsync(lineStation.StationId);
                     lineStationsDto.Add(new LineStationDto()
                     {
                         Id = lineStation.Id,
-                        LineId = line.Id,
+                        LineId = id,
                         StoppingByOrder = lineStation.StoppinByOrder,
                         StationId = lineStation.StationId,
                         StationName = station.Name
                     });
                 }
 
-                var lineStart = await db.Stations.FindAsync(line.LineStartStationId);
-                var lineEnd = await db.Stations.FindAsync(line.LineEndStationId);
-
-                lineDto = new LineDto()
+                lineStationDetails = new LineStationDetailsDto()
                 {
-                    CompanyId = line.CompanyId,
-                    HomeCityId = line.HomeCityId,
-                    CreatedDate = line.CreatedDate,
-                    Destination = destination.ArabicCityName,
-                    Home = home.ArabicCityName,
-                    Id = line.Id,
-                    LineStart = lineStart.Name,
-                    DestinationCityId = line.DestinationCityId,
-                    LineEnd = lineEnd.Name,
-                    LineName = line.LineName,
-                    LineBuses = lineBusesDto,
-                    LineStations = lineStationsDto
+                    LineId = id,
+                    Stations = lineStationsDto
                 };
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-
-            return View(lineDto);
+            return View(lineStationDetails);
         }
 
         public async Task<ActionResult> StationDetails(int? id)
@@ -318,11 +657,10 @@ namespace Zmap.Controllers
                 {
                     Address = station.Address,
                     Id = station.id,
-                    Photos = await db.Galleries.Where(a => a.Active == true && a.StationId == station.id).ToListAsync(),
+                    Photo = await db.Galleries.Where(a => a.Active == true && a.StationId == station.id).FirstOrDefaultAsync(),
                     Name = station.Name,
                     GoogleMapLocation = station.GoogleMapLocation,
                     CreatedDate = station.CreatedDate,
-                    Contacts = await db.Contacts.Where(c => c.Active == true && c.StationId == station.id).ToListAsync(),
                     CityId = station.CityId,
                     City = city.ArabicCityName,
                     CompanyId = station.CompanyId
@@ -331,13 +669,12 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(stationDto);
         }
 
-        // GET: Transportation/Create
         public ActionResult Create()
         {
             SetIdenitiy();
@@ -387,13 +724,12 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(company);
         }
 
-        // GET: Transportation/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             SetIdenitiy();
@@ -424,15 +760,12 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(company);
         }
 
-        // POST: Transportation/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Company company)
@@ -461,13 +794,12 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(company);
         }
 
-        // GET: Transportation/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             SetIdenitiy();
@@ -502,7 +834,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return RedirectToAction("Index", "Transportation");
@@ -544,10 +876,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = gallery.CompanyId });
+            return RedirectToAction("Gallery", "Transportation", new { Id = gallery.CompanyId });
         }
 
         public ActionResult CreatePhoto(int? Id)
@@ -563,7 +895,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -606,10 +938,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = galley.CompanyId });
+            return RedirectToAction("Gallery", "Transportation", new { Id = galley.CompanyId });
         }
 
         public ActionResult CreateContact(int? Id)
@@ -625,7 +957,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -662,10 +994,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = contact.CompanyId });
+            return RedirectToAction("Contacts", "Transportation", new { Id = contact.CompanyId });
         }
 
         public async Task<ActionResult> DeleteContact(int? Id)
@@ -702,9 +1034,9 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
-            return RedirectToAction("Details", "Transportation", new { Id = contact.CompanyId });
+            return RedirectToAction("Contacts", "Transportation", new { Id = contact.CompanyId });
         }
 
         public ActionResult CreateFAQ(int? id)
@@ -720,7 +1052,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(id == null)
+            if (id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -758,10 +1090,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = fAQ.CompanyId });
+            return RedirectToAction("FAQs", "Transportation", new { Id = fAQ.CompanyId });
         }
 
         public async Task<ActionResult> CreateBus(int? id)
@@ -777,7 +1109,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(id == null)
+            if (id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -789,7 +1121,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(new Bus() { CompanyId = (int)id });
@@ -825,10 +1157,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = bus.CompanyId });
+            return RedirectToAction("Buses", "Transportation", new { Id = bus.CompanyId });
         }
 
         public async Task<ActionResult> CreateStation(int? id)
@@ -844,7 +1176,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(id == null)
+            if (id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -855,7 +1187,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(new Station() { CompanyId = (int)id });
@@ -893,10 +1225,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = station.CompanyId });
+            return RedirectToAction("Stations", "Transportation", new { Id = station.CompanyId });
         }
 
         public async Task<ActionResult> CreateLine(int? id)
@@ -912,7 +1244,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(id == null)
+            if (id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -924,7 +1256,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(new TransportationCompanyLine() { CompanyId = (int)id });
@@ -948,7 +1280,7 @@ namespace Zmap.Controllers
             try
             {
 
-                if(!ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     ViewBag.Stations = await db.Stations.Where(s => s.Active == true && s.CompanyId == line.CompanyId).ToListAsync();
                     ViewBag.Cities = await db.Cities.ToListAsync();
@@ -963,10 +1295,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = line.CompanyId });
+            return RedirectToAction("Lines", "Transportation", new { Id = line.CompanyId });
         }
 
         public async Task<ActionResult> DeleteFAQ(int? Id)
@@ -1003,10 +1335,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = faq.CompanyId });
+            return RedirectToAction("FAQs", "Transportation", new { Id = faq.CompanyId });
         }
 
         public async Task<ActionResult> DeleteBus(int? Id)
@@ -1044,10 +1376,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = bus.CompanyId });
+            return RedirectToAction("Buses", "Transportation", new { Id = bus.CompanyId });
         }
 
         public async Task<ActionResult> DeleteStation(int? Id)
@@ -1085,10 +1417,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = station.CompanyId });
+            return RedirectToAction("Stations", "Transportation", new { Id = station.CompanyId });
         }
 
         public async Task<ActionResult> DeleteLine(int? Id)
@@ -1126,10 +1458,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Transportation", new { Id = line.CompanyId });
+            return RedirectToAction("Lines", "Transportation", new { Id = line.CompanyId });
         }
 
         public async Task<ActionResult> BusDetails(int? id)
@@ -1162,9 +1494,51 @@ namespace Zmap.Controllers
 
                 var cat = await db.BusCategories.FindAsync(bus.CategoryId);
                 var map = await db.BusSeatsMaps.FindAsync(bus.SeatsMapId);
+               
+                busDto = new BusDto()
+                {
+                    BusNumber = bus.BusNumber,
+                    CreatedDate = bus.CreatedDate,
+                    Id = bus.Id,
+                    Name = bus.Name,
+                    Photo = await db.Galleries.Where(g => g.Active == true && g.BusId == bus.Id).FirstOrDefaultAsync(),
+                    CategoryId = bus.CategoryId,
+                    Category = cat.CategoryName,
+                    BusSeatMapId = bus.SeatsMapId,
+                    BusSeatMap = map.MapName,
+                    CompanyId = bus.CompanyId,
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
 
-                var busAdds = await db.BusAddOns.Where(b => b.Active == true && b.BusId == bus.Id).ToListAsync();
+            return View(busDto);
+        }
 
+        public async Task<ActionResult> BusAddsOn(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var addOnDetails = new AddOnDetailsDto();
+
+            try
+            {
+                var busAdds = await db.BusAddOns.Where(b => b.Active == true && b.BusId == id).ToListAsync();
                 var busAddDtos = new List<AddOnDto>();
 
                 foreach (var add in busAdds)
@@ -1178,8 +1552,49 @@ namespace Zmap.Controllers
                     });
                 }
 
-                var trips = await db.BusTripSchedules.Where(b => b.Active == true && b.BusId == bus.Id).ToListAsync();
+                addOnDetails = new AddOnDetailsDto()
+                {
+                    BusId = id,
+                    AddOns = busAddDtos
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
 
+            return View(addOnDetails);
+        }
+
+        public async Task<ActionResult> BusTrips(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var busTripDetails = new BusTripDetailsDto();
+
+            try
+            {
+                var bus = await db.Buses.FindAsync(id);
+
+                if(bus == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "bus is null", UserId = userId });
+                }
+
+                var trips = await db.BusTripSchedules.Where(b => b.Active == true && b.BusId == id).ToListAsync();
                 var tripsDto = new List<BusTripScheduleDto>();
 
                 foreach (var trip in trips)
@@ -1202,29 +1617,19 @@ namespace Zmap.Controllers
                     });
                 }
 
-                busDto = new BusDto()
+                busTripDetails = new BusTripDetailsDto()
                 {
-                    BusNumber = bus.BusNumber,
-                    CreatedDate = bus.CreatedDate,
-                    Id = bus.Id,
-                    Name = bus.Name,
-                    Photos = await db.Galleries.Where(g => g.Active == true && g.BusId == bus.Id).ToListAsync(),
-                    NumberOfSeats = bus.NumberOfSeats,
-                    CategoryId = bus.CategoryId,
-                    Category = cat.CategoryName,
-                    BusSeatMapId = bus.SeatsMapId,
-                    BusSeatMap = map.MapName,
-                    BusAddOns = busAddDtos,
-                    CompanyId = bus.CompanyId,
-                    busTripSchedules = tripsDto
+                    BusId = id,
+                    BusName = bus.Name,
+                    BusTrips = tripsDto
                 };
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return View(busDto);
+            return View(busTripDetails);
         }
 
         [HttpPost]
@@ -1263,10 +1668,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("BusDetails", "Transportation", new { Id = gallery.BusId });
+            return RedirectToAction("Gallery", "Transportation", new { Id = gallery.BusId, flag = 1 });
         }
 
         public ActionResult CreateBusPhoto(int? Id)
@@ -1281,7 +1686,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -1302,7 +1707,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(id == null)
+            if (id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -1314,7 +1719,7 @@ namespace Zmap.Controllers
             catch (Exception e)
             {
 
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(new BusAddOn() { BusId = (int)id });
@@ -1349,10 +1754,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("BusDetails", "Transportation", new { Id = busAddOn.BusId });
+            return RedirectToAction("BusAddsOn", "Transportation", new { Id = busAddOn.BusId });
         }
 
         public async Task<ActionResult> CreateBusTrip(int? id)
@@ -1380,7 +1785,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
             return View(new BusTripSchedule() { BusId = (int)id });
@@ -1417,10 +1822,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("BusDetails", "Transportation", new { Id = trip.BusId });
+            return RedirectToAction("BusTrips", "Transportation", new { Id = trip.BusId });
         }
 
         public async Task<ActionResult> DeleteBusPhoto(int? Id)
@@ -1457,10 +1862,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("BusDetails", "Transportation", new { Id = station.BusId });
+            return RedirectToAction("Gallery", "Transportation", new { Id = station.BusId, flag = 1 });
         }
 
         public async Task<ActionResult> DeleteBusAddOn(int? Id)
@@ -1496,10 +1901,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("BusDetails", "Transportation", new { Id = station.BusId });
+            return RedirectToAction("BusAddsOn", "Transportation", new { Id = station.BusId });
         }
 
         public async Task<ActionResult> DeleteBusTrip(int? Id)
@@ -1537,10 +1942,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("BusDetails", "Transportation", new { Id = station.BusId });
+            return RedirectToAction("BusTrips", "Transportation", new { Id = station.BusId });
         }
 
         public ActionResult CreateStationContact(int? Id)
@@ -1556,7 +1961,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -1594,10 +1999,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("StationDetails", "Transportation", new { Id = contact.StationId });
+            return RedirectToAction("Contacts", "Transportation", new { Id = contact.StationId, isCompany = false });
         }
 
         public async Task<ActionResult> DeleteStationContact(int? Id)
@@ -1635,10 +2040,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("StationDetails", "Transportation", new { Id = contact.StationId });
+            return RedirectToAction("Contacts", "Transportation", new { Id = contact.StationId, isCompany = false });
         }
 
         [HttpPost]
@@ -1680,10 +2085,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("StationDetails", "Transportation", new { Id = gallery.StationId });
+            return RedirectToAction("Gallery", "Transportation", new { Id = gallery.StationId, flag = 2 });
         }
 
         public ActionResult CreateStationPhoto(int? Id)
@@ -1699,7 +2104,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -1741,9 +2146,9 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
-            return RedirectToAction("StationDetails", "Transportation", new { Id = station.StationId });
+            return RedirectToAction("Gallery", "Transportation", new { Id = station.StationId, flag = 2 });
         }
 
         public async Task<ActionResult> CreateLineBus(int? Id)
@@ -1759,7 +2164,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -1771,9 +2176,9 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
-            return View(new LineBus() { LineId = (int)Id});
+            return View(new LineBus() { LineId = (int)Id });
         }
 
         [HttpPost]
@@ -1793,7 +2198,7 @@ namespace Zmap.Controllers
 
             try
             {
-                if(!ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     var line = await db.TransportationCompanyLines.FindAsync(lineBus.LineId);
                     ViewBag.Buses = await db.Buses.Where(b => b.Active == true && b.CompanyId == line.CompanyId).ToListAsync();
@@ -1808,10 +2213,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("LineDetails", "Transportation", new { id = lineBus.LineId });
+            return RedirectToAction("LineBuses", "Transportation", new { id = lineBus.LineId });
         }
 
         public async Task<ActionResult> DeleteLineBus(int? Id)
@@ -1848,10 +2253,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("LineDetails", "Transportation", new { Id = station.LineId });
+            return RedirectToAction("LineBuses", "Transportation", new { Id = station.LineId });
         }
 
         public async Task<ActionResult> CreateLineStation(int? Id)
@@ -1867,7 +2272,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
             }
 
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
             }
@@ -1879,7 +2284,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
             return View(new LineStation() { LineId = (int)Id });
         }
@@ -1931,7 +2336,7 @@ namespace Zmap.Controllers
                         return View(lineBus);
                     }
                 }
-                else if(len <= 0 && lineBus.StoppinByOrder > 1 ) 
+                else if (len <= 0 && lineBus.StoppinByOrder > 1)
                 {
                     ViewBag.Stations = await db.Stations.Where(b => b.Active == true && b.CompanyId == line.CompanyId).ToListAsync();
                     return View(lineBus);
@@ -1944,11 +2349,11 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
 
-            return RedirectToAction("LineDetails", "Transportation", new { id = lineBus.LineId });
+            return RedirectToAction("LineStations", "Transportation", new { id = lineBus.LineId });
         }
 
         public async Task<ActionResult> DeleteLineStation(int? Id)
@@ -1975,7 +2380,7 @@ namespace Zmap.Controllers
                 station = await db.LineStations.Where(l => l.Active == true && l.LineId == Id).ToListAsync();
                 if (station == null)
                 {
-                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "station is null", UserId = userId });
                 }
                 foreach (var item in station)
                 {
@@ -1987,10 +2392,10 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("LineDetails", "Transportation", new { Id = station[0].LineId });
+            return RedirectToAction("LineStations", "Transportation", new { Id = station[0].LineId });
         }
 
         public ActionResult CreateAttachment(int? id)
@@ -2051,7 +2456,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Activites", new { Id = attachment.CompanyId });
+            return RedirectToAction("Files", "Transportation", new { Id = attachment.CompanyId });
         }
 
         public ActionResult DownloadAttachment(string filePath)
@@ -2122,7 +2527,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Activites", new { id = att.CompanyId });
+            return RedirectToAction("Files", "Transportation", new { id = att.CompanyId });
         }
 
         public async Task<ActionResult> Confirm(int? id, bool? isConfirm)
@@ -2163,6 +2568,111 @@ namespace Zmap.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> BusTripReservations(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 3)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+            }
+
+            var reservedSeatsDto = new ReservedSeatsDto();
+
+            try
+            {
+                var busTrip = await db.BusTripSchedules.FindAsync(id);
+                var bus = await db.Buses.FindAsync(busTrip.BusId);
+                var map = await db.BusSeatsMaps.FindAsync(bus.SeatsMapId);
+
+                if(busTrip == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "bus trip is null", UserId = userId });
+                }
+
+                var reservedSeats = await db.ReservedSeats.Where(r => r.Active == true && r.BusTripId == id).ToListAsync();
+                var seatsNumber = new List<string>();
+
+                foreach (var item in reservedSeats)
+                {
+                    seatsNumber.Add(item.SeatNumber);
+                }
+
+
+                reservedSeatsDto = new ReservedSeatsDto()
+                {
+                    ReservedSeats = reservedSeats,
+                    BusTripId = id,
+                    BusId = bus.Id,
+                    NumberOfSeats = map.NumberOfSeats,
+                    SeatsNumber = seatsNumber
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(reservedSeatsDto);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<bool> UpdateBusTripReservations([System.Web.Http.FromUri]int? id, [System.Web.Http.FromBody]List<string> seatsNumber)
+        {
+            SetIdenitiy();
+
+            try
+            {
+
+                foreach (var item in seatsNumber)
+                {
+                    
+                    var reservedSeat = new ReservedSeat()
+                    {
+                        Active = true,
+                        BusTripId = id,
+                        ByAdmin = true,
+                        CreatedByUserId = userId,
+                        CreatedDate = DateTime.Now,
+                        SeatNumber = item
+                    };
+
+                    db.ReservedSeats.Add(reservedSeat);
+                }
+
+                await db.SaveChangesAsync();
+
+                
+            }
+            catch (Exception e)
+            {
+
+                logger.ErrorLoggers.Add(new ErrorLogger()
+                {
+                    ActionName = "update seats map",
+                    CreatedDate = DateTime.Now,
+                    Error = e.Message.ToString(),
+                    UserId = userId
+                });
+
+                await logger.SaveChangesAsync();
+                return false;
+            }
+
+            return true;
+
         }
 
         protected override void Dispose(bool disposing)

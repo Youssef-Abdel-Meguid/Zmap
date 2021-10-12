@@ -1,0 +1,91 @@
+﻿@model Zmap.Dtos.BusTripDetailsDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة النقل</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateBusTrip", "Transportation", new { id = Model.BusId})">
+                <i class="material-icons">add</i>
+            </a>
+            <h2>جدول رحلات الاتوبيس</h2>
+
+            <table class="table table-bordered" id="trips">
+                <thead>
+                    <tr>
+                        <th>اسم الاتوبيس</th>
+                        <th>وقت المغادرة</th>
+                        <th>وقت الوصول</th>
+                        <th>تاريخ المغادرة</th>
+                        <th>تاريخ الوصول</th>
+                        <th>المحطة من</th>
+                        <th>المحطة الى</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BusTrips)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => m.BusName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DepartureTime)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ArrivalTime)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DepartureDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ArrivalDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.StationFromName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.StationToName)</td>
+                            <td>
+                                <a href="@Url.Action("BusTripReservations", "Transportation", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm cyan">
+                                    <i class="material-icons">
+                                        event_seat
+                                    </i>
+                                </a>
+                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteBusTrip", "Transportation", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
+                                    <i class="material-icons">
+                                        delete
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a href="@Url.Action("BusDetails", "Transportation", new { id = Model.BusId })" class="btn-floating btn-large waves-effect waves-light blue">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#trips').DataTable();
+        });
+    </script>
+}

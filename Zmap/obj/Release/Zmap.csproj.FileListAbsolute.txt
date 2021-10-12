@@ -38,9 +38,13 @@ E:\Work\Zmap\Zmap\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
 E:\Work\Zmap\Zmap\bin\Microsoft.Owin.Security.OAuth.dll
 E:\Work\Zmap\Zmap\bin\Microsoft.Owin.Security.Twitter.dll
 E:\Work\Zmap\Zmap\bin\Microsoft.Web.Infrastructure.dll
+E:\Work\Zmap\Zmap\bin\MvcCheckBoxList.dll
 E:\Work\Zmap\Zmap\bin\Newtonsoft.Json.dll
 E:\Work\Zmap\Zmap\bin\Owin.dll
+E:\Work\Zmap\Zmap\bin\System.Net.Http.Formatting.dll
 E:\Work\Zmap\Zmap\bin\System.Web.Helpers.dll
+E:\Work\Zmap\Zmap\bin\System.Web.Http.dll
+E:\Work\Zmap\Zmap\bin\System.Web.Http.WebHost.dll
 E:\Work\Zmap\Zmap\bin\System.Web.Mvc.dll
 E:\Work\Zmap\Zmap\bin\System.Web.Optimization.dll
 E:\Work\Zmap\Zmap\bin\System.Web.Razor.dll
@@ -54,6 +58,9 @@ E:\Work\Zmap\Zmap\bin\Microsoft.AI.Web.xml
 E:\Work\Zmap\Zmap\bin\Microsoft.AI.WindowsServer.xml
 E:\Work\Zmap\Zmap\bin\Microsoft.ApplicationInsights.xml
 E:\Work\Zmap\Zmap\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Work\Zmap\Zmap\bin\System.Net.Http.Formatting.xml
+E:\Work\Zmap\Zmap\bin\System.Web.Http.xml
+E:\Work\Zmap\Zmap\bin\System.Web.Http.WebHost.xml
 E:\Work\Zmap\Zmap\bin\System.Web.Helpers.xml
 E:\Work\Zmap\Zmap\bin\System.Web.Mvc.xml
 E:\Work\Zmap\Zmap\bin\System.Web.Optimization.xml
@@ -77,9 +84,8 @@ E:\Work\Zmap\Zmap\bin\Microsoft.Owin.Security.OAuth.xml
 E:\Work\Zmap\Zmap\bin\Microsoft.Owin.Security.Google.xml
 E:\Work\Zmap\Zmap\bin\Microsoft.Owin.Security.Twitter.xml
 E:\Work\Zmap\Zmap\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-E:\Work\Zmap\Zmap\obj\Release\Zmap.csprojAssemblyReference.cache
 E:\Work\Zmap\Zmap\obj\Release\Zmap.csproj.CoreCompileInputs.cache
 E:\Work\Zmap\Zmap\obj\Release\Zmap.csproj.CopyComplete
 E:\Work\Zmap\Zmap\obj\Release\Zmap.dll
 E:\Work\Zmap\Zmap\obj\Release\Zmap.pdb
-E:\Work\Zmap\Zmap\bin\MvcCheckBoxList.dll
+E:\Work\Zmap\Zmap\obj\Release\Zmap.csprojAssemblyReference.cache

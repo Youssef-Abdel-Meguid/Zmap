@@ -1,0 +1,75 @@
+﻿@model Zmap.Dtos.LineStationDetailsDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة النقل</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateLineStation", "Transportation", new { id = Model.LineId})">
+                <i class="material-icons">add</i>
+            </a>
+            <h2>محطات الخط</h2>
+
+            @if (Model.Stations.Count > 0)
+            {
+                <a onclick="return confirm('هل تريد مسح البيانات')" style="margin-bottom: 10px" href="@Url.Action("DeleteLineStation", "Transportation", new { id = Model.LineId })" class="btn-floating btn-large waves-effect waves-light purple">
+                    <i class="material-icons">delete</i>
+                </a>
+            }
+            <table class="table table-bordered" id="lineStations">
+                <thead>
+                    <tr>
+                        <th>الترتيب</th>
+                        <th>اسم المحطة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Stations)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.StoppingByOrder)</td>
+                            <td>@Html.DisplayFor(modelItem => item.StationName)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a href="@Url.Action("LineDetails", "Transportation", new { id = Model.LineId })" class="btn-floating btn-large waves-effect waves-light blue">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#lineStations').DataTable();
+        });
+    </script>
+}
+

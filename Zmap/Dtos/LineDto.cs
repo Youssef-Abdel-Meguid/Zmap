@@ -17,7 +17,5 @@ namespace Zmap.Dtos
         public int? DestinationCityId { get; set; }
         public string Home { get; set; }
         public string Destination { get; set; }
-        public List<LineBusDto> LineBuses { get; set; }
-        public List<LineStationDto> LineStations { get; set; }
     }
 }

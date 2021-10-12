@@ -109,7 +109,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="NumberOfSeats" Type="int" Nullable="false" />
           <Property Name="SeatsMapId" Type="int" Nullable="false" />
           <Property Name="BusNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
@@ -125,8 +124,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MapName" Type="nvarchar" MaxLength="50" />
-          <Property Name="MapPhotoUrl" Type="nvarchar" MaxLength="255" />
           <Property Name="Active" Type="bit" />
+          <Property Name="NumberOfSeats" Type="int" />
         </EntityType>
         <EntityType Name="BusTripSchedule">
           <Key>
@@ -146,6 +145,7 @@
           <Property Name="Active" Type="bit" />
           <Property Name="ArrivalDate" Type="date" Nullable="false" />
           <Property Name="DepartureDate" Type="date" Nullable="false" />
+          <Property Name="TripName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Cities">
           <Key>
@@ -161,8 +161,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="About" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="PrivacyPolicy" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="About" Type="ntext" Nullable="false" />
+          <Property Name="PrivacyPolicy" Type="ntext" Nullable="false" />
           <Property Name="IsExternal" Type="bit" />
           <Property Name="IsInternal" Type="bit" />
           <Property Name="IsActivity" Type="bit" />
@@ -266,8 +266,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="WebsiteUrl" Type="nvarchar" MaxLength="255" />
           <Property Name="GoogleMapLocation" Type="nvarchar" MaxLength="255" />
-          <Property Name="Description" Type="nvarchar" MaxLength="255" />
-          <Property Name="Conditions" Type="nvarchar(max)" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Conditions" Type="ntext" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="CreateByUserId" Type="int" />
@@ -338,8 +338,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="100" />
-          <Property Name="Details" Type="nvarchar(max)" />
+          <Property Name="Title" Type="ntext" />
+          <Property Name="Details" Type="ntext" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedByUserId" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
@@ -358,6 +358,21 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedByUserId" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedByUserId" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ReservedSeats">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReservationId" Type="int" />
+          <Property Name="BusTripId" Type="int" />
+          <Property Name="SeatNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="ByAdmin" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedByUserId" Type="int" />
           <Property Name="ModifiedByUserId" Type="int" />
           <Property Name="Active" Type="bit" />
         </EntityType>
@@ -666,6 +681,7 @@
           <EntitySet Name="PostCategory" EntityType="Self.PostCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PostsCategories" EntityType="Self.PostsCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReservedSeats" EntityType="Self.ReservedSeats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomAddsOn" EntityType="Self.RoomAddsOn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomAvailabilities" EntityType="Self.RoomAvailabilities" Schema="dbo" store:Type="Tables" />
@@ -758,7 +774,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NumberOfSeats" Type="Int32" Nullable="false" />
           <Property Name="SeatsMapId" Type="Int32" Nullable="false" />
           <Property Name="BusNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
@@ -774,8 +789,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MapName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MapPhotoUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
+          <Property Name="NumberOfSeats" Type="Int32" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -791,7 +806,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="About" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="About" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PrivacyPolicy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsExternal" Type="Boolean" />
           <Property Name="IsInternal" Type="Boolean" />
@@ -873,7 +888,7 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="WebsiteUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="GoogleMapLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Conditions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
@@ -1177,6 +1192,7 @@
           <EntitySet Name="Services" EntityType="ZmapModel.Service" />
           <EntitySet Name="SubAreas" EntityType="ZmapModel.SubArea" />
           <EntitySet Name="Attachments" EntityType="ZmapModel.Attachment" />
+          <EntitySet Name="ReservedSeats" EntityType="ZmapModel.ReservedSeat" />
           </EntityContainer>
         <EntityType Name="Accommodation">
           <Key>
@@ -1262,6 +1278,7 @@
           <Property Name="Active" Type="Boolean" />
           <Property Name="ArrivalDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DepartureDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TripName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PostCategory">
           <Key>
@@ -1276,7 +1293,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedByUserId" Type="Int32" />
@@ -1371,6 +1388,21 @@
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="SavedFileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="ReservedSeat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReservationId" Type="Int32" />
+          <Property Name="BusTripId" Type="Int32" />
+          <Property Name="SeatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ByAdmin" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="ModifiedByUserId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1449,7 +1481,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
                 <ScalarProperty Name="SeatsMapId" ColumnName="SeatsMapId" />
                 <ScalarProperty Name="BusNumber" ColumnName="BusNumber" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
@@ -1464,9 +1495,9 @@
           <EntitySetMapping Name="BusSeatsMaps">
             <EntityTypeMapping TypeName="ZmapModel.BusSeatsMap">
               <MappingFragment StoreEntitySet="BusSeatsMap">
+                <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="MapName" ColumnName="MapName" />
-                <ScalarProperty Name="MapPhotoUrl" ColumnName="MapPhotoUrl" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1922,6 +1953,7 @@
           <EntitySetMapping Name="BusTripSchedules">
             <EntityTypeMapping TypeName="ZmapModel.BusTripSchedule">
               <MappingFragment StoreEntitySet="BusTripSchedule">
+                <ScalarProperty Name="TripName" ColumnName="TripName" />
                 <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
                 <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
@@ -2052,6 +2084,22 @@
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="HotelId" ColumnName="HotelId" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReservedSeats">
+            <EntityTypeMapping TypeName="ZmapModel.ReservedSeat">
+              <MappingFragment StoreEntitySet="ReservedSeats">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ByAdmin" ColumnName="ByAdmin" />
+                <ScalarProperty Name="SeatNumber" ColumnName="SeatNumber" />
+                <ScalarProperty Name="BusTripId" ColumnName="BusTripId" />
+                <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

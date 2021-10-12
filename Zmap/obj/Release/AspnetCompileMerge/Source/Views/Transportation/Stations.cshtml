@@ -1,0 +1,88 @@
+﻿@model Zmap.Dtos.StationDetailsDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة النقل</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateStation", "Transportation", new { id = Model.CompanyId})">
+                <i class="material-icons">add</i>
+            </a>
+            <h2>جميع محطات الشركة</h2>
+
+            <table class="table table-bordered" id="stations">
+                <thead>
+                    <tr>
+                        <th>اسم المحطة</th>
+                        <th>عنوان المحطة</th>
+                        <th>موفع خريطة جوجل</th>
+                        <th>المدينة</th>
+                        <th>تاريخ الاضافة</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Stations)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                            <td>@Html.DisplayFor(modelItem => item.GoogleMapLocation)</td>
+                            <td>@Html.DisplayFor(modelItem => item.City)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                            <td>
+                                <a href="@Url.Action("StationDetails", "Transportation", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm green">
+                                    <i class="material-icons">
+                                        info
+                                    </i>
+                                </a>
+
+                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteStation", "Transportation", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
+                                    <i class="material-icons">
+                                        delete
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a href="@Url.Action("Details", "Transportation", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#stations').DataTable();
+        });
+    </script>
+}

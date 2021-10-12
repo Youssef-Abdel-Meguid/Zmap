@@ -16,7 +16,7 @@ namespace Zmap.Models
     {
         public int Id { get; set; }
         public string MapName { get; set; }
-        public string MapPhotoUrl { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Nullable<int> NumberOfSeats { get; set; }
     }
 }

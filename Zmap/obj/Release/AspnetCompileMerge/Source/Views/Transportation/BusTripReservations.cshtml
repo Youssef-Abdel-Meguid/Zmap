@@ -1,0 +1,630 @@
+﻿@model Zmap.Dtos.ReservedSeatsDto
+
+@{
+    Layout = null;
+
+    int? seats = Model.NumberOfSeats;
+    int? tripId = Model.BusTripId;
+    string userType = Session["UserType"] == null ? null : Session["UserType"].ToString();
+
+    string[] seatsNumberArray = new string[Model.SeatsNumber.Count];
+
+    if(Model.SeatsNumber.Count > 0)
+    {
+
+        for (int i = 0; i < Model.SeatsNumber.Count; i++)
+        {
+            seatsNumberArray[i] = Model.SeatsNumber[i];
+        }
+    }
+
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+    var seatsNumber = serializer.Serialize(seatsNumberArray);
+
+}
+
+<!doctype html>
+<html>
+<head>
+
+    <title>ZMAP - Hotel Booking and Room Booking Online </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/icon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Poppins%7CQuicksand:500,700" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <link href="~/Content/materialize.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/responsive.css" rel="stylesheet">
+    <link href="~/Content/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/owl.theme.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/sweetalert.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/custome.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery.seat-charts.css" />
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <style>
+       
+        a {
+            color: #b71a4c;
+        }
+
+        .front-indicator {
+            width: 145px;
+            margin: 5px 32px 15px 32px;
+            background-color: #f6f6f6;
+            color: #adadad;
+            text-align: center;
+            padding: 3px;
+            border-radius: 5px;
+        }
+
+        .wrapper {
+            width: 100%;
+            text-align: center;
+            margin-top: 150px;
+        }
+
+        .container1 {
+            margin: 0 auto;
+            width: 500px;
+            text-align: left;
+        }
+
+        .booking-details {
+            float: left;
+            text-align: left;
+            margin-left: 35px;
+            font-size: 12px;
+            position: relative;
+            height: 401px;
+        }
+
+        .booking-details h2 {
+            margin: 25px 0 20px 0;
+            font-size: 17px;
+        }
+
+        .booking-details h3 {
+            margin: 5px 5px 0 0;
+            font-size: 14px;
+        }
+
+        div.seatCharts-cell {
+            color: #182C4E;
+            height: 25px;
+            width: 25px;
+            line-height: 25px;
+        }
+
+        div.seatCharts-seat {
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+
+        div.seatCharts-row {
+            height: 35px;
+        }
+
+        div.seatCharts-seat.available {
+            background-color: #B9DEA0;
+        }
+
+        div.seatCharts-seat.available.first-class {
+            /* 	background: url(vip.png); */
+            background-color: #3a78c3;
+        }
+
+        div.seatCharts-seat.focused {
+            background-color: #76B474;
+        }
+
+        div.seatCharts-seat.selected {
+            background-color: #E6CAC4;
+        }
+
+        div.seatCharts-seat.unavailable {
+            background-color: #472B34;
+        }
+
+        div.seatCharts-container {
+            border-right: 1px dotted #adadad;
+            width: 200px;
+            float: left;
+        }
+
+        div.seatCharts-legend {
+            padding-left: 0px;
+            position: absolute;
+            bottom: 16px;
+        }
+
+        ul.seatCharts-legendList {
+            padding-left: 0px;
+        }
+
+        span.seatCharts-legendDescription {
+            margin-left: 5px;
+            line-height: 30px;
+        }
+
+        .checkout-button {
+            display: block;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        #selected-seats {
+            max-height: 90px;
+            overflow-y: scroll;
+            overflow-x: none;
+            width: 170px;
+        }
+    </style>
+</head>
+
+<body onload="seats(@tripId, @seats, @seatsNumber)">
+
+
+
+
+    <div class="menu-section" dir="rtl">
+        <div class="container">
+            <div class="row">
+                <div class="top-bar">
+                    <ul>
+                        <li>
+                            <a class='dropdown-button' href='#' data-activates='dropdown1'>
+                                حسابي <i class="fa fa-angle-down"></i>
+                            </a>
+                        </li>
+                        @if (string.IsNullOrEmpty(userType) || userType == "5")
+                        {
+                            <li><a href="#">فنادقنا</a></li>
+                        }
+                        <li><a href="@Url.Action("About", "Home")">عن الشركة</a></li>
+                        <li><a href="@Url.Action("Contact", "Home")">إتصل بنا</a></li>
+                        <li><a href="#">خدمة العملاء: (+20) 12 06 11 8888</a></li>
+                    </ul>
+                </div>
+                <div class="all-drop-down">
+                    <ul id='dropdown1' class='dropdown-content drop-con-man'>
+
+                        @if (!string.IsNullOrEmpty(userType))
+                        {
+                            <li>
+                                <a href="#"><img src="~/images/icon/15.png" alt=""> حسابي</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Logout", "Account")"><img src="~/images/icon/db8.png" alt=""> تسجيل الخروج</a>
+                            </li>
+                            if (userType == "5")
+                            {
+                                <li>
+                                    <a href="db-#"><img src="~/images/icon/16.png" alt=""> حجوزاتي</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+
+                            <li>
+                                <a href="@Url.Action("Register", "Account")">
+                                    <img src="~/images/icon/5.png"
+                                         alt=""> مستخدم جديد
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Login", "Account")">
+                                    <img src="~/images/icon/6.png"
+                                         alt=""> تسجيل دخول
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Images/logo.png" alt="" />
+                    </a>
+                </div>
+                <div class="menu-bar">
+                    <ul>
+
+                        @if (string.IsNullOrEmpty(userType))
+                        {
+                            <li><a href="@Url.Action("Index", "Home")">الرئيسية</a></li>
+                        }
+
+                        @if (string.IsNullOrEmpty(userType) || userType == "5")
+                        {
+                            <li><a href="#">خطط رحلتك</a></li>
+                            <li>@Html.ActionLink("رحلات المابرز", "Trips", "Home")</li>
+                            <li>@Html.ActionLink("خدماتنا", "Services", "Home")</li>
+                            <li>@Html.ActionLink("المدونة", "Blogs", "Home")</li>
+                        }
+
+                        @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "2"))
+                        {
+                            <li>@Html.ActionLink("ادارة الفنادق", "Index", "Hotels")</li>
+                        }
+
+                        @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "3"))
+                        {
+                            <li>@Html.ActionLink("ادارة النقل", "Index", "Transportation")</li>
+                        }
+                        @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "4"))
+                        {
+                            <li>@Html.ActionLink("ادارة الانشطة", "Index", "Activites")</li>
+                        }
+
+                        @if (!string.IsNullOrEmpty(userType) && userType == "1")
+                        {
+                            <li>@Html.ActionLink("ادارة المستخدمين", "Index", "Users")</li>
+                            <li>@Html.ActionLink("ادارة المدونة", "Index", "Blogs")</li>
+                            <li>@Html.ActionLink("ادارة الموقع", "Index", "Admin")</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+   
+    <div class="wrapper">
+        <div style="margin-left: 700px;">
+            <a href="@Url.Action("BusTrips", "Transportation", new { id = Model.BusId})" class="btn-floating btn-large waves-effect waves-light blue">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        </div>
+        <div class="container1">
+            <div id="seat-map">
+                <div class="front-indicator">السائق</div>
+            </div>
+            <div class="booking-details" id="checkOut">
+                <h2>تفاصيل الحجز</h2>
+                <h3> المقاعد المحددة (<span id="counter">0</span>):</h3>
+                <ul id="selected-seats">
+                </ul>
+                <button class="checkout-button btn-large">تسجيل &raquo;</button>
+                <div id="legend"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="site-footer clearfix">
+        <div class="sidebar-container">
+            <div class="sidebar-inner">
+                <div class="widget-area clearfix">
+                    <div class="widget widget_azh_widget">
+                        <div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 foot-logo">
+                                        <img src="~/images/logo1.png" alt="logo">
+                                        <p class="hasimg">المنصة الأولى لتخطيط الرحلات</p>
+                                        <p class="hasimg">خدمات سياحية على أعلى مستوى.</p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3">
+                                        <h4>الدعم و المساعدة</h4>
+                                        <ul class="two-columns">
+                                            <li>
+                                                <a href="contact-us.html">إتصل بنا</a>
+                                            </li>
+                                            <li>
+                                                <a href="about-us.html">عن الشركة</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="blog.html">المدونة</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3">
+                                        <h4>مدن نغطيها</h4>
+                                        <ul class="two-columns">
+                                            <li>
+                                                <a href="#!">شرم الشيخ</a>
+                                            </li>
+                                            <li>
+                                                <a href="#!">الغردقة</a>
+                                            </li>
+                                            <li>
+                                                <a href="#!">دهب </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3">
+                                        <h4>العنوان</h4>
+                                        <p>شيراتون المطار - طريق العروبة</p>
+                                        <p>
+                                            <span class="foot-phone">الهاتف: </span> <span class="foot-phone">
+                                                +01 1245
+                                                2541
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="foot-sec2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3">
+                                        <h4>خيارات الدفع</h4>
+                                        <p class="hasimg"> <img src="~/images/payment.png" alt="payment"> </p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <h4>إشترك الأن</h4>
+                                        <form>
+                                            <ul class="foot-subsc">
+                                                <li>
+                                                    <input type="text" placeholder="البريد الإلكتروني">
+                                                </li>
+                                                <li>
+                                                    <input type="submit" value="إشتراك">
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-12 col-md-5 foot-social">
+                                        <h4>تابعنا</h4>
+                                        <p>تابعنا على الشبكات الإجتماعية</p>
+                                        <ul>
+                                            <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+                                            <li>
+                                                <a href="#!"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                            </li>
+                                            <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+                                            <li><a href="#!"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+                                            <li><a href="#!"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+                                            <li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/bootstrap.js" type="text/javascript"></script>
+    <script src="~/Scripts/materialize.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.mixitup.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/custom.js"></script>
+    <script src="~/Scripts/sweetalert2.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+    <script src="~/Scripts/jquery.seat-charts.js"></script>
+
+    <script>
+
+        function seats(tripId, numberOfSeats, seatsNumber) {
+            var firstSeatLabel = 1;
+            if (numberOfSeats == 49) {
+                var selectedSeats = [];
+                $(document).ready(function () {
+                    var $cart = $('#selected-seats'),
+                        $counter = $('#counter'),
+                        sc = $('#seat-map').seatCharts({
+                            map: [
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee___',
+                                'ee___',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'eeeee',
+                            ],
+                            naming: {
+                                top: false,
+                                getLabel: function (character, row, column) {
+                                    return firstSeatLabel++;
+                                },
+                            },
+                            legend: {
+                                node: $('#legend'),
+                                items: [
+                                    ['e', 'available', 'لم يتم الحجز بعد'],
+                                    ['f', 'unavailable', 'تم الحجز مسبفا']
+                                ]
+                            },
+                            click: function () {
+                                if (this.status() == 'available') {
+                                    //let's create a new <li> which we'll add to the cart items
+                                    $('<li>' + ' مقعد # ' + this.settings.label + '<a href="#" class="cancel-cart-item">[الغاء]</a></li>')
+                                        .attr('id', 'cart-item-' + this.settings.id)
+                                        .data('seatId', this.settings.id)
+                                        .appendTo($cart);
+
+                                    /*
+                                     * Lets update the counter and total
+                                     *
+                                     * .find function will not find the current seat, because it will change its stauts only after return
+                                     * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                                     */
+                                    $counter.text(sc.find('selected').length + 1);
+                                    selectedSeats.push(this.settings.id);
+
+                                    /*console.log(selectedSeats);*/
+
+                                    return 'selected';
+                                } else if (this.status() == 'selected') {
+                                    //update the counter
+                                    $counter.text(sc.find('selected').length - 1);
+                                    //and total
+
+                                    //remove the item from our cart
+                                    $('#cart-item-' + this.settings.id).remove();
+
+                                    var index = selectedSeats.indexOf(this.settings.id);
+                                    if (index > -1)
+                                        selectedSeats.splice(index, 1);
+
+                                    /*console.log(selectedSeats);*/
+
+                                    //seat has been vacated
+                                    return 'available';
+                                } else if (this.status() == 'unavailable') {
+                                    //seat has been already booked
+                                    return 'unavailable';
+                                } else {
+                                    return this.style();
+                                }
+                            }
+                        });
+
+                    $('#selected-seats').on('click', '.cancel-cart-item', function () {
+                        //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                        sc.get($(this).parents('li:first').data('seatId')).click();
+
+                    });
+
+                    $('#checkOut').on('click', '.checkout-button', function () {
+                        console.log(tripId);
+                        console.log(selectedSeats);
+                        $.ajax({
+                            url: "/Transportation/UpdateBusTripReservations/" + tripId,
+                            method: "POST",
+                            contentType: 'application/json;charset=utf-8',
+                            data: JSON.stringify({
+                                seatsNumber: selectedSeats
+                            }),
+                            success: function () {
+                                location.reload();
+                            }
+                        });
+                    });
+
+                    sc.get(seatsNumber).status('unavailable');
+
+                });
+            }
+            else if (numberOfSeats == 27) {
+                var selectedSeats = [];
+                $(document).ready(function () {
+                    var $cart = $('#selected-seats'),
+                        $counter = $('#counter'),
+                        sc = $('#seat-map').seatCharts({
+                            map: [
+                                'ee___',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'ee_ee',
+                                'eeeee',
+                            ],
+                            naming: {
+                                top: false,
+                                getLabel: function (character, row, column) {
+                                    return firstSeatLabel++;
+                                },
+                            },
+                            legend: {
+                                node: $('#legend'),
+                                items: [
+                                    ['e', 'available', 'لم يتم الحجز بعد'],
+                                    ['f', 'unavailable', 'تم الحجز مسبفا']
+                                ]
+                            },
+                            click: function () {
+                                if (this.status() == 'available') {
+                                    //let's create a new <li> which we'll add to the cart items
+                                    $('<li>' + ' مقعد # ' + this.settings.label + '<a href="#" class="cancel-cart-item">[الغاء]</a></li>')
+                                        .attr('id', 'cart-item-' + this.settings.id)
+                                        .data('seatId', this.settings.id)
+                                        .appendTo($cart);
+
+                                    /*
+                                     * Lets update the counter and total
+                                     *
+                                     * .find function will not find the current seat, because it will change its stauts only after return
+                                     * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                                     */
+                                    $counter.text(sc.find('selected').length + 1);
+                                    selectedSeats.push(this.settings.id);
+                                    console.log(selectedSeats);
+
+                                    return 'selected';
+                                } else if (this.status() == 'selected') {
+                                    //update the counter
+                                    $counter.text(sc.find('selected').length - 1);
+                                    //and total
+
+                                    //remove the item from our cart
+                                    $('#cart-item-' + this.settings.id).remove();
+
+                                    var index = selectedSeats.indexOf(this.settings.id);
+                                    if (index > -1)
+                                        selectedSeats.splice(index, 1);
+
+                                    console.log(selectedSeats);
+
+                                    //seat has been vacated
+                                    return 'available';
+                                } else if (this.status() == 'unavailable') {
+                                    //seat has been already booked
+                                    return 'unavailable';
+                                } else {
+                                    return this.style();
+                                }
+                            }
+                        });
+
+                    $('#selected-seats').on('click', '.cancel-cart-item', function () {
+                        //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                        sc.get($(this).parents('li:first').data('seatId')).click();
+                    });
+
+                    $('#checkOut').on('click', '.checkout-button', function () {
+                        console.log(tripId);
+                        console.log(selectedSeats);
+                        $.ajax({
+                            url: "/Transportation/UpdateBusTripReservations/" + tripId,
+                            method: "POST",
+                            contentType: 'application/json;charset=utf-8',
+                            data: JSON.stringify({
+                                seatsNumber: selectedSeats
+                            }),
+                            success: function () {
+                                location.reload();
+                            }
+                        });
+                    });
+
+                    sc.get(seatsNumber).status('unavailable');
+
+                });
+            }
+        }
+    </script>
+</body>
+</html>

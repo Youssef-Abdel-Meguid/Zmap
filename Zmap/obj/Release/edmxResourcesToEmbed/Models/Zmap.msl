@@ -73,7 +73,6 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
           <ScalarProperty Name="SeatsMapId" ColumnName="SeatsMapId" />
           <ScalarProperty Name="BusNumber" ColumnName="BusNumber" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
@@ -88,9 +87,9 @@
     <EntitySetMapping Name="BusSeatsMaps">
       <EntityTypeMapping TypeName="ZmapModel.BusSeatsMap">
         <MappingFragment StoreEntitySet="BusSeatsMap">
+          <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="MapName" ColumnName="MapName" />
-          <ScalarProperty Name="MapPhotoUrl" ColumnName="MapPhotoUrl" />
           <ScalarProperty Name="Active" ColumnName="Active" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -546,6 +545,7 @@
     <EntitySetMapping Name="BusTripSchedules">
       <EntityTypeMapping TypeName="ZmapModel.BusTripSchedule">
         <MappingFragment StoreEntitySet="BusTripSchedule">
+          <ScalarProperty Name="TripName" ColumnName="TripName" />
           <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
           <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
           <ScalarProperty Name="Active" ColumnName="Active" />
@@ -676,6 +676,22 @@
           <ScalarProperty Name="FileName" ColumnName="FileName" />
           <ScalarProperty Name="HotelId" ColumnName="HotelId" />
           <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReservedSeats">
+      <EntityTypeMapping TypeName="ZmapModel.ReservedSeat">
+        <MappingFragment StoreEntitySet="ReservedSeats">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ByAdmin" ColumnName="ByAdmin" />
+          <ScalarProperty Name="SeatNumber" ColumnName="SeatNumber" />
+          <ScalarProperty Name="BusTripId" ColumnName="BusTripId" />
+          <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

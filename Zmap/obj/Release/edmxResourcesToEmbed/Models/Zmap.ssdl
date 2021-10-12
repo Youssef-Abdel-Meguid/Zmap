@@ -104,7 +104,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CompanyId" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="NumberOfSeats" Type="int" Nullable="false" />
     <Property Name="SeatsMapId" Type="int" Nullable="false" />
     <Property Name="BusNumber" Type="nvarchar" MaxLength="50" />
     <Property Name="CategoryId" Type="int" Nullable="false" />
@@ -120,8 +119,8 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="MapName" Type="nvarchar" MaxLength="50" />
-    <Property Name="MapPhotoUrl" Type="nvarchar" MaxLength="255" />
     <Property Name="Active" Type="bit" />
+    <Property Name="NumberOfSeats" Type="int" />
   </EntityType>
   <EntityType Name="BusTripSchedule">
     <Key>
@@ -141,6 +140,7 @@
     <Property Name="Active" Type="bit" />
     <Property Name="ArrivalDate" Type="date" Nullable="false" />
     <Property Name="DepartureDate" Type="date" Nullable="false" />
+    <Property Name="TripName" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Cities">
     <Key>
@@ -156,8 +156,8 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="About" Type="nvarchar" MaxLength="255" Nullable="false" />
-    <Property Name="PrivacyPolicy" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="About" Type="ntext" Nullable="false" />
+    <Property Name="PrivacyPolicy" Type="ntext" Nullable="false" />
     <Property Name="IsExternal" Type="bit" />
     <Property Name="IsInternal" Type="bit" />
     <Property Name="IsActivity" Type="bit" />
@@ -261,8 +261,8 @@
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="WebsiteUrl" Type="nvarchar" MaxLength="255" />
     <Property Name="GoogleMapLocation" Type="nvarchar" MaxLength="255" />
-    <Property Name="Description" Type="nvarchar" MaxLength="255" />
-    <Property Name="Conditions" Type="nvarchar(max)" />
+    <Property Name="Description" Type="ntext" />
+    <Property Name="Conditions" Type="ntext" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="CreateByUserId" Type="int" />
@@ -333,8 +333,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar" MaxLength="100" />
-    <Property Name="Details" Type="nvarchar(max)" />
+    <Property Name="Title" Type="ntext" />
+    <Property Name="Details" Type="ntext" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedByUserId" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
@@ -353,6 +353,21 @@
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedByUserId" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="ReservedSeats">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReservationId" Type="int" />
+    <Property Name="BusTripId" Type="int" />
+    <Property Name="SeatNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ByAdmin" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
     <Property Name="ModifiedByUserId" Type="int" />
     <Property Name="Active" Type="bit" />
   </EntityType>
@@ -661,6 +676,7 @@
     <EntitySet Name="PostCategory" EntityType="Self.PostCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PostsCategories" EntityType="Self.PostsCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReservedSeats" EntityType="Self.ReservedSeats" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoomAddsOn" EntityType="Self.RoomAddsOn" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoomAvailabilities" EntityType="Self.RoomAvailabilities" Schema="dbo" store:Type="Tables" />

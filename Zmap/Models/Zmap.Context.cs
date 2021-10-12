@@ -71,5 +71,6 @@ namespace Zmap.Models
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<SubArea> SubAreas { get; set; }
         public virtual DbSet<Attachment> Attachments { get; set; }
+        public virtual DbSet<ReservedSeat> ReservedSeats { get; set; }
     }
 }

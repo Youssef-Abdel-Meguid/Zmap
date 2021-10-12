@@ -19,8 +19,6 @@ namespace Zmap.DTOs
         public string RoomView { get; set; }
         public string Status { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public List<AddOnDto> RoomSpecials { get; set; }
-        public List<RoomAvailabilityDto> RoomAvailabilities { get; set; }
-        public List<Gallery> Photos { get; set; }
+        public Gallery Photo { get; set; }
     }
 }

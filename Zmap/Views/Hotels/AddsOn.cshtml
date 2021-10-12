@@ -1,0 +1,105 @@
+﻿@model Zmap.Dtos.AddOnDetailsDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة الفنادق</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.HotelId != null)
+            {
+                <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateAddOn", "Hotels", new { id = Model.HotelId})">
+                    <i class="material-icons">add</i>
+                </a>
+                <h2>جميع مرافق الفندق</h2>
+            }
+            else if (Model.RoomId != null)
+            {
+                <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateRoomSpecial", "Hotels", new { id = Model.RoomId})">
+                    <i class="material-icons">add</i>
+                </a>
+                <h2>جميع مرافق الغرفة</h2>
+            }
+
+            <table class="table table-bordered" id="addson">
+                <thead>
+                    <tr>
+                        <th>اسم المرفق</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.AddOns)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ArabicName)</td>
+                            <td>
+                                @if (Model.HotelId != null)
+                                {
+                                    <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteAddOn", "Hotels", new { id = item.Id })">
+                                        <i class="material-icons">
+                                            delete
+                                        </i>
+                                    </a>
+                                }
+                                else if (Model.RoomId != null)
+                                {
+                                    <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteRoomSpecial", "Hotels", new { id = item.Id })">
+                                        <i class="material-icons">
+                                            delete
+                                        </i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div>
+        @if (Model.HotelId != null)
+        {
+            <a href="@Url.Action("Details", "Hotels", new { id = Model.HotelId })" class="btn-floating btn-large waves-effect waves-light blue">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        }
+        else if (Model.RoomId != null)
+        {
+            <a href="@Url.Action("RoomDetails", "Hotels", new { id = Model.RoomId })" class="btn-floating btn-large waves-effect waves-light blue">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        }
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#addson').DataTable();
+        });
+    </script>
+}

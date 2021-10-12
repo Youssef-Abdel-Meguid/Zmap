@@ -84,6 +84,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -92,6 +95,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -196,6 +205,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIs\SeatsMapController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -210,28 +220,42 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Dtos\AccommodationDto.cs" />
     <Compile Include="Dtos\ActivityCompanyDto.cs" />
+    <Compile Include="Dtos\ActivityDetailsDto.cs" />
     <Compile Include="Dtos\ActivityDto.cs" />
+    <Compile Include="Dtos\AddOnDetailsDto.cs" />
     <Compile Include="Dtos\AddOnDto.cs" />
     <Compile Include="Dtos\BlogCreateDto.cs" />
     <Compile Include="Dtos\BlogDetailsDto.cs" />
     <Compile Include="Dtos\BlogsDto.cs" />
+    <Compile Include="Dtos\BusDetailsDto.cs" />
     <Compile Include="Dtos\BusDto.cs" />
+    <Compile Include="Dtos\BusTripDetailsDto.cs" />
     <Compile Include="Dtos\BusTripScheduleDto.cs" />
     <Compile Include="Dtos\Categories.cs" />
     <Compile Include="Dtos\CategoryListDto.cs" />
+    <Compile Include="Dtos\ContactDetailsDto.cs" />
+    <Compile Include="Dtos\FAQDetailsDto.cs" />
     <Compile Include="Dtos\FAQDto.cs" />
+    <Compile Include="Dtos\FilesDetailsDto.cs" />
     <Compile Include="Dtos\HotelDetailsDto.cs" />
     <Compile Include="Dtos\HotelDto.cs" />
+    <Compile Include="Dtos\LineBusDetailsDto.cs" />
     <Compile Include="Dtos\LineBusDto.cs" />
+    <Compile Include="Dtos\LineDetailsDto.cs" />
     <Compile Include="Dtos\LineDto.cs" />
+    <Compile Include="Dtos\LineStationDetailsDto.cs" />
     <Compile Include="Dtos\LineStationDto.cs" />
     <Compile Include="Dtos\LoginDto.cs" />
     <Compile Include="Dtos\NewUserDto.cs" />
     <Compile Include="Dtos\PageDto.cs" />
+    <Compile Include="Dtos\PhotoDetailsDto.cs" />
     <Compile Include="Dtos\RegisterDto.cs" />
+    <Compile Include="Dtos\ReservedSeatsDto.cs" />
+    <Compile Include="Dtos\RoomDataDto.cs" />
     <Compile Include="Dtos\RoomDetailsDto.cs" />
     <Compile Include="Dtos\RoomDto.cs" />
     <Compile Include="Dtos\ServicesDto.cs" />
+    <Compile Include="Dtos\StationDetailsDto.cs" />
     <Compile Include="Dtos\StationDto.cs" />
     <Compile Include="Dtos\TransportationDetailsDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
@@ -319,6 +343,9 @@
     <Compile Include="Models\PostsCategory.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReservedSeat.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Review.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
@@ -393,11 +420,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Dtos\RoomAvailabilityDetailsDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\custome.css" />
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\jquery.seat-charts.css" />
     <Content Include="Content\materialize.css" />
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\owl.theme.min.css" />
@@ -470,6 +500,7 @@
     <Content Include="Images\h-room.jpg" />
     <Content Include="Images\h-star.png" />
     <Content Include="Images\h-trip.png" />
+    <Content Include="Images\Hotels\14.jpg" />
     <Content Include="Images\Hotels\187647811_304584551379025_7957960700911097826_n.jpg" />
     <Content Include="Images\Hotels\188109121_267805015130689_3032786589870294842_n.jpg" />
     <Content Include="Images\Hotels\188136692_826775788275695_4527458691997806675_n.jpg" />
@@ -517,6 +548,10 @@
     <Content Include="Images\icon\a7.png" />
     <Content Include="Images\icon\a8.png" />
     <Content Include="Images\icon\a9.png" />
+    <Content Include="Images\icon\activity.png" />
+    <Content Include="Images\icon\addson.png" />
+    <Content Include="Images\icon\bus.png" />
+    <Content Include="Images\icon\bustime.png" />
     <Content Include="Images\icon\db1.png" />
     <Content Include="Images\icon\db2.png" />
     <Content Include="Images\icon\db3.png" />
@@ -543,12 +578,20 @@
     <Content Include="Images\icon\dis3.png" />
     <Content Include="Images\icon\dis4.png" />
     <Content Include="Images\icon\dis5.png" />
+    <Content Include="Images\icon\faq.png" />
+    <Content Include="Images\icon\folder.png" />
+    <Content Include="Images\icon\gallery.png" />
     <Content Include="Images\icon\h1.png" />
     <Content Include="Images\icon\h2.png" />
     <Content Include="Images\icon\h3.png" />
     <Content Include="Images\icon\h4.png" />
     <Content Include="Images\icon\h5.png" />
     <Content Include="Images\icon\h7.png" />
+    <Content Include="Images\icon\line.png" />
+    <Content Include="Images\icon\phone.png" />
+    <Content Include="Images\icon\room.png" />
+    <Content Include="Images\icon\roomdate.png" />
+    <Content Include="Images\icon\station.png" />
     <Content Include="Images\inn-bg.jpg" />
     <Content Include="Images\left-arrow.png" />
     <Content Include="Images\login.jpg" />
@@ -664,9 +707,11 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.mixitup.min.js" />
+    <Content Include="Scripts\jquery.seat-charts.js" />
     <Content Include="Scripts\materialize.min.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\sweetalert2.min.js" />
@@ -772,6 +817,30 @@
     <Content Include="Views\Activites\CreateAttachment.cshtml" />
     <Content Include="Views\Hotels\CreateAttachment.cshtml" />
     <Content Include="Views\Transportation\CreateAttachment.cshtml" />
+    <Content Include="Views\Hotels\Rooms.cshtml" />
+    <Content Include="Views\Hotels\Gallery.cshtml" />
+    <Content Include="Views\Hotels\Files.cshtml" />
+    <Content Include="Views\Hotels\Contacts.cshtml" />
+    <Content Include="Views\Hotels\FAQs.cshtml" />
+    <Content Include="Views\Hotels\AddsOn.cshtml" />
+    <Content Include="Views\Activites\Contacts.cshtml" />
+    <Content Include="Views\Activites\FAQs.cshtml" />
+    <Content Include="Views\Activites\Files.cshtml" />
+    <Content Include="Views\Activites\Gallery.cshtml" />
+    <Content Include="Views\Activites\Activities.cshtml" />
+    <Content Include="Views\Transportation\Contacts.cshtml" />
+    <Content Include="Views\Transportation\FAQs.cshtml" />
+    <Content Include="Views\Transportation\Files.cshtml" />
+    <Content Include="Views\Transportation\Gallery.cshtml" />
+    <Content Include="Views\Hotels\RoomAvailabilities.cshtml" />
+    <Content Include="Views\Transportation\Stations.cshtml" />
+    <Content Include="Views\Transportation\Buses.cshtml" />
+    <Content Include="Views\Transportation\Lines.cshtml" />
+    <Content Include="Views\Transportation\BusTrips.cshtml" />
+    <Content Include="Views\Transportation\BusAddsOn.cshtml" />
+    <Content Include="Views\Transportation\LineBuses.cshtml" />
+    <Content Include="Views\Transportation\LineStations.cshtml" />
+    <Content Include="Views\Transportation\BusTripReservations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

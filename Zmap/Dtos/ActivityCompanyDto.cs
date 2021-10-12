@@ -16,10 +16,6 @@ namespace Zmap.Dtos
         public string ManagerPhonenumber { get; set; }
         public string ManagerEmail { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public List<Gallery> Photos { get; set; }
-        public List<Contact> Contacts { get; set; }
-        public List<FAQ> FAQs { get; set; }
-        public List<ActivityDto> Activities { get; set; }
-        public List<Attachment> Attachments { get; set; }
+        public Gallery Photo { get; set; }
     }
 }

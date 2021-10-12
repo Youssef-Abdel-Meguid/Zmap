@@ -20,12 +20,12 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="head-typo typo-com">
+            @*<div class="head-typo typo-com">
                 <div class="room">
                     <div class="col-md-6 portfolio-wrapper">
-                        @if (Model.Photos.Count > 0)
+                        @if (Model.Photo != null)
                         {
-                            <img src="~/Images/Transportation/Buses/@Model.Photos[0].PhotoUrl" />
+                            <img src="~/Images/Transportation/Buses/@Model.Photo.PhotoUrl" />
                         }
                     </div>
                     <div class="col-md-6">
@@ -34,7 +34,6 @@
                             <ul>
                                 <li><label>اسم الاتوبيس: @Html.DisplayFor(model => model.Name)</label></li>
                                 <li><label>رقم الاتوبيس: @Html.DisplayFor(model => model.BusNumber)</label></li>
-                                <li><label>عدد المقاعد: @Html.DisplayFor(model => model.NumberOfSeats)</label></li>
                                 <li><label>نوع الاتوبيس: @Html.DisplayFor(model => model.Category)</label></li>
                                 <li><label>خريطة مقاعد الاتوبيس: @Html.DisplayFor(model => model.BusSeatMap)</label></li>
                                 <li><label>تاريخ الاضافة : @Html.DisplayFor(model => model.CreatedDate)</label></li>
@@ -42,133 +41,39 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
 
             <div class="col-md-12">
-                <div class="head-typo typo-com collap-expand">
-                    <h2>ادارة موارد الاتوبيس</h2>
-                    <p>اضافة, تعديل, حذف موارد ,و معلومات الاتوبيس</p>
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li>
-                            <div class="collapsible-header"><i class="material-icons"></i>صور الاتوبيس</div>
-                            <div class="collapsible-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="head-typo typo-com">
-                                            <a style="margin-bottom: 10px"
-                                               class="btn-floating btn-large waves-effect waves-light red"
-                                               href="@Url.Action("CreateBusPhoto", "Transportation", new { Id = Model.Id })">
-                                                <i class="material-icons">add</i>
-                                            </a>
-                                            <table class="table table-bordered">
-                                                @foreach (var item in Model.Photos)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            <img width="50" height="50" src="~/Images/Transportation/Buses/@item.PhotoUrl" />
-                                                        </td>
-                                                        <td>
-                                                            <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteBusPhoto", "Transportation", new { id = item.Id })">
-                                                                <i class="material-icons">
-                                                                    delete
-                                                                </i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="hp-amini hp-amini-block db-div-card">
+                    <ul>
+                        <li class="db-card">
+                            <a href="@Url.Action("BusTrips", "Transportation", new { Id = Model.Id })">
+                                <img src="~/Images/icon/bustime.png" class="db-card-img" />
+                                <p>مواعيد الاتوبيس</p>
+                            </a>
                         </li>
-                        <li>
-                            <div class="collapsible-header"><i class="material-icons"></i>مرافق الاتوبيس</div>
-                            <div class="collapsible-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="head-typo typo-com">
-                                            <a style="margin-bottom: 10px"
-                                               class="btn-floating btn-large waves-effect waves-light red"
-                                               href="@Url.Action("CreateBusAddOn", "Transportation", new { Id = Model.Id })">
-                                                <i class="material-icons">add</i>
-                                            </a>
-                                            <table class="table table-bordered">
-                                                <tr>
-                                                    <th>اسم المرفق</th>
-                                                    <th></th>
-                                                </tr>
-                                                @foreach (var item in Model.BusAddOns)
-                                                {
-                                                    <tr>
-                                                        <td>@Html.DisplayFor(modelItem => item.ArabicName)</td>
-                                                        <td>
-                                                            <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteBusAddOn", "Transportation", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
-                                                                <i class="material-icons">
-                                                                    delete
-                                                                </i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+
+                        <li class="db-card">
+                            <a href="@Url.Action("BusAddsOn", "Transportation", new { Id = Model.Id })">
+                                <img src="~/Images/icon/addson.png" class="db-card-img" />
+                                <p>مرافق الاتوبيس</p>
+                            </a>
                         </li>
-                        <li>
-                            <div class="collapsible-header"><i class="material-icons"></i>جدول رحلات الاتوبيس</div>
-                            <div class="collapsible-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="head-typo typo-com">
-                                            <a style="margin-bottom: 10px"
-                                               class="btn-floating btn-large waves-effect waves-light red"
-                                               href="@Url.Action("CreateBusTrip", "Transportation", new { Id = Model.Id })">
-                                                <i class="material-icons">add</i>
-                                            </a>
-                                            <table class="table table-bordered">
-                                                <tr>
-                                                    <th>وقت المغادرة</th>
-                                                    <th>وقت الوصول</th>
-                                                    <th>تاريخ المغادرة</th>
-                                                    <th>تاريخ الوصول</th>
-                                                    <th>المحطة من</th>
-                                                    <th>المحطة الى</th>
-                                                    <th>تاريخ الاضافة</th>
-                                                    <th></th>
-                                                </tr>
-                                                @foreach (var item in Model.busTripSchedules)
-                                                {
-                                                    <tr>
-                                                        <td>@Html.DisplayFor(modelItem => item.DepartureTime)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.ArrivalTime)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.DepartureDate)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.ArrivalDate)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.StationFromName)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.StationToName)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
-                                                        <td>
-                                                            <a href="@Url.Action("DeleteBusTrip", "Transportation", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
-                                                                <i class="material-icons">
-                                                                    delete
-                                                                </i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                        <li class="db-card">
+                            <a href="@Url.Action("Gallery", "Transportation", new { Id = Model.Id, flag = 1 })">
+                                <img src="~/Images/icon/gallery.png" class="db-card-img" />
+                                <p>صور الاتوبيس</p>
+                            </a>
                         </li>
+
                     </ul>
                 </div>
             </div>
+
             <div>
-                <a href="@Url.Action("Details", "Transportation", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+                <a href="@Url.Action("Buses", "Transportation", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
                     <i class="material-icons">arrow_back</i>
                 </a>
             </div>

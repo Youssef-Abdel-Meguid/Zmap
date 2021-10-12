@@ -1,0 +1,141 @@
+﻿@model Zmap.Dtos.PhotoDetailsDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة النقل</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.CompanyId != null)
+            {
+                <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreatePhoto", "Transportation", new { id = Model.CompanyId})">
+                    <i class="material-icons">add</i>
+                </a>
+                <h2>جميع صور الشركة</h2>
+            }
+            else if (Model.BusId != null)
+            {
+                <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateBusPhoto", "Transportation", new { id = Model.BusId})">
+                    <i class="material-icons">add</i>
+                </a>
+                <h2>جميع صور الاتوبيس</h2>
+            }
+            else if (Model.StationId != null)
+            {
+                <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateStationPhoto", "Transportation", new { id = Model.StationId})">
+                    <i class="material-icons">add</i>
+                </a>
+                <h2>جميع صور المحطة</h2>
+            }
+
+            <table class="table table-bordered" id="photos">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Photos)
+                    {
+                        <tr>
+                            <td>
+                                <div class="col-md-3">
+                                    @if (Model.CompanyId != null)
+                                    {
+                                        <img width="50" height="50" src="~/images/Transportation/Companies/@item.PhotoUrl" class="materialboxed" />
+                                    }
+                                    else if (Model.BusId != null)
+                                    {
+                                        <img width="50" height="50" src="~/images/Transportation/Buses/@item.PhotoUrl" class="materialboxed" />
+                                    }
+                                    else if (Model.StationId != null)
+                                    {
+                                        <img width="50" height="50" src="~/images/Transportation/Stations/@item.PhotoUrl" class="materialboxed" />
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-6">
+                                    @if (Model.CompanyId != null)
+                                    {
+                                        <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeletePhoto", "Transportation", new { id = item.Id })">
+                                            <i class="material-icons">
+                                                delete
+                                            </i>
+                                        </a>
+                                    }
+                                    else if (Model.BusId != null)
+                                    {
+                                        <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteBusPhoto", "Transportation", new { id = item.Id })">
+                                            <i class="material-icons">
+                                                delete
+                                            </i>
+                                        </a>
+                                    }
+                                    else if (Model.StationId != null)
+                                    {
+                                        <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteStationPhoto", "Transportation", new { id = item.Id })">
+                                            <i class="material-icons">
+                                                delete
+                                            </i>
+                                        </a>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        @if (Model.CompanyId != null)
+        {
+            <a href="@Url.Action("Details", "Transportation", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        }
+        else if (Model.BusId != null)
+        {
+            <a href="@Url.Action("BusDetails", "Transportation", new { id = Model.BusId })" class="btn-floating btn-large waves-effect waves-light blue">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        }
+        else if (Model.StationId != null)
+        {
+            <a href="@Url.Action("StationDetails", "Transportation", new { id = Model.StationId })" class="btn-floating btn-large waves-effect waves-light blue">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        }
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#photos').DataTable();
+        });
+    </script>
+}

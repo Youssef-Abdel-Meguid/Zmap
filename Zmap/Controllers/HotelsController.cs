@@ -93,25 +93,288 @@ namespace Zmap.Controllers
                        new ErrorLogger() { ActionName = "Error in hotel", Error = "hotel not found", UserId = userId });
                 }
 
-                List<AddOnDto> hotelAddOnDtos = new List<AddOnDto>();
-
-                var hotelAddsOn = await db.HotelAddsOns.Where(a => a.Active == true && a.HotelId == hotel.Id).ToListAsync();
-
-                foreach (var hotelAdd in hotelAddsOn)
+                hotelDetailsDto = new HotelDetailsDto()
                 {
-                    var addOn = await db.AddsOns.FindAsync(hotelAdd.AddOnId);
+                    City = hotel.City,
+                    Conditions = hotel.Conditions,
+                    Description = hotel.Description,
+                    GoogleMapLocation = hotel.GoogleMapLocation,
+                    Name = hotel.Name,
+                    WebsiteUrl = hotel.WebsiteUrl,
+                    Id = hotel.Id,
+                    CreatedDate = (DateTime)hotel.CreatedDate,
+                    IsConfirmed = hotel.IsConfirmed,
+                    ManagerPhonenumber = hotel.ManagerPhonenumber,
+                    ManagerEmail = hotel.ManagerEmail,
+                    Photo = await db.Galleries.Where(g => g.Active == true && g.HotelId == hotel.Id).FirstOrDefaultAsync()
+                };
 
-                    hotelAddOnDtos.Add(new AddOnDto()
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel details", Error = e.Message.ToString() , UserId = userId });
+            }
+
+
+            return View(hotelDetailsDto);
+        }
+
+        public async Task<ActionResult> Gallery(int? id, bool isHotel = true)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+            }
+
+            var photoDetails = new PhotoDetailsDto();
+
+            try
+            {
+               if(isHotel == true)
+                {
+                    photoDetails = new PhotoDetailsDto()
                     {
-                        Id = hotelAdd.Id,
-                        EnglishName = addOn.EnglishName,
-                        ArabicName = addOn.ArabicName
-                    });
+                        HotelId = id,
+                        Photos = await db.Galleries.Where(g => g.Active == true && g.HotelId == id).ToListAsync()
+                    };
                 }
+                else
+                {
+                    photoDetails = new PhotoDetailsDto()
+                    {
+                        RoomId = id,
+                        Photos = await db.Galleries.Where(g => g.Active == true && g.RoomId == id).ToListAsync()
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = e.Message.ToString(), UserId = userId });
+            }
 
-                var rooms = await db.Rooms.Where(r => r.Active == true && r.HotleId == hotel.Id).ToListAsync();
+            return View(photoDetails);
+        }
 
-                List<RoomDto> roomDtos = new List<RoomDto>();
+        public async Task<ActionResult> Contacts(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+            }
+
+            var contacts = new ContactDetailsDto();
+
+            try
+            {
+                contacts = new ContactDetailsDto() 
+                {
+                    Contacts = await db.Contacts.Where(c => c.Active == true && c.HotelId == id).ToListAsync(),
+                    HotelId = id
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(contacts);
+        }
+
+        public async Task<ActionResult> Files(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+            }
+
+            var files = new FilesDetailsDto();
+
+            try
+            {
+                files = new FilesDetailsDto()
+                {
+                    Files = await db.Attachments.Where(a => a.Active == true && a.HotelId == id).ToListAsync(),
+                    HotelId = id
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(files);
+        }
+
+        public async Task<ActionResult> FAQs(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+            }
+
+            var faqs = new FAQDetailsDto();
+
+            try
+            {
+                faqs = new FAQDetailsDto()
+                {
+                    FAQs = await db.FAQs.Where(f => f.Active == true && f.HotelId == id).ToListAsync(),
+                    HotelId = id
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(faqs);
+        }
+
+        public async Task<ActionResult> AddsOn(int? id, bool isHotel = true)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+            }
+
+            var addOnsDetials = new AddOnDetailsDto();
+
+            try
+            {
+                if(isHotel == true)
+                {
+                    var hotelAddOnDtos = new List<AddOnDto>();
+                    var hotelAddsOn = await db.HotelAddsOns.Where(a => a.Active == true && a.HotelId == id).ToListAsync();
+
+                    foreach (var hotelAdd in hotelAddsOn)
+                    {
+                        var addOn = await db.AddsOns.FindAsync(hotelAdd.AddOnId);
+
+                        hotelAddOnDtos.Add(new AddOnDto()
+                        {
+                            Id = hotelAdd.Id,
+                            EnglishName = addOn.EnglishName,
+                            ArabicName = addOn.ArabicName
+                        });
+                    }
+
+                    addOnsDetials = new AddOnDetailsDto()
+                    {
+                        AddOns = hotelAddOnDtos,
+                        HotelId = id
+                    };
+                }
+                else
+                {
+                    var roomAddOnDtos = new List<AddOnDto>();
+                    var roomAddsOn = await db.RoomAddsOns.Where(a => a.Active == true && a.RoomId == id).ToListAsync();
+
+                    foreach (var roomAdd in roomAddsOn)
+                    {
+                        var addOn = await db.AddsOns.FindAsync(roomAdd.AddOnId);
+
+                        roomAddOnDtos.Add(new AddOnDto()
+                        {
+                            Id = roomAdd.Id,
+                            EnglishName = addOn.EnglishName,
+                            ArabicName = addOn.ArabicName
+                        });
+                    }
+
+                    addOnsDetials = new AddOnDetailsDto()
+                    {
+                        AddOns = roomAddOnDtos,
+                        RoomId = id
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(addOnsDetials);
+        }
+
+        public async Task<ActionResult> Rooms(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+            }
+
+            var roomsData = new RoomDataDto();
+
+            try
+            {
+                var roomDtos = new List<RoomDto>();
+                var rooms = await db.Rooms.Where(r => r.Active == true && r.HotleId == id).ToListAsync();
 
                 foreach (var room in rooms)
                 {
@@ -132,36 +395,18 @@ namespace Zmap.Controllers
                     });
                 }
 
-                hotelDetailsDto = new HotelDetailsDto()
+                roomsData = new RoomDataDto()
                 {
-                    City = hotel.City,
-                    Conditions = hotel.Conditions,
-                    Contacts = await db.Contacts.Where(c => c.Active == true && c.HotelId == hotel.Id).ToListAsync(),
-                    Description = hotel.Description,
-                    FAQs = await db.FAQs.Where(f => f.Active == true && f.HotelId == hotel.Id).ToListAsync(),
-                    GoogleMapLocation = hotel.GoogleMapLocation,
-                    Name = hotel.Name,
-                    WebsiteUrl = hotel.WebsiteUrl,
-                    Id = hotel.Id,
-                    Photos = await db.Galleries.Where(g => g.Active == true && g.HotelId == hotel.Id).ToListAsync(),
-                    Rooms = roomDtos,
-                    HotelAddsOn = hotelAddOnDtos,
-                    CreatedDate = (DateTime)hotel.CreatedDate,
-                    IsConfirmed = hotel.IsConfirmed,
-                    Attachments = await db.Attachments.Where(a => a.Active == true && a.HotelId == hotel.Id).ToListAsync(),
-                    ManagerPhonenumber = hotel.ManagerPhonenumber,
-                    ManagerEmail = hotel.ManagerEmail
+                    HotelId = id,
+                    Rooms = roomDtos
                 };
-
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home",
-                    new ErrorLogger() { ActionName = "Error in hotel details", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = e.Message.ToString(), UserId = userId });
             }
 
-
-            return View(hotelDetailsDto);
+            return View(roomsData);
         }
 
         // GET: Hotels/Create
@@ -524,7 +769,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels", new { Id = hotelAddsOn.HotelId });
+            return RedirectToAction("AddsOn", "Hotels", new { Id = hotelAddsOn.HotelId });
         }
 
         public async Task<ActionResult> DeleteAddOn(int? Id)
@@ -560,7 +805,8 @@ namespace Zmap.Controllers
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
-            return RedirectToAction("Details", "Hotels",new { Id = hotel.HotelId });
+
+            return RedirectToAction("AddsOn", "Hotels", new { Id = hotel.HotelId});
         }
 
         public async Task<ActionResult> DeletePhoto(int? Id)
@@ -629,7 +875,7 @@ namespace Zmap.Controllers
             galley.ModifiedDate = DateTime.Now;
             galley.ModifiedByUserId = userId;
             await db.SaveChangesAsync();
-            return RedirectToAction("RoomDetails", "Hotels",new { Id = galley.RoomId });
+            return RedirectToAction("Gallery", "Hotels",new { Id = galley.RoomId, isHotel = false });
         }
 
         public ActionResult CreatePhoto(int? Id)
@@ -706,7 +952,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels", new { Id = contact.HotelId });
+            return RedirectToAction("Contacts", "Hotels", new { Id = contact.HotelId });
         }
 
         public async Task<ActionResult> DeleteContact(int? Id)
@@ -747,7 +993,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels", new { Id = contact.HotelId });
+            return RedirectToAction("Contacts", "Hotels", new { Id = contact.HotelId });
         }
 
         public async Task<ActionResult> CreateRoom(int? Id)
@@ -819,7 +1065,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels", new { Id = room.HotleId});
+            return RedirectToAction("Rooms", "Hotels", new { Id = room.HotleId});
         }
 
         public async Task<ActionResult> EditRoom(int? id)
@@ -897,7 +1143,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels", new { Id = room.HotleId });
+            return RedirectToAction("Rooms", "Hotels", new { Id = room.HotleId });
         }
 
         public async Task<ActionResult> DeleteRoom(int? Id)
@@ -937,7 +1183,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels",new { Id = room.HotleId });
+            return RedirectToAction("Rooms", "Hotels",new { Id = room.HotleId });
         }
 
         public async Task<ActionResult> RoomDetails(int? Id)
@@ -963,38 +1209,74 @@ namespace Zmap.Controllers
             try
             {
                 var room = await db.Rooms.Where(r => r.Active == true && r.Id == Id).SingleOrDefaultAsync();
+
                 if (room == null)
                 {
                     return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
-                }
-
-                var roomAddsOn = await db.RoomAddsOns.Where(a => a.Active == true && a.RoomId == room.Id).ToListAsync();
-                var roomAddsOnDto = new List<AddOnDto>();
-                
-                foreach (var add in roomAddsOn)
-                {
-                    var addOn = await db.AddsOns.FindAsync(add.AddOnId);
-
-                    roomAddsOnDto.Add(new AddOnDto()
-                    {
-                        Id = add.Id,
-                        EnglishName = addOn.EnglishName,
-                        ArabicName = addOn.ArabicName
-                    });
-
                 }
 
                 var status = await db.RoomStatus.FindAsync(room.StatusId);
                 var view = await db.RoomViews.FindAsync(room.RoomViewId);
                 var type = await db.RoomTypes.FindAsync(room.RoomTypeId);
 
+                roomDetailsDto = new RoomDetailsDto()
+                {
+                    CreatedDate = room.CreatedDate,
+                    Description = room.Description,
+                    HotleId = room.HotleId,
+                    Id = room.Id,
+                    Name = room.Name,
+                    Number = room.Number,
+                    RoomType = type.EnglishName,
+                    RoomView = view.EnglishName,
+                    Photo = await db.Galleries.Where(g => g.Active == true && g.RoomId == room.Id).FirstOrDefaultAsync(),
+                    Status = status.RoomStatusName,
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
+            }
+
+            return View(roomDetailsDto);
+        }
+
+        public async Task<ActionResult> RoomAvailabilities(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+            }
+
+            var roomAvaDetails = new RoomAvailabilityDetailsDto();
+
+            try
+            {
+                var room = await db.Rooms.FindAsync(id);
+
+                if(room == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "room is null", UserId = userId });
+                }
+
                 var roomAvaDto = new List<RoomAvailabilityDto>();
-                var roomAva = await db.RoomAvailabilities.Where(a => a.Active == true && a.RoomId == room.Id).ToListAsync();
+                var roomAva = await db.RoomAvailabilities.Where(a => a.Active == true && a.RoomId == id).ToListAsync();
 
                 foreach (var ava in roomAva)
                 {
                     var acco = await db.Accommodations.FindAsync(ava.AccommodationId);
-                    roomAvaDto.Add(new RoomAvailabilityDto() 
+                    roomAvaDto.Add(new RoomAvailabilityDto()
                     {
                         AccommodationId = acco != null ? acco.Id : 0,
                         ArabicName = acco != null ? acco.ArabicName : null,
@@ -1007,28 +1289,19 @@ namespace Zmap.Controllers
                     });
                 }
 
-                roomDetailsDto = new RoomDetailsDto()
+                roomAvaDetails = new RoomAvailabilityDetailsDto()
                 {
-                    CreatedDate = room.CreatedDate,
-                    Description = room.Description,
-                    HotleId = room.HotleId,
-                    Id = room.Id,
-                    Name = room.Name,
-                    Number = room.Number,
-                    RoomType = type.EnglishName,
-                    RoomView = view.EnglishName,
-                    Photos = await db.Galleries.Where(g => g.Active == true && g.RoomId == room.Id).ToListAsync(),
-                    RoomSpecials = roomAddsOnDto,
-                    RoomAvailabilities = roomAvaDto,
-                    Status = status.RoomStatusName,
+                    RoomId = room.Id,
+                    HotelId = room.HotleId,
+                    RoomAvailabilities = roomAvaDto
                 };
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return View(roomDetailsDto);
+            return View(roomAvaDetails);
         }
 
         public async Task<ActionResult> DeleteRoomAvailability(int? Id)
@@ -1068,7 +1341,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("RoomDetails", "Hotels",new { Id = room.RoomId });
+            return RedirectToAction("RoomAvailabilities", "Hotels",new { Id = room.RoomId });
         }
 
         public async Task<ActionResult> DeleteRoomSpecial(int? Id)
@@ -1106,7 +1379,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("RoomDetails", "Hotels", new { Id = room.RoomId });
+            return RedirectToAction("AddsOn", "Hotels", new { Id = room.RoomId, isHotel = false });
         }
 
         [HttpPost]
@@ -1147,7 +1420,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("RoomDetails", "Hotels", new { Id = gallery.RoomId });
+            return RedirectToAction("Gallery", "Hotels", new { Id = gallery.RoomId, isHotel = false });
         }
 
         public ActionResult CreateRoomPhoto(int? Id)
@@ -1236,7 +1509,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("RoomDetails", "Hotels",new { Id = roomSpecial.RoomId });
+            return RedirectToAction("AddsOn", "Hotels",new { Id = roomSpecial.RoomId, isHotel = false });
         }
 
         public async Task<ActionResult> CreateRoomAvailability(int? Id)
@@ -1301,7 +1574,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("RoomDetails", "Hotels",new { Id = roomAvailability.RoomId });
+            return RedirectToAction("RoomAvailabilities", "Hotels",new { Id = roomAvailability.RoomId });
         }
 
         public ActionResult CreateFAQ(int? id)
@@ -1355,7 +1628,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels", new { Id = fAQ.HotelId });
+            return RedirectToAction("FAQs", "Hotels", new { Id = fAQ.HotelId });
         }
 
         public async Task<ActionResult> DeleteFAQ(int? Id)
@@ -1374,14 +1647,18 @@ namespace Zmap.Controllers
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
             }
-            var faq = await db.FAQs.FindAsync(Id);
-            if (faq == null)
-            {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
-            }
+
+            var faq = new FAQ();
 
             try
             {
+                faq = await db.FAQs.FindAsync(Id);
+
+                if (faq == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+                }
+
                 faq.Active = false;
                 faq.ModifiedDate = DateTime.Now;
                 faq.ModifiedByUserId = userId;
@@ -1392,7 +1669,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels", new { Id = faq.HotelId });
+            return RedirectToAction("FAQs", "Hotels", new { Id = faq.HotelId });
         }
 
         public ActionResult CreateAttachment(int? id)
@@ -1453,7 +1730,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Activites", new { Id = attachment.HotelId });
+            return RedirectToAction("Files", "Hotels", new { Id = attachment.HotelId });
         }
 
         public ActionResult DownloadAttachment(string filePath)
@@ -1524,7 +1801,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Details", "Activites", new { id = att.HotelId });
+            return RedirectToAction("Files", "Hotels", new { id = att.HotelId });
         }
 
         public async Task<ActionResult> Confirm(int? id, bool? isConfirm)

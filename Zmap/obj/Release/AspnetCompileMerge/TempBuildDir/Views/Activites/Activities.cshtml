@@ -1,0 +1,91 @@
+﻿@model Zmap.Dtos.ActivityDetailsDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة الانشطة</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateActivity", "Activites", new { id = Model.CompanyId})">
+                <i class="material-icons">add</i>
+            </a>
+            <h2>
+                جميع انشطة الشركة
+            </h2>
+            <table class="table table-bordered" id="activities">
+                <thead>
+                    <tr>
+                        <th>اسم النشاط</th>
+                        <th>نوع النشاط</th>
+                        <th>مكان النشاط</th>
+                        <th>المدينة</th>
+                        <th>السعر بالانتقالات</th>
+                        <th>السعر بدون الانتقالات</th>
+                        <th>تاريخ الاضافة</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Activities)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ActicityName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ActivityCategory)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SubArea)</td>
+                            <td>@Html.DisplayFor(modelItem => item.City)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CostWithTrans)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CostWithoutTrans)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                            <td>
+                                <a href="@Url.Action("EditActivity", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light orange">
+                                    <i class="material-icons">
+                                        edit
+                                    </i>
+                                </a>
+                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteActivity", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
+                                    <i class="material-icons">
+                                        delete
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a href="@Url.Action("Details", "Activites", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#activities').DataTable();
+        });
+    </script>
+}

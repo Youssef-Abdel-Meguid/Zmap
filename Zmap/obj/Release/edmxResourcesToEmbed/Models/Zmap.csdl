@@ -68,7 +68,6 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CompanyId" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="NumberOfSeats" Type="Int32" Nullable="false" />
     <Property Name="SeatsMapId" Type="Int32" Nullable="false" />
     <Property Name="BusNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CategoryId" Type="Int32" Nullable="false" />
@@ -84,8 +83,8 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="MapName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="MapPhotoUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Active" Type="Boolean" />
+    <Property Name="NumberOfSeats" Type="Int32" />
   </EntityType>
   <EntityType Name="City">
     <Key>
@@ -101,7 +100,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="About" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="About" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="PrivacyPolicy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="IsExternal" Type="Boolean" />
     <Property Name="IsInternal" Type="Boolean" />
@@ -183,7 +182,7 @@
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="WebsiteUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="GoogleMapLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Conditions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
@@ -487,6 +486,7 @@
     <EntitySet Name="Services" EntityType="ZmapModel.Service" />
     <EntitySet Name="SubAreas" EntityType="ZmapModel.SubArea" />
     <EntitySet Name="Attachments" EntityType="ZmapModel.Attachment" />
+    <EntitySet Name="ReservedSeats" EntityType="ZmapModel.ReservedSeat" />
   </EntityContainer>
   <EntityType Name="Accommodation">
     <Key>
@@ -572,6 +572,7 @@
     <Property Name="Active" Type="Boolean" />
     <Property Name="ArrivalDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="DepartureDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TripName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="PostCategory">
     <Key>
@@ -586,7 +587,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="CreatedByUserId" Type="Int32" />
@@ -680,5 +681,20 @@
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedByUserId" Type="Int32" />
     <Property Name="SavedFileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ReservedSeat">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReservationId" Type="Int32" />
+    <Property Name="BusTripId" Type="Int32" />
+    <Property Name="SeatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ByAdmin" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="ModifiedByUserId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
   </EntityType>
 </Schema>

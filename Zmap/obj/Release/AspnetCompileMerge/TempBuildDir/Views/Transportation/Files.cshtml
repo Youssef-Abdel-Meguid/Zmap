@@ -1,0 +1,76 @@
+﻿@model Zmap.Dtos.FilesDetailsDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة النقل</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateAttachment", "Transportation", new { id = Model.CompanyId})">
+                <i class="material-icons">add</i>
+            </a>
+            <h2>
+                جميع ملفات الشركة
+            </h2>
+            <table class="table table-bordered" id="files">
+                <thead>
+                    <tr>
+                        <th>اسم الملف</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Files)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("DownloadAttachment", "Transportation", new { filePath = item.SavedFileName})">@Html.DisplayFor(modelItem => item.FileName)</a>
+                            </td>
+                            <td>
+                                <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteAttachment", "Transportation", new { id = item.Id })">
+                                    <i class="material-icons">
+                                        delete
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a href="@Url.Action("Details", "Transportation", new { id = Model.CompanyId })" class="btn-floating btn-large waves-effect waves-light blue">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#files').DataTable();
+        });
+    </script>
+}

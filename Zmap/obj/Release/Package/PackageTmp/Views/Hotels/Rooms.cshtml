@@ -1,0 +1,94 @@
+﻿@model Zmap.Dtos.RoomDataDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="page-head">
+                <h2>ادارة الفنادق</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateRoom", "Hotels", new { id = Model.HotelId})">
+                <i class="material-icons">add</i>
+            </a>
+            <h2>جميع غرف الفندق</h2>
+            <table class="table table-bordered" id="rooms">
+                <thead>
+                    <tr>
+                        <th>اسم الغرفة</th>
+                        <th>رقم الغرفة</th>
+                        <th>نوع الغرفة</th>
+                        <th>فيو الغرفة</th>
+                        <th>وصف الغرفة</th>
+                        <th>حالة الغرفة</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Rooms)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Number)</td>
+                            <td>@Html.DisplayFor(modelItem => item.RoomType)</td>
+                            <td>@Html.DisplayFor(modelItem => item.RoomView)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Status) </td>
+
+                            <td>
+                                <a href="@Url.Action("EditRoom", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light orange">
+                                    <i class="material-icons">
+                                        edit
+                                    </i>
+                                </a>
+                                <a href="@Url.Action("RoomDetails", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm green">
+                                    <i class="material-icons">
+                                        info
+                                    </i>
+                                </a>
+
+                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteRoom", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
+                                    <i class="material-icons">
+                                        delete
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a href="@Url.Action("Details", "Hotels", new { id = Model.HotelId })" class="btn-floating btn-large waves-effect waves-light blue">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#rooms').DataTable();
+        });
+    </script>
+}

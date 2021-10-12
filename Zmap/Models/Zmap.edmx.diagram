@@ -51,6 +51,7 @@
         <EntityTypeShape EntityType="ZmapModel.Service" Width="1.5" PointX="19.375" PointY="16.75" />
         <EntityTypeShape EntityType="ZmapModel.SubArea" Width="1.5" PointX="17.375" PointY="20.75" />
         <EntityTypeShape EntityType="ZmapModel.Attachment" Width="1.5" PointX="19.375" PointY="20.75" />
+        <EntityTypeShape EntityType="ZmapModel.ReservedSeat" Width="1.5" PointX="21.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -10,7 +10,6 @@ namespace Zmap.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int NumberOfSeats { get; set; }
         public string BusNumber { get; set; }
         public int CategoryId { get; set; }
         public string Category { get; set; }
@@ -18,8 +17,6 @@ namespace Zmap.Dtos
         public string BusSeatMap { get; set; }
         public int CompanyId { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public List<Gallery> Photos { get; set; }
-        public List<BusTripScheduleDto> busTripSchedules { get; set; }
-        public List<AddOnDto> BusAddOns { get; set; }
+        public Gallery Photo { get; set; }
     }
 }
