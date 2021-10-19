@@ -10,7 +10,7 @@
                     </a>
                 </div>
                 <div class="page-head">
-                    <h2>اضافة غرفة جديدة</h2>
+                    <h2>تعديل الغرفة</h2>
                     <div class="head-title">
                         <div class="hl-1"></div>
                         <div class="hl-2"></div>
@@ -28,44 +28,6 @@
                                     <form class="col l12">
                                         <div class="row">
                                             <div class="input-field col l9">
-                                                @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required" } })*@
-                                                <input type="text" name="Name" value="@Model.Name" required class="validate" />
-                                            </div>
-                                            <div class="input-field col l3">
-                                                <label>اسم الغرفة</label>
-                                            </div>
-                                        </div>
-                                        @Html.HiddenFor(m => Model.HotleId)
-                                        <div class="row">
-                                            <div class="input-field col l9">
-                                                @*@Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "validate" }, @data_val = "true", @required = "required" })*@
-                                                <input type="text" name="Number" value="@Model.Number" required class="validate" />
-                                            </div>
-                                            <div class="input-field col l3">
-                                                <label>رقم الغرفة</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="input-field col l9">
-                                                @Html.DropDownList("StatusId", new SelectList(ViewBag.Status, "Id", "RoomStatusName"), new { @class = "validate", @data_val = "true", @required = "required" })
-                                            </div>
-                                            <div class="input-field col l3">
-                                                <label>حالة الغرفة</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="input-field col l9">
-                                                @Html.DropDownList("RoomTypeId", new SelectList(ViewBag.RoomTypes, "Id", "ArabicName"), new { @class = "validate", @data_val = "true", @required = "required" })
-                                            </div>
-                                            <div class="input-field col l3">
-                                                <label>نوع الغرفة</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="input-field col l9">
                                                 @Html.DropDownList("RoomViewId", new SelectList(ViewBag.RoomViews, "Id", "ArabicName"), new { @class = "validate", @data_val = "true", @required = "required" })
                                             </div>
                                             <div class="input-field col l3">
@@ -73,14 +35,23 @@
                                             </div>
                                         </div>
 
+                                         <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="text" name="NumberOfRooms" value="@Model.NumberOfRooms" required class="validate" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>عدد الغرف المتاحة</label>
+                                            </div>
+                                        </div>
+
                                         @Html.HiddenFor(m => m.HotleId)
                                         @Html.HiddenFor(m => m.CreatedDate)
                                         @Html.HiddenFor(m => m.CreatedByUserId)
                                         @Html.HiddenFor(m => m.Active)
+                                        @Html.HiddenFor(m => Model.HotleId)
 
                                         <div class="row">
                                             <div class="input-field col l9">
-                                                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "validate" }, @data_val = "true", @required = "required" })*@
                                                 <textarea class="form-control" required name="Description">@Model.Description</textarea>
                                             </div>
                                             <div class="input-field col l3">

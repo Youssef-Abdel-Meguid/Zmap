@@ -253,6 +253,20 @@
     <Property Name="Active" Type="bit" />
     <Property Name="OtherValue" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="HotelCustomAdds">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="Cost" Type="money" />
+    <Property Name="HotelId" Type="int" />
+  </EntityType>
   <EntityType Name="Hotels">
     <Key>
       <PropertyRef Name="Id" />
@@ -436,9 +450,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" />
     <Property Name="HotleId" Type="int" Nullable="false" />
     <Property Name="RoomTypeId" Type="int" />
     <Property Name="RoomViewId" Type="int" />
@@ -448,6 +460,7 @@
     <Property Name="CreatedByUserId" Type="int" />
     <Property Name="ModifiedByUserId" Type="int" />
     <Property Name="Active" Type="bit" />
+    <Property Name="NumberOfRooms" Type="int" />
   </EntityType>
   <EntityType Name="RoomStatus">
     <Key>
@@ -668,6 +681,7 @@
     <EntitySet Name="FAQs" EntityType="Self.FAQs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Gallery" EntityType="Self.Gallery" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HotelAddsOn" EntityType="Self.HotelAddsOn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HotelCustomAdds" EntityType="Self.HotelCustomAdds" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LineBuses" EntityType="Self.LineBuses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LineStations" EntityType="Self.LineStations" Schema="dbo" store:Type="Tables" />

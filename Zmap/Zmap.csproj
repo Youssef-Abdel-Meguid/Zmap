@@ -237,6 +237,7 @@
     <Compile Include="Dtos\FAQDetailsDto.cs" />
     <Compile Include="Dtos\FAQDto.cs" />
     <Compile Include="Dtos\FilesDetailsDto.cs" />
+    <Compile Include="Dtos\HotelCustomAddDto.cs" />
     <Compile Include="Dtos\HotelDetailsDto.cs" />
     <Compile Include="Dtos\HotelDto.cs" />
     <Compile Include="Dtos\LineBusDetailsDto.cs" />
@@ -320,6 +321,9 @@
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HotelAddsOn.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HotelCustomAdd.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LineBus.cs">
@@ -590,6 +594,7 @@
     <Content Include="Images\icon\line.png" />
     <Content Include="Images\icon\phone.png" />
     <Content Include="Images\icon\room.png" />
+    <Content Include="Images\icon\roomAddons.png" />
     <Content Include="Images\icon\roomdate.png" />
     <Content Include="Images\icon\station.png" />
     <Content Include="Images\inn-bg.jpg" />
@@ -841,6 +846,9 @@
     <Content Include="Views\Transportation\LineBuses.cshtml" />
     <Content Include="Views\Transportation\LineStations.cshtml" />
     <Content Include="Views\Transportation\BusTripReservations.cshtml" />
+    <Content Include="Views\Hotels\HotelCustomAdds.cshtml" />
+    <Content Include="Views\Hotels\CreateHotelCustomAdds.cshtml" />
+    <Content Include="Views\Hotels\EditHotelCustomAdds.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

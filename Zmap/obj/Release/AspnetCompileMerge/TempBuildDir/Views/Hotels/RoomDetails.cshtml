@@ -1,5 +1,4 @@
-﻿@model Zmap.DTOs.RoomDetailsDto
-
+﻿@model Zmap.Dtos.RoomDetailsDto
 @{
     ViewBag.Title = "RoomDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,7 +8,7 @@
 
     <div class="inn-body-section pad-bot-55">
         <div class="page-head">
-            <h2>ادارة غرفة @Model.Name</h2>
+            <h2>ادارة الغرف</h2>
             <div class="head-title">
                 <div class="hl-1"></div>
                 <div class="hl-2"></div>
@@ -21,30 +20,6 @@
 
     <div class="row">
         <div class="col-md-12">
-            @*<div class="head-typo typo-com">
-                <div class="room">
-                    <div class="col-md-6 portfolio-wrapper">
-                        @if (Model.Photo != null)
-                        {
-                            <img src="~/Images/Rooms/@Model.Photo.PhotoUrl" style="width: fit-content(); height: fit-content()" />
-                        }
-                    </div>
-                    <div class="col-md-6">
-                        <div dir="rtl">
-                            <hr />
-                            <ul>
-                                <li><label>اسم الغرفة: @Html.DisplayFor(model => model.Name)</label></li>
-                                <li><label>رقم الغرفة: @Html.DisplayFor(model => model.Number)</label></li>
-                                <li><label>حالة الغرفة: @Html.DisplayFor(model => model.Status)</label></li>
-                                <li><label>وصف الغرفة: @Html.DisplayFor(model => model.Description)</label></li>
-                                <li><label>نوع الغرفة: @Html.DisplayFor(model => model.RoomType)</label></li>
-                                <li><label>فيو الغرفة : @Html.DisplayFor(model => model.RoomView)</label></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-
             <div class="col-md-12">
                 <div class="hp-amini hp-amini-block db-div-card">
                     <ul>
@@ -82,132 +57,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-@*<div class="col-md-12">
-    <div class="head-typo typo-com collap-expand">
-        <h2>ادارة بيانات الغرفة</h2>
-        <p>اضافة, تعديل, حذف موارد ,و معلومات الغرفة</p>
-        <ul class="collapsible" data-collapsible="accordion">
-            <li>
-                <div class="collapsible-header"><i class="material-icons"></i>مرافق الغرفة</div>
-                <div class="collapsible-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="head-typo typo-com">
-                                <a style="margin-bottom: 10px"
-                                   class="btn-floating btn-large waves-effect waves-light red"
-                                   href="@Url.Action("CreateRoomSpecial", "Hotels", new { Id = Model.Id })">
-                                    <i class="material-icons">add</i>
-                                </a>
-
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>اسم المرفق</th>
-                                    </tr>
-                                    @foreach (var item in Model.RoomSpecials)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ArabicName)
-                                            </td>
-                                            <td>
-                                                <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteRoomSpecial", "Hotels", new { id = item.Id })">
-                                                    <i class="material-icons">
-                                                        delete
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="collapsible-header"><i class="material-icons"></i>صور الغرفة</div>
-                <div class="collapsible-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="head-typo typo-com">
-                                <a style="margin-bottom: 10px"
-                                   class="btn-floating btn-large waves-effect waves-light red"
-                                   href="@Url.Action("CreateRoomPhoto", "Hotels", new { Id = Model.Id })">
-                                    <i class="material-icons">add</i>
-                                </a>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th></th>
-                                    </tr>
-                                    @foreach (var item in Model.Photos)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <img width="50" height="50" src="~/Images/Rooms/@item.PhotoUrl" />
-                                            </td>
-                                            <td>
-                                                <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteRoomPhoto", "Hotels", new { id = item.Id })">
-                                                    <i class="material-icons">
-                                                        delete
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="collapsible-header"><i class="material-icons"></i>مواعيد الغرفة</div>
-                <div class="collapsible-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="head-typo typo-com">
-                                <a style="margin-bottom: 10px"
-                                   class="btn-floating btn-large waves-effect waves-light red"
-                                   href="@Url.Action("CreateRoomAvailability", "Hotels", new { Id = Model.Id })">
-                                    <i class="material-icons">add</i>
-                                </a>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>التاريخ من</th>
-                                        <th>التاريخ الى</th>
-                                        <th>نوع الاقامة</th>
-                                        <th>سعر الليلة</th>
-                                        <th></th>
-                                    </tr>
-
-                                    @foreach (var item in Model.RoomAvailabilities)
-                                    {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.DateFrom)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.DateTo)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ArabicName)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.PricePerNight)</td>
-                                            <td>
-                                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteRoomAvailability", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
-                                                    <i class="material-icons">
-                                                        delete
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>*@

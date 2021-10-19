@@ -45,7 +45,6 @@ namespace Zmap.Models
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<RoomAvailability> RoomAvailabilities { get; set; }
         public virtual DbSet<RoomReservationCancellation> RoomReservationCancellations { get; set; }
-        public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomStatu> RoomStatus { get; set; }
         public virtual DbSet<Station> Stations { get; set; }
         public virtual DbSet<TripType> TripTypes { get; set; }
@@ -72,5 +71,7 @@ namespace Zmap.Models
         public virtual DbSet<SubArea> SubAreas { get; set; }
         public virtual DbSet<Attachment> Attachments { get; set; }
         public virtual DbSet<ReservedSeat> ReservedSeats { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<HotelCustomAdd> HotelCustomAdds { get; set; }
     }
 }

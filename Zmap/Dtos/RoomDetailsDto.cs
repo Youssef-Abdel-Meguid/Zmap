@@ -6,19 +6,15 @@ using System.Threading.Tasks;
 using Zmap.Dtos;
 using Zmap.Models;
 
-namespace Zmap.DTOs
+namespace Zmap.Dtos
 {
     public class RoomDetailsDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Number { get; set; }
         public string Description { get; set; }
         public int HotleId { get; set; }
-        public string RoomType { get; set; }
         public string RoomView { get; set; }
-        public string Status { get; set; }
+        public int? NumberOfRooms { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public Gallery Photo { get; set; }
     }
 }

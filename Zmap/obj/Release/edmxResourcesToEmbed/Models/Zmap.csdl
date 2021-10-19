@@ -281,24 +281,6 @@
     <Property Name="ModifiedByUserId" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
   </EntityType>
-  <EntityType Name="Room">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="HotleId" Type="Int32" Nullable="false" />
-    <Property Name="StatusId" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedByUserId" Type="Int32" />
-    <Property Name="ModifiedByUserId" Type="Int32" />
-    <Property Name="Active" Type="Boolean" />
-    <Property Name="RoomTypeId" Type="Int32" />
-    <Property Name="RoomViewId" Type="Int32" />
-  </EntityType>
   <EntityType Name="RoomStatu">
     <Key>
       <PropertyRef Name="Id" />
@@ -460,7 +442,6 @@
     <EntitySet Name="Reviews" EntityType="Self.Review" />
     <EntitySet Name="RoomAvailabilities" EntityType="Self.RoomAvailability" />
     <EntitySet Name="RoomReservationCancellations" EntityType="Self.RoomReservationCancellation" />
-    <EntitySet Name="Rooms" EntityType="Self.Room" />
     <EntitySet Name="RoomStatus" EntityType="Self.RoomStatu" />
     <EntitySet Name="Stations" EntityType="Self.Station" />
     <EntitySet Name="TripTypes" EntityType="Self.TripType" />
@@ -487,6 +468,8 @@
     <EntitySet Name="SubAreas" EntityType="ZmapModel.SubArea" />
     <EntitySet Name="Attachments" EntityType="ZmapModel.Attachment" />
     <EntitySet Name="ReservedSeats" EntityType="ZmapModel.ReservedSeat" />
+    <EntitySet Name="Rooms" EntityType="ZmapModel.Room" />
+    <EntitySet Name="HotelCustomAdds" EntityType="ZmapModel.HotelCustomAdd" />
   </EntityContainer>
   <EntityType Name="Accommodation">
     <Key>
@@ -696,5 +679,36 @@
     <Property Name="CreatedByUserId" Type="Int32" />
     <Property Name="ModifiedByUserId" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="HotleId" Type="Int32" Nullable="false" />
+    <Property Name="RoomTypeId" Type="Int32" />
+    <Property Name="RoomViewId" Type="Int32" />
+    <Property Name="StatusId" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="ModifiedByUserId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="NumberOfRooms" Type="Int32" />
+  </EntityType>
+  <EntityType Name="HotelCustomAdd">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="ModifiedByUserId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="HotelId" Type="Int32" />
   </EntityType>
 </Schema>

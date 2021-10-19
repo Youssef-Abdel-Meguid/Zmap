@@ -258,6 +258,20 @@
           <Property Name="Active" Type="bit" />
           <Property Name="OtherValue" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="HotelCustomAdds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedByUserId" Type="int" />
+          <Property Name="ModifiedByUserId" Type="int" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="Cost" Type="money" />
+          <Property Name="HotelId" Type="int" />
+        </EntityType>
         <EntityType Name="Hotels">
           <Key>
             <PropertyRef Name="Id" />
@@ -441,9 +455,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
           <Property Name="HotleId" Type="int" Nullable="false" />
           <Property Name="RoomTypeId" Type="int" />
           <Property Name="RoomViewId" Type="int" />
@@ -453,6 +465,7 @@
           <Property Name="CreatedByUserId" Type="int" />
           <Property Name="ModifiedByUserId" Type="int" />
           <Property Name="Active" Type="bit" />
+          <Property Name="NumberOfRooms" Type="int" />
         </EntityType>
         <EntityType Name="RoomStatus">
           <Key>
@@ -673,6 +686,7 @@
           <EntitySet Name="FAQs" EntityType="Self.FAQs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gallery" EntityType="Self.Gallery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HotelAddsOn" EntityType="Self.HotelAddsOn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelCustomAdds" EntityType="Self.HotelCustomAdds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LineBuses" EntityType="Self.LineBuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LineStations" EntityType="Self.LineStations" Schema="dbo" store:Type="Tables" />
@@ -987,24 +1001,6 @@
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
         </EntityType>
-        <EntityType Name="Room">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="HotleId" Type="Int32" Nullable="false" />
-          <Property Name="StatusId" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedByUserId" Type="Int32" />
-          <Property Name="ModifiedByUserId" Type="Int32" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="RoomTypeId" Type="Int32" />
-          <Property Name="RoomViewId" Type="Int32" />
-        </EntityType>
         <EntityType Name="RoomStatu">
           <Key>
             <PropertyRef Name="Id" />
@@ -1166,7 +1162,6 @@
           <EntitySet Name="Reviews" EntityType="Self.Review" />
           <EntitySet Name="RoomAvailabilities" EntityType="Self.RoomAvailability" />
           <EntitySet Name="RoomReservationCancellations" EntityType="Self.RoomReservationCancellation" />
-          <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="RoomStatus" EntityType="Self.RoomStatu" />
           <EntitySet Name="Stations" EntityType="Self.Station" />
           <EntitySet Name="TripTypes" EntityType="Self.TripType" />
@@ -1193,6 +1188,8 @@
           <EntitySet Name="SubAreas" EntityType="ZmapModel.SubArea" />
           <EntitySet Name="Attachments" EntityType="ZmapModel.Attachment" />
           <EntitySet Name="ReservedSeats" EntityType="ZmapModel.ReservedSeat" />
+          <EntitySet Name="Rooms" EntityType="ZmapModel.Room" />
+          <EntitySet Name="HotelCustomAdds" EntityType="ZmapModel.HotelCustomAdd" />
           </EntityContainer>
         <EntityType Name="Accommodation">
           <Key>
@@ -1402,6 +1399,37 @@
           <Property Name="CreatedByUserId" Type="Int32" />
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HotleId" Type="Int32" Nullable="false" />
+          <Property Name="RoomTypeId" Type="Int32" />
+          <Property Name="RoomViewId" Type="Int32" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="ModifiedByUserId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="NumberOfRooms" Type="Int32" />
+        </EntityType>
+        <EntityType Name="HotelCustomAdd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="ModifiedByUserId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="HotelId" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1702,25 +1730,6 @@
                 <ScalarProperty Name="UserTripReservationId" ColumnName="UserTripReservationId" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Rooms">
-            <EntityTypeMapping TypeName="ZmapModel.Room">
-              <MappingFragment StoreEntitySet="Rooms">
-                <ScalarProperty Name="RoomViewId" ColumnName="RoomViewId" />
-                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="HotleId" ColumnName="HotleId" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
@@ -2100,6 +2109,39 @@
                 <ScalarProperty Name="SeatNumber" ColumnName="SeatNumber" />
                 <ScalarProperty Name="BusTripId" ColumnName="BusTripId" />
                 <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="ZmapModel.Room">
+              <MappingFragment StoreEntitySet="Rooms">
+                <ScalarProperty Name="NumberOfRooms" ColumnName="NumberOfRooms" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="RoomViewId" ColumnName="RoomViewId" />
+                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
+                <ScalarProperty Name="HotleId" ColumnName="HotleId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelCustomAdds">
+            <EntityTypeMapping TypeName="ZmapModel.HotelCustomAdd">
+              <MappingFragment StoreEntitySet="HotelCustomAdds">
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

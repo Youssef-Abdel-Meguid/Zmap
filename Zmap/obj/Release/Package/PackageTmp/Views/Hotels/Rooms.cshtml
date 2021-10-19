@@ -30,12 +30,9 @@
             <table class="table table-bordered" id="rooms">
                 <thead>
                     <tr>
-                        <th>اسم الغرفة</th>
-                        <th>رقم الغرفة</th>
-                        <th>نوع الغرفة</th>
                         <th>فيو الغرفة</th>
                         <th>وصف الغرفة</th>
-                        <th>حالة الغرفة</th>
+                        <th>عدد الغرف المناحة</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -43,12 +40,9 @@
                     @foreach (var item in Model.Rooms)
                     {
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Number)</td>
-                            <td>@Html.DisplayFor(modelItem => item.RoomType)</td>
                             <td>@Html.DisplayFor(modelItem => item.RoomView)</td>
                             <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Status) </td>
+                            <td>@Html.DisplayFor(modelItem => item.NumberOfRooms) </td>
 
                             <td>
                                 <a href="@Url.Action("EditRoom", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light orange">
