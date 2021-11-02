@@ -377,6 +377,8 @@ namespace Zmap.Controllers
                 foreach (var room in rooms)
                 {
                     var view = await db.RoomViews.FindAsync(room.RoomViewId);
+                    var type = await db.RoomTypes.FindAsync(room.RoomTypeId);
+
                     roomDtos.Add(new RoomDto()
                     {
                         CreatedDate = room.CreatedDate,
@@ -384,7 +386,8 @@ namespace Zmap.Controllers
                         Description = room.Description,
                         HotleId = room.HotleId,
                         RoomView = view.ArabicName,
-                        NumberOfRooms = room.NumberOfRooms
+                        NumberOfRooms = room.NumberOfRooms,
+                        RoomType = type != null ? type.ArabicName : ""
                     });
                 }
 
@@ -1003,6 +1006,7 @@ namespace Zmap.Controllers
 
             try
             {
+                ViewBag.RoomTypes = await db.RoomTypes.Where(r => r.Active == true).ToListAsync();
                 ViewBag.RoomViews = await db.RoomViews.Where(r => r.Active == true).ToListAsync();
             }
             catch (Exception e)
@@ -1032,6 +1036,7 @@ namespace Zmap.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    ViewBag.RoomTypes = await db.RoomTypes.Where(r => r.Active == true).ToListAsync();
                     ViewBag.RoomViews = await db.RoomViews.Where(r => r.Active == true).ToListAsync();
                     return View(room);
                 }
@@ -1078,7 +1083,7 @@ namespace Zmap.Controllers
                 {
                     return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "room is null", UserId = userId });
                 }
-
+                ViewBag.RoomTypes = await db.RoomTypes.Where(r => r.Active == true).ToListAsync();
                 ViewBag.RoomViews = await db.RoomViews.Where(r => r.Active == true).ToListAsync();
             }
             catch (Exception e)
@@ -1109,6 +1114,7 @@ namespace Zmap.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    ViewBag.RoomTypes = await db.RoomTypes.Where(r => r.Active == true).ToListAsync();
                     ViewBag.RoomViews = await db.RoomViews.Where(r => r.Active == true).ToListAsync();
                     return View(room);
                 }
@@ -1840,8 +1846,8 @@ namespace Zmap.Controllers
             {
                 hotelCustomAdds = new HotelCustomAddDto()
                 {
-                    HotelCustomAdds = await db.HotelCustomAdds.Where(h => h.HotelId == id && h.Active == true).ToListAsync(),
-                    HotelId = id
+                    HotelCustomAdds = await db.HotelCustomAdds.Where(h => h.RoomId == id && h.Active == true).ToListAsync(),
+                    RoomId = id
                 };
             }
             catch (Exception e)
@@ -1870,7 +1876,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
             }
 
-            int? hotelId;
+            int? roomId;
 
             try
             {
@@ -1881,7 +1887,7 @@ namespace Zmap.Controllers
                     return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "hotel custome is null", UserId = userId });
                 }
 
-                hotelId = hotelCustom.HotelId;
+                roomId = hotelCustom.RoomId;
 
                 hotelCustom.Active = false;
                 hotelCustom.ModifiedDate = DateTime.Now;
@@ -1894,7 +1900,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("HotelCustomAdds", "Hotels", new { id = hotelId });
+            return RedirectToAction("HotelCustomAdds", "Hotels", new { id = roomId });
         } 
 
         public ActionResult CreateHotelCustomAdds(int? id)
@@ -1915,7 +1921,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
             }
 
-            return View(new HotelCustomAdd() { HotelId = id });
+            return View(new HotelCustomAdd() { RoomId = id });
         }
 
         [HttpPost]
@@ -1951,7 +1957,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("HotelCustomAdds", "Hotels", new { id = hotelCustomAdd.HotelId });
+            return RedirectToAction("HotelCustomAdds", "Hotels", new { id = hotelCustomAdd.RoomId });
         }
 
         public async Task<ActionResult> EditHotelCustomAdds(int? id)
@@ -2019,8 +2025,557 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("HotelCustomAdds", "Hotels", new { id = hotelCustomAdd.HotelId });
+            return RedirectToAction("HotelCustomAdds", "Hotels", new { id = hotelCustomAdd.RoomId });
         }
+
+        public async Task<ActionResult> LockedRooms(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            if(id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+            }
+
+            var lockedRoomDetails = new LockedRoomDetailsDto();
+
+            try
+            {
+                var lockedRooms = await db.LockedRooms.Where(l => l.Active == true && l.RoomId == id).ToListAsync();
+
+                if(lockedRooms == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "locked rooms is null", UserId = userId });
+                }
+
+                var lockedRoomsDto = new List<LockedRoomDto>();
+
+                foreach (var room in lockedRooms)
+                {
+                    var theRoom = await db.Rooms.FindAsync(room.RoomId);
+                    var roomView = await db.RoomViews.FindAsync(theRoom.RoomViewId);
+                    var roomType = await db.RoomTypes.FindAsync(theRoom.RoomTypeId);
+
+                    lockedRoomsDto.Add(new LockedRoomDto()
+                    {
+                        Id = room.Id,
+                        LockedDateFrom = room.DateFrom,
+                        LockedDateTo = room.DateTo,
+                        NumberOfLockedRooms = room.NumberOfLockedRooms,
+                        RoomType = roomType.ArabicName,
+                        RoomView = roomView.ArabicName
+                    });
+                }
+
+                lockedRoomDetails = new LockedRoomDetailsDto()
+                {
+                    RoomId = id,
+                    LockedRooms = lockedRoomsDto
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(lockedRoomDetails);
+        }
+
+        public async Task<ActionResult> DeleteLockedRoom(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            if(id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+            }
+
+            int? roomId;
+
+            try
+            {
+                var lockedRooms = await db.LockedRooms.FindAsync(id);
+
+                if(lockedRooms == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "locked rooms is null", UserId = userId });
+                }
+
+                roomId = lockedRooms.RoomId;
+                var room = await db.Rooms.FindAsync(roomId);
+
+                room.NumberOfRooms = room.NumberOfRooms + lockedRooms.NumberOfLockedRooms;
+                room.ModifiedDate = DateTime.Now;
+                room.ModifiedByUserId = userId;
+
+                lockedRooms.Active = false;
+                lockedRooms.ModifiedDate = DateTime.Now;
+                lockedRooms.ModifiedByUserId = userId;
+
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("LockedRooms", "Hotels", new { id = roomId});
+        }
+
+        public async Task<ActionResult> CreateLockedRoom(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+            }
+
+            try
+            {
+                var room = await db.Rooms.FindAsync(id);
+
+                if(room == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "room is null", UserId = userId });
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(new LockedRoom() { RoomId = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateLockedRoom(LockedRoom lockedRoom)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                if(!ModelState.IsValid)
+                {
+                    return View(lockedRoom);
+                }
+
+                if (lockedRoom.NumberOfLockedRooms <= 0)
+                {
+                    ViewBag.Validation = "number of locked rooms cannot be less than or equal 0";
+                    return View(lockedRoom);
+                }
+
+                var room = await db.Rooms.FindAsync(lockedRoom.RoomId);
+
+                if(room == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "room is null", UserId = userId });
+                }
+
+                if(lockedRoom.NumberOfLockedRooms > room.NumberOfRooms)
+                {
+                    ViewBag.Validation = "number of requested rooms is greater than number of actual rooms";
+                    return View(lockedRoom);
+                }
+
+                room.NumberOfRooms = room.NumberOfRooms - lockedRoom.NumberOfLockedRooms;
+                room.ModifiedDate = DateTime.Now;
+                room.ModifiedByUserId = userId;
+
+                lockedRoom.CreatedByUserId = userId;
+                lockedRoom.CreatedDate = DateTime.Now;
+                lockedRoom.Active = true;
+
+                db.LockedRooms.Add(lockedRoom);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("LockedRooms", "Hotels", new { id = lockedRoom.RoomId});
+        }
+
+        public async Task<ActionResult> EditLockedRoom(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+            }
+
+            var lockedRoom = new LockedRoom();
+
+            try
+            {
+                lockedRoom = await db.LockedRooms.FindAsync(id);
+
+                if (lockedRoom == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "room is null", UserId = userId });
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(lockedRoom);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditLockedRoom(LockedRoom lockedRoom)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(lockedRoom);
+                }
+
+                if (lockedRoom.NumberOfLockedRooms <= 0)
+                {
+                    ViewBag.Validation = "number of locked rooms cannot be less than or equal 0";
+                    return View(lockedRoom);
+                }
+
+                var room = await db.Rooms.FindAsync(lockedRoom.RoomId);
+
+                if (room == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "room is null", UserId = userId });
+                }
+
+                if (lockedRoom.NumberOfLockedRooms > room.NumberOfRooms)
+                {
+                    ViewBag.Validation = "number of requested rooms is greater than number of actual rooms";
+                    return View(lockedRoom);
+                }
+
+                var tempLockedRoom = db.LockedRooms.Find(lockedRoom.Id);
+
+                room.NumberOfRooms = tempLockedRoom.NumberOfLockedRooms + room.NumberOfRooms;
+                room.NumberOfRooms = room.NumberOfRooms - lockedRoom.NumberOfLockedRooms;
+                room.ModifiedDate = DateTime.Now;
+                room.ModifiedByUserId = userId;
+
+                tempLockedRoom.ModifiedByUserId = userId;
+                tempLockedRoom.ModifiedDate = DateTime.Now;
+                tempLockedRoom.DateTo = lockedRoom.DateTo;
+                tempLockedRoom.DateFrom = lockedRoom.DateFrom;
+                tempLockedRoom.NumberOfLockedRooms = lockedRoom.NumberOfLockedRooms;
+
+                //db.Entry(lockedRoom).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("LockedRooms", "Hotels", new { id = lockedRoom.RoomId });
+        }
+
+        public async Task<ActionResult> ChildPolicy(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            if(id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+            }
+
+            var childPolicyDetailsDto = new ChildPolicyDetailsDto();
+
+            try
+            {
+                var childPolicy = await db.ChildPolicies.Where(c => c.Active == true && c.HotelId == id).ToListAsync();
+                var childPolicyDto = new List<ChildPolicyDto>();
+                foreach (var item in childPolicy)
+                {
+                    var accommodationPercentage = await db.ChildAccommodationPercentages.FindAsync(item.ChildAccommodationPercentageId);
+
+                    childPolicyDto.Add(new ChildPolicyDto()
+                    {
+                        Id = item.Id,
+                        AgeTo = item.AgeTo,
+                        AgeFrom = item.AgeFrom,
+                        AccommodationPercentage = accommodationPercentage.AccommodationPercentage
+                    });
+                }
+
+                childPolicyDetailsDto = new ChildPolicyDetailsDto()
+                {
+                    ChildPolicies = childPolicyDto,
+                    HotelId = id
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(childPolicyDetailsDto);
+        }
+
+        public async Task<ActionResult> DeleteChildPolicy(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+            }
+
+            int? hotelId;
+
+            try
+            {
+                var childPolicy = await db.ChildPolicies.FindAsync(id);
+
+                if(childPolicy == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "child policy is null", UserId = userId });
+                }
+
+                hotelId = childPolicy.HotelId;
+
+                childPolicy.ModifiedDate = DateTime.Now;
+                childPolicy.ModifiedByUserId = userId;
+                childPolicy.Active = false;
+
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("ChildPolicy", "Hotels", new { id = hotelId });
+        }
+
+        public async Task<ActionResult> CreateChildPolicy(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+            }
+
+            try
+            {
+                ViewBag.AccoPercentage = await db.ChildAccommodationPercentages.Where(c => c.Active == true).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(new ChildPolicy() { HotelId = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateChildPolicy(ChildPolicy childPolicy) 
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.AccoPercentage = await db.ChildAccommodationPercentages.Where(c => c.Active == true).ToListAsync();
+                    return View(childPolicy);
+                }
+
+                childPolicy.CreatedByUserId = userId;
+                childPolicy.CreatedDate = DateTime.Now;
+                childPolicy.Active = true;
+
+                db.ChildPolicies.Add(childPolicy);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("ChildPolicy", "Hotels", new { id = childPolicy.HotelId });
+        }
+
+        //public async Task<ActionResult> EditChildPolicy(int? id)
+        //{
+        //    SetIdenitiy();
+        //    if (userId == 0 || userId == null)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
+
+        //    if (userType != 1 && userType != 2)
+        //    {
+        //        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+        //    }
+
+        //    if (id == null)
+        //    {
+        //        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+        //    }
+
+        //    var childPolicy = new ChildPolicy();
+
+        //    try
+        //    {
+        //        childPolicy = await db.ChildPolicies.FindAsync(id);
+
+        //        if(childPolicy == null)
+        //        {
+        //            return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "child policy is null", UserId = userId });
+        //        }
+
+        //        ViewBag.AccoPercentage = await db.ChildAccommodationPercentages.Where(c => c.Active == true).ToListAsync();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+        //    }
+
+        //    return View(childPolicy);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> EditChildPolicy(ChildPolicy childPolicy)
+        //{
+        //    SetIdenitiy();
+        //    if (userId == 0 || userId == null)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
+
+        //    if (userType != 1 && userType != 2)
+        //    {
+        //        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+        //    }
+
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            ViewBag.AccoPercentage = await db.ChildAccommodationPercentages.Where(c => c.Active == true).ToListAsync();
+        //            return View(childPolicy);
+        //        }
+
+        //        childPolicy.ModifiedByUserId = userId;
+        //        childPolicy.ModifiedDate = DateTime.Now;
+
+        //        db.Entry(childPolicy).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+        //    }
+
+        //    return RedirectToAction("ChildPolicy", "Hotels", new { id = childPolicy.HotelId });
+        //}
 
         protected override void Dispose(bool disposing)
         {

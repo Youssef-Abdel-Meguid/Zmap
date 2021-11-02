@@ -8,7 +8,7 @@ namespace Zmap.Dtos
 {
     public class HotelCustomAddDto
     {
-        public int? HotelId { get; set; }
+        public int? RoomId { get; set; }
         public List<HotelCustomAdd> HotelCustomAdds { get; set; }
     }
 }

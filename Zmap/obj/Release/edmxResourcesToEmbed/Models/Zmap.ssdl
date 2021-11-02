@@ -142,6 +142,29 @@
     <Property Name="DepartureDate" Type="date" Nullable="false" />
     <Property Name="TripName" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="ChildAccommodationPercentage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccommodationPercentage" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="ChildPolicy">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="ChildAccommodationPercentageId" Type="int" />
+    <Property Name="AgeFrom" Type="int" />
+    <Property Name="AgeTo" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
   <EntityType Name="Cities">
     <Key>
       <PropertyRef Name="Id" />
@@ -266,6 +289,7 @@
     <Property Name="Active" Type="bit" />
     <Property Name="Cost" Type="money" />
     <Property Name="HotelId" Type="int" />
+    <Property Name="RoomId" Type="int" />
   </EntityType>
   <EntityType Name="Hotels">
     <Key>
@@ -313,6 +337,21 @@
     <Property Name="StoppinByOrder" Type="int" Nullable="false" />
     <Property Name="LineId" Type="int" Nullable="false" />
     <Property Name="StationId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="LockedRooms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="NumberOfLockedRooms" Type="int" />
+    <Property Name="DateFrom" Type="datetime" />
+    <Property Name="DateTo" Type="datetime" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="CreatedByUserId" Type="int" />
@@ -673,6 +712,8 @@
     <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BusSeatsMap" EntityType="Self.BusSeatsMap" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BusTripSchedule" EntityType="Self.BusTripSchedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChildAccommodationPercentage" EntityType="Self.ChildAccommodationPercentage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChildPolicy" EntityType="Self.ChildPolicy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
@@ -685,6 +726,7 @@
     <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LineBuses" EntityType="Self.LineBuses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LineStations" EntityType="Self.LineStations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LockedRooms" EntityType="Self.LockedRooms" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OurServices" EntityType="Self.OurServices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentStatus" EntityType="Self.PaymentStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PostCategory" EntityType="Self.PostCategory" Schema="dbo" store:Type="Tables" />

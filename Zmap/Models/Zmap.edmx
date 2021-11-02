@@ -147,6 +147,29 @@
           <Property Name="DepartureDate" Type="date" Nullable="false" />
           <Property Name="TripName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="ChildAccommodationPercentage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationPercentage" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ChildPolicy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HotelId" Type="int" />
+          <Property Name="ChildAccommodationPercentageId" Type="int" />
+          <Property Name="AgeFrom" Type="int" />
+          <Property Name="AgeTo" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedByUserId" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedByUserId" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="Cities">
           <Key>
             <PropertyRef Name="Id" />
@@ -271,6 +294,7 @@
           <Property Name="Active" Type="bit" />
           <Property Name="Cost" Type="money" />
           <Property Name="HotelId" Type="int" />
+          <Property Name="RoomId" Type="int" />
         </EntityType>
         <EntityType Name="Hotels">
           <Key>
@@ -318,6 +342,21 @@
           <Property Name="StoppinByOrder" Type="int" Nullable="false" />
           <Property Name="LineId" Type="int" Nullable="false" />
           <Property Name="StationId" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedByUserId" Type="int" />
+          <Property Name="ModifiedByUserId" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="LockedRooms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoomId" Type="int" />
+          <Property Name="NumberOfLockedRooms" Type="int" />
+          <Property Name="DateFrom" Type="datetime" />
+          <Property Name="DateTo" Type="datetime" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="CreatedByUserId" Type="int" />
@@ -678,6 +717,8 @@
           <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusSeatsMap" EntityType="Self.BusSeatsMap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusTripSchedule" EntityType="Self.BusTripSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChildAccommodationPercentage" EntityType="Self.ChildAccommodationPercentage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChildPolicy" EntityType="Self.ChildPolicy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
@@ -690,6 +731,7 @@
           <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LineBuses" EntityType="Self.LineBuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LineStations" EntityType="Self.LineStations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LockedRooms" EntityType="Self.LockedRooms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurServices" EntityType="Self.OurServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentStatus" EntityType="Self.PaymentStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PostCategory" EntityType="Self.PostCategory" Schema="dbo" store:Type="Tables" />
@@ -1190,6 +1232,9 @@
           <EntitySet Name="ReservedSeats" EntityType="ZmapModel.ReservedSeat" />
           <EntitySet Name="Rooms" EntityType="ZmapModel.Room" />
           <EntitySet Name="HotelCustomAdds" EntityType="ZmapModel.HotelCustomAdd" />
+          <EntitySet Name="LockedRooms" EntityType="ZmapModel.LockedRoom" />
+          <EntitySet Name="ChildAccommodationPercentages" EntityType="ZmapModel.ChildAccommodationPercentage" />
+          <EntitySet Name="ChildPolicies" EntityType="ZmapModel.ChildPolicy" />
           </EntityContainer>
         <EntityType Name="Accommodation">
           <Key>
@@ -1430,6 +1475,45 @@
           <Property Name="Active" Type="Boolean" />
           <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="HotelId" Type="Int32" />
+          <Property Name="RoomId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LockedRoom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoomId" Type="Int32" />
+          <Property Name="NumberOfLockedRooms" Type="Int32" />
+          <Property Name="DateFrom" Type="DateTime" Precision="3" />
+          <Property Name="DateTo" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="ModifiedByUserId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ChildAccommodationPercentage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationPercentage" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ChildPolicy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HotelId" Type="Int32" />
+          <Property Name="ChildAccommodationPercentageId" Type="Int32" />
+          <Property Name="AgeFrom" Type="Int32" />
+          <Property Name="AgeTo" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedByUserId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2134,6 +2218,7 @@
           <EntitySetMapping Name="HotelCustomAdds">
             <EntityTypeMapping TypeName="ZmapModel.HotelCustomAdd">
               <MappingFragment StoreEntitySet="HotelCustomAdds">
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
                 <ScalarProperty Name="HotelId" ColumnName="HotelId" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
@@ -2142,6 +2227,47 @@
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LockedRooms">
+            <EntityTypeMapping TypeName="ZmapModel.LockedRoom">
+              <MappingFragment StoreEntitySet="LockedRooms">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="NumberOfLockedRooms" ColumnName="NumberOfLockedRooms" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChildAccommodationPercentages">
+            <EntityTypeMapping TypeName="ZmapModel.ChildAccommodationPercentage">
+              <MappingFragment StoreEntitySet="ChildAccommodationPercentage">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="AccommodationPercentage" ColumnName="AccommodationPercentage" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChildPolicies">
+            <EntityTypeMapping TypeName="ZmapModel.ChildPolicy">
+              <MappingFragment StoreEntitySet="ChildPolicy">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="AgeTo" ColumnName="AgeTo" />
+                <ScalarProperty Name="AgeFrom" ColumnName="AgeFrom" />
+                <ScalarProperty Name="ChildAccommodationPercentageId" ColumnName="ChildAccommodationPercentageId" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

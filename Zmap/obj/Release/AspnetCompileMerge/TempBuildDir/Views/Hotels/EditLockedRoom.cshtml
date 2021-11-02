@@ -1,0 +1,86 @@
+﻿@model Zmap.Models.LockedRoom
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("LockedRooms", "Hotels", new { id = Model.RoomId })" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>تعديل الغرف مغلقة </h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                            <h2>بيانات الغرفة المغلقة</h2>
+
+                            <div class="aminities">
+                                @using (Html.BeginForm("EditLockedRoom", "Hotels", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="col l12">
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="number" value="@Model.NumberOfLockedRooms" name="NumberOfLockedRooms" required class="validate" />
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>عدد الغرف</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="date" name="DateFrom" required class="validate" value="@Model.DateFrom"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>التاريخ من</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="date" name="DateTo" required class="validate" value="@Model.DateTo"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>التاريخ الى</label>
+                                            </div>
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.RoomId)
+                                        @Html.HiddenFor(m => m.CreatedByUserId)
+                                        @Html.HiddenFor(m => m.CreatedDate)
+                                        @Html.HiddenFor(m => m.Active)
+
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

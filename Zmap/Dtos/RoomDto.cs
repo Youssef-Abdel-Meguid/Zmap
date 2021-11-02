@@ -13,6 +13,7 @@ namespace Zmap.DTOs
         public int HotleId { get; set; }
         public string AccommodationType { get; set; }
         public string RoomView { get; set; }
+        public string RoomType { get; set; }
         public int? NumberOfRooms { get; set; }
         public DateTime? CreatedDate { get; set; }
     }

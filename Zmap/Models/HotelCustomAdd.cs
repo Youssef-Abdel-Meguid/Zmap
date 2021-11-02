@@ -23,5 +23,6 @@ namespace Zmap.Models
         public Nullable<bool> Active { get; set; }
         public Nullable<decimal> Cost { get; set; }
         public Nullable<int> HotelId { get; set; }
+        public Nullable<int> RoomId { get; set; }
     }
 }

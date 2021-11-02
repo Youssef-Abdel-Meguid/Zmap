@@ -37,6 +37,15 @@
 
                                          <div class="row">
                                             <div class="input-field col l9">
+                                                @Html.DropDownList("RoomTypeId", new SelectList(ViewBag.RoomTypes, "Id", "ArabicName"), new { @class = "validate", @data_val = "true", @required = "required" })
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>نوع الغرفة</label>
+                                            </div>
+                                        </div>
+
+                                         <div class="row">
+                                            <div class="input-field col l9">
                                                 <input type="text" name="NumberOfRooms" value="@Model.NumberOfRooms" required class="validate" />
                                             </div>
                                             <div class="input-field col l3">

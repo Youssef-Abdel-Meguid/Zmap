@@ -73,5 +73,8 @@ namespace Zmap.Models
         public virtual DbSet<ReservedSeat> ReservedSeats { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<HotelCustomAdd> HotelCustomAdds { get; set; }
+        public virtual DbSet<LockedRoom> LockedRooms { get; set; }
+        public virtual DbSet<ChildAccommodationPercentage> ChildAccommodationPercentages { get; set; }
+        public virtual DbSet<ChildPolicy> ChildPolicies { get; set; }
     }
 }

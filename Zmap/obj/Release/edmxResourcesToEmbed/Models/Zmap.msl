@@ -698,6 +698,7 @@
     <EntitySetMapping Name="HotelCustomAdds">
       <EntityTypeMapping TypeName="ZmapModel.HotelCustomAdd">
         <MappingFragment StoreEntitySet="HotelCustomAdds">
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
           <ScalarProperty Name="HotelId" ColumnName="HotelId" />
           <ScalarProperty Name="Cost" ColumnName="Cost" />
           <ScalarProperty Name="Active" ColumnName="Active" />
@@ -706,6 +707,47 @@
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LockedRooms">
+      <EntityTypeMapping TypeName="ZmapModel.LockedRoom">
+        <MappingFragment StoreEntitySet="LockedRooms">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="NumberOfLockedRooms" ColumnName="NumberOfLockedRooms" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChildAccommodationPercentages">
+      <EntityTypeMapping TypeName="ZmapModel.ChildAccommodationPercentage">
+        <MappingFragment StoreEntitySet="ChildAccommodationPercentage">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="AccommodationPercentage" ColumnName="AccommodationPercentage" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChildPolicies">
+      <EntityTypeMapping TypeName="ZmapModel.ChildPolicy">
+        <MappingFragment StoreEntitySet="ChildPolicy">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="AgeTo" ColumnName="AgeTo" />
+          <ScalarProperty Name="AgeFrom" ColumnName="AgeFrom" />
+          <ScalarProperty Name="ChildAccommodationPercentageId" ColumnName="ChildAccommodationPercentageId" />
+          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

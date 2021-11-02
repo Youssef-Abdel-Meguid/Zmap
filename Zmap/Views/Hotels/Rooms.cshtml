@@ -31,6 +31,7 @@
                 <thead>
                     <tr>
                         <th>فيو الغرفة</th>
+                        <th>نوع الغرفة</th>
                         <th>وصف الغرفة</th>
                         <th>عدد الغرف المناحة</th>
                         <th></th>
@@ -41,6 +42,7 @@
                     {
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.RoomView)</td>
+                            <td>@Html.DisplayFor(modelItem => item.RoomType)</td>
                             <td>@Html.DisplayFor(modelItem => item.Description)</td>
                             <td>@Html.DisplayFor(modelItem => item.NumberOfRooms) </td>
 

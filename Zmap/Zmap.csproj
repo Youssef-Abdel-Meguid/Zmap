@@ -37,12 +37,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -233,6 +234,8 @@
     <Compile Include="Dtos\BusTripScheduleDto.cs" />
     <Compile Include="Dtos\Categories.cs" />
     <Compile Include="Dtos\CategoryListDto.cs" />
+    <Compile Include="Dtos\ChildPolicyDetailsDto.cs" />
+    <Compile Include="Dtos\ChildPolicyDto.cs" />
     <Compile Include="Dtos\ContactDetailsDto.cs" />
     <Compile Include="Dtos\FAQDetailsDto.cs" />
     <Compile Include="Dtos\FAQDto.cs" />
@@ -246,6 +249,8 @@
     <Compile Include="Dtos\LineDto.cs" />
     <Compile Include="Dtos\LineStationDetailsDto.cs" />
     <Compile Include="Dtos\LineStationDto.cs" />
+    <Compile Include="Dtos\LockedRoomDetailsDto.cs" />
+    <Compile Include="Dtos\LockedRoomDto.cs" />
     <Compile Include="Dtos\LoginDto.cs" />
     <Compile Include="Dtos\NewUserDto.cs" />
     <Compile Include="Dtos\PageDto.cs" />
@@ -296,6 +301,12 @@
     <Compile Include="Models\BusTripSchedule.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChildAccommodationPercentage.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChildPolicy.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\City.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
@@ -330,6 +341,9 @@
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LineStation.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LockedRoom.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OurService.cs">
@@ -556,6 +570,7 @@
     <Content Include="Images\icon\addson.png" />
     <Content Include="Images\icon\bus.png" />
     <Content Include="Images\icon\bustime.png" />
+    <Content Include="Images\icon\child.png" />
     <Content Include="Images\icon\db1.png" />
     <Content Include="Images\icon\db2.png" />
     <Content Include="Images\icon\db3.png" />
@@ -592,6 +607,7 @@
     <Content Include="Images\icon\h5.png" />
     <Content Include="Images\icon\h7.png" />
     <Content Include="Images\icon\line.png" />
+    <Content Include="Images\icon\lock.png" />
     <Content Include="Images\icon\phone.png" />
     <Content Include="Images\icon\room.png" />
     <Content Include="Images\icon\roomAddons.png" />
@@ -849,6 +865,11 @@
     <Content Include="Views\Hotels\HotelCustomAdds.cshtml" />
     <Content Include="Views\Hotels\CreateHotelCustomAdds.cshtml" />
     <Content Include="Views\Hotels\EditHotelCustomAdds.cshtml" />
+    <Content Include="Views\Hotels\ChildPolicy.cshtml" />
+    <Content Include="Views\Hotels\CreateChildPolicy.cshtml" />
+    <Content Include="Views\Hotels\LockedRooms.cshtml" />
+    <Content Include="Views\Hotels\CreateLockedRoom.cshtml" />
+    <Content Include="Views\Hotels\EditLockedRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

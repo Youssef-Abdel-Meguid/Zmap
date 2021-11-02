@@ -470,6 +470,9 @@
     <EntitySet Name="ReservedSeats" EntityType="ZmapModel.ReservedSeat" />
     <EntitySet Name="Rooms" EntityType="ZmapModel.Room" />
     <EntitySet Name="HotelCustomAdds" EntityType="ZmapModel.HotelCustomAdd" />
+    <EntitySet Name="LockedRooms" EntityType="ZmapModel.LockedRoom" />
+    <EntitySet Name="ChildAccommodationPercentages" EntityType="ZmapModel.ChildAccommodationPercentage" />
+    <EntitySet Name="ChildPolicies" EntityType="ZmapModel.ChildPolicy" />
   </EntityContainer>
   <EntityType Name="Accommodation">
     <Key>
@@ -710,5 +713,44 @@
     <Property Name="Active" Type="Boolean" />
     <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="HotelId" Type="Int32" />
+    <Property Name="RoomId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LockedRoom">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoomId" Type="Int32" />
+    <Property Name="NumberOfLockedRooms" Type="Int32" />
+    <Property Name="DateFrom" Type="DateTime" Precision="3" />
+    <Property Name="DateTo" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="ModifiedByUserId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="ChildAccommodationPercentage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccommodationPercentage" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="ChildPolicy">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HotelId" Type="Int32" />
+    <Property Name="ChildAccommodationPercentageId" Type="Int32" />
+    <Property Name="AgeFrom" Type="Int32" />
+    <Property Name="AgeTo" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedByUserId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
   </EntityType>
 </Schema>
