@@ -93,18 +93,9 @@ namespace Zmap.Controllers
 
                 hotelDetailsDto = new HotelDetailsDto()
                 {
-                    City = hotel.City,
-                    Conditions = hotel.Conditions,
-                    Description = hotel.Description,
-                    GoogleMapLocation = hotel.GoogleMapLocation,
                     Name = hotel.Name,
-                    WebsiteUrl = hotel.WebsiteUrl,
                     Id = hotel.Id,
-                    CreatedDate = (DateTime)hotel.CreatedDate,
                     IsConfirmed = hotel.IsConfirmed,
-                    ManagerPhonenumber = hotel.ManagerPhonenumber,
-                    ManagerEmail = hotel.ManagerEmail,
-                    Photo = await db.Galleries.Where(g => g.Active == true && g.HotelId == hotel.Id).FirstOrDefaultAsync()
                 };
 
             }

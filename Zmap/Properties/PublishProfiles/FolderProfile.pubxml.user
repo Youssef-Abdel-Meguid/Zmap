@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Jo\Work\Zmap publish</_PublishTargetUrl>
-    <History>True|2021-11-02T03:21:11.2859932Z;True|2021-10-19T19:01:22.2556980+02:00;True|2021-10-12T23:51:59.4252138+02:00;True|2021-10-07T04:11:28.7343804+02:00;True|2021-10-02T01:35:51.9674004+02:00;True|2021-09-30T15:24:01.1424512+02:00;True|2021-09-28T00:04:25.7005456+02:00;</History>
+    <History>True|2021-11-08T20:35:49.8926698Z;True|2021-11-08T22:33:46.7700547+02:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -21,10 +21,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>11/02/2021 05:21:10</publishTime>
+      <publishTime>11/08/2021 22:35:48</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>11/02/2021 05:21:10</publishTime>
+      <publishTime>11/08/2021 22:35:48</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/25/2021 00:34:04</publishTime>
@@ -174,16 +174,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:04</publishTime>
     </File>
     <File Include="bin/Zmap.dll">
-      <publishTime>11/02/2021 05:21:05</publishTime>
+      <publishTime>11/08/2021 22:35:41</publishTime>
     </File>
     <File Include="bin/Zmap.pdb">
-      <publishTime>11/02/2021 05:21:05</publishTime>
+      <publishTime>11/08/2021 22:35:41</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
       <publishTime>10/25/2021 00:34:02</publishTime>
-    </File>
-    <File Include="Content/bootstrap.min.css">
-      <publishTime>09/16/2021 01:53:34</publishTime>
     </File>
     <File Include="Content/custome.css">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -266,6 +263,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Images/Activities/187647811_304584551379025_7957960700911097826_n.jpg">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
+    <File Include="Images/Activity/defualt.jpg">
+      <publishTime>11/08/2021 22:01:41</publishTime>
+    </File>
     <File Include="Images/Admin/About/about.jpg">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
@@ -331,147 +331,6 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Images/bread.png">
       <publishTime>10/25/2021 00:34:02</publishTime>
-    </File>
-    <File Include="Images/business/about-us.html">
-      <publishTime>08/16/2021 11:56:04</publishTime>
-    </File>
-    <File Include="Images/business/admin-panel-html-template.html">
-      <publishTime>08/16/2021 11:56:16</publishTime>
-    </File>
-    <File Include="Images/business/affiliate-digital-product.html">
-      <publishTime>08/16/2021 11:56:18</publishTime>
-    </File>
-    <File Include="Images/business/all-in-one-sports-club-html-template.html">
-      <publishTime>08/16/2021 11:56:16</publishTime>
-    </File>
-    <File Include="Images/business/business-template.html">
-      <publishTime>08/16/2021 11:56:18</publishTime>
-    </File>
-    <File Include="Images/business/businessdirectorytemplate.html">
-      <publishTime>08/16/2021 11:56:24</publishTime>
-    </File>
-    <File Include="Images/business/css/download-pricing.htm">
-      <publishTime>08/16/2021 11:54:30</publishTime>
-    </File>
-    <File Include="Images/business/directory-script-php.html">
-      <publishTime>08/16/2021 11:56:06</publishTime>
-    </File>
-    <File Include="Images/business/directory-website-template.html">
-      <publishTime>08/16/2021 11:56:10</publishTime>
-    </File>
-    <File Include="Images/business/education-template.html">
-      <publishTime>08/16/2021 11:56:12</publishTime>
-    </File>
-    <File Include="Images/business/hotel-restaurant-booking-website-template.html">
-      <publishTime>08/16/2021 11:56:16</publishTime>
-    </File>
-    <File Include="Images/business/htmltemplates.html">
-      <publishTime>08/16/2021 11:56:06</publishTime>
-    </File>
-    <File Include="Images/business/images/business/s2.htm">
-      <publishTime>08/16/2021 11:56:24</publishTime>
-    </File>
-    <File Include="Images/business/images/fav.htm">
-      <publishTime>08/16/2021 11:56:02</publishTime>
-    </File>
-    <File Include="Images/business/images/favicon.htm">
-      <publishTime>08/16/2021 11:56:02</publishTime>
-    </File>
-    <File Include="Images/business/images/icon/twitter.htm">
-      <publishTime>08/16/2021 11:56:24</publishTime>
-    </File>
-    <File Include="Images/business/images/icon/whatsapp.htm">
-      <publishTime>08/16/2021 11:56:26</publishTime>
-    </File>
-    <File Include="Images/business/images/icon/youtube.htm">
-      <publishTime>08/16/2021 11:56:24</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/admin-panel-html-template.htm">
-      <publishTime>08/16/2021 11:56:16</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/digital-product-sale-page-template.htm">
-      <publishTime>08/16/2021 11:56:18</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/directory-listing-html-template.htm">
-      <publishTime>08/16/2021 11:56:10</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/directory-listing-php-template.htm">
-      <publishTime>08/16/2021 11:56:10</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/education-html-template.htm">
-      <publishTime>08/16/2021 11:56:12</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/hotel-booking-html-template.htm">
-      <publishTime>08/16/2021 11:56:16</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/landing-page-html-template.htm">
-      <publishTime>08/16/2021 11:56:16</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/single-page-business-html-template.htm">
-      <publishTime>08/16/2021 11:56:18</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/sports-html-template.htm">
-      <publishTime>08/16/2021 11:56:16</publishTime>
-    </File>
-    <File Include="Images/business/images/pre/tour-travel-html-template.htm">
-      <publishTime>08/16/2021 11:56:12</publishTime>
-    </File>
-    <File Include="Images/business/images/product/htmltemplate-rn53-themes.htm">
-      <publishTime>08/16/2021 11:56:08</publishTime>
-    </File>
-    <File Include="Images/business/images/product/phptemplate-rn53-themes.htm">
-      <publishTime>08/16/2021 11:56:08</publishTime>
-    </File>
-    <File Include="Images/business/images/product/website-redesign-rn53-themes.htm">
-      <publishTime>08/16/2021 11:56:10</publishTime>
-    </File>
-    <File Include="Images/business/images/rn53themes.htm">
-      <publishTime>08/16/2021 11:56:04</publishTime>
-    </File>
-    <File Include="Images/business/index.html">
-      <publishTime>08/16/2021 11:56:04</publishTime>
-    </File>
-    <File Include="Images/business/js/custom.htm">
-      <publishTime>08/16/2021 11:54:30</publishTime>
-    </File>
-    <File Include="Images/business/js/mail.htm">
-      <publishTime>08/16/2021 11:54:30</publishTime>
-    </File>
-    <File Include="Images/business/js/main.min.htm">
-      <publishTime>08/16/2021 11:54:30</publishTime>
-    </File>
-    <File Include="Images/business/leader-landing-pages.html">
-      <publishTime>08/16/2021 11:56:16</publishTime>
-    </File>
-    <File Include="Images/business/mail.htm">
-      <publishTime>08/16/2021 11:56:08</publishTime>
-    </File>
-    <File Include="Images/business/phpdirectorytemplate.html">
-      <publishTime>08/16/2021 11:56:08</publishTime>
-    </File>
-    <File Include="Images/business/phpdirectorytemplatedownload.htm">
-      <publishTime>08/16/2021 11:56:24</publishTime>
-    </File>
-    <File Include="Images/business/phpdirectorytemplatedownload.html">
-      <publishTime>08/16/2021 11:56:08</publishTime>
-    </File>
-    <File Include="Images/business/products.html">
-      <publishTime>08/16/2021 11:56:04</publishTime>
-    </File>
-    <File Include="Images/business/rn53-themes.html">
-      <publishTime>08/16/2021 11:56:22</publishTime>
-    </File>
-    <File Include="Images/business/s2.htm">
-      <publishTime>08/16/2021 11:53:12</publishTime>
-    </File>
-    <File Include="Images/business/tour-travel-booking-html-template.html">
-      <publishTime>08/16/2021 11:56:12</publishTime>
-    </File>
-    <File Include="Images/business/tutorial-videos.html">
-      <publishTime>08/16/2021 11:56:18</publishTime>
-    </File>
-    <File Include="Images/business/websiteservices.html">
-      <publishTime>08/16/2021 11:56:06</publishTime>
     </File>
     <File Include="Images/cancel.png">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1125,13 +984,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:04</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>11/02/2021 05:21:06</publishTime>
-    </File>
-    <File Include="Scripts/ai.0.22.9-build00167.js">
-      <publishTime>09/16/2021 01:54:22</publishTime>
-    </File>
-    <File Include="Scripts/ai.0.22.9-build00167.min.js">
-      <publishTime>09/16/2021 01:54:22</publishTime>
+      <publishTime>11/08/2021 22:35:43</publishTime>
     </File>
     <File Include="Scripts/angular.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1139,23 +992,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Scripts/bootstrap.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
-    <File Include="Scripts/bootstrap.min.js">
-      <publishTime>09/16/2021 01:53:33</publishTime>
-    </File>
     <File Include="Scripts/custom.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Scripts/datatables.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
-    </File>
-    <File Include="Scripts/jquery-1.10.2.js">
-      <publishTime>09/16/2021 01:53:36</publishTime>
-    </File>
-    <File Include="Scripts/jquery-1.10.2.min.js">
-      <publishTime>09/16/2021 01:53:36</publishTime>
-    </File>
-    <File Include="Scripts/jquery-1.10.2.min.map">
-      <publishTime>09/16/2021 01:53:36</publishTime>
     </File>
     <File Include="Scripts/jquery-1.12.4.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1172,38 +1013,14 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Scripts/jquery.seat-charts.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
-    <File Include="Scripts/jquery.validate.js">
-      <publishTime>09/16/2021 01:53:49</publishTime>
-    </File>
-    <File Include="Scripts/jquery.validate.min.js">
-      <publishTime>09/16/2021 01:53:49</publishTime>
-    </File>
-    <File Include="Scripts/jquery.validate.unobtrusive.js">
-      <publishTime>09/16/2021 01:53:49</publishTime>
-    </File>
-    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
-      <publishTime>09/16/2021 01:53:49</publishTime>
-    </File>
     <File Include="Scripts/materialize.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
-    </File>
-    <File Include="Scripts/modernizr-2.6.2.js">
-      <publishTime>09/16/2021 01:53:47</publishTime>
     </File>
     <File Include="Scripts/owl.carousel.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
-    <File Include="Scripts/respond.js">
-      <publishTime>09/16/2021 01:53:48</publishTime>
-    </File>
-    <File Include="Scripts/respond.min.js">
-      <publishTime>09/16/2021 01:53:48</publishTime>
-    </File>
     <File Include="Scripts/sweetalert2.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
-    </File>
-    <File Include="Scripts/_references.js">
-      <publishTime>09/16/2021 01:54:22</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1212,7 +1029,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Activites/Activities.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/08/2021 00:28:34</publishTime>
+    </File>
+    <File Include="Views/Activites/ActivityDetails.cshtml">
+      <publishTime>11/08/2021 22:02:16</publishTime>
+    </File>
+    <File Include="Views/Activites/ActivityGallery.cshtml">
+      <publishTime>11/08/2021 22:03:01</publishTime>
     </File>
     <File Include="Views/Activites/Contacts.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1221,10 +1044,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Activites/CreateActivity.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/08/2021 00:23:48</publishTime>
     </File>
     <File Include="Views/Activites/CreateAttachment.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
+    </File>
+    <File Include="Views/Activites/CreateAvtivityPhoto.cshtml">
+      <publishTime>11/08/2021 21:52:41</publishTime>
     </File>
     <File Include="Views/Activites/CreateContact.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1236,13 +1062,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Activites/Details.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/08/2021 21:13:43</publishTime>
     </File>
     <File Include="Views/Activites/Edit.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Activites/EditActivity.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/08/2021 00:24:43</publishTime>
     </File>
     <File Include="Views/Activites/FAQs.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1251,7 +1077,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Activites/Gallery.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/08/2021 21:59:37</publishTime>
     </File>
     <File Include="Views/Activites/Index.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1279,9 +1105,6 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Blogs/Create.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
-    </File>
-    <File Include="Views/Blogs/Delete.cshtml">
-      <publishTime>09/25/2021 21:55:22</publishTime>
     </File>
     <File Include="Views/Blogs/Details.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1354,9 +1177,6 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Hotels/CreateRoom.cshtml">
       <publishTime>10/28/2021 01:04:43</publishTime>
-    </File>
-    <File Include="Views/Hotels/CreateRoomAccommodation.cshtml">
-      <publishTime>09/28/2021 00:47:42</publishTime>
     </File>
     <File Include="Views/Hotels/CreateRoomAvailability.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1449,7 +1269,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Transportation/BusTripReservations.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/07/2021 01:11:39</publishTime>
     </File>
     <File Include="Views/Transportation/BusTrips.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1521,7 +1341,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Transportation/LineBuses.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/08/2021 22:30:55</publishTime>
     </File>
     <File Include="Views/Transportation/LineDetails.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1554,7 +1374,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/02/2021 05:21:05</publishTime>
+      <publishTime>11/08/2021 22:33:36</publishTime>
     </File>
   </ItemGroup>
 </Project>

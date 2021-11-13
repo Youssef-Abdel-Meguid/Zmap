@@ -13,6 +13,7 @@ namespace Zmap.Dtos
         public int? BusId { get; set; }
         public int? CompanyId { get; set; }
         public int? StationId { get; set; }
+        public int? ActivityId { get; set; }
         public List<Gallery> Photos { get; set; }
     }
 }

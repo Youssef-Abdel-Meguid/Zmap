@@ -206,7 +206,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIs\SeatsMapController.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\api\SeatMapController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -460,6 +461,7 @@
     <Content Include="Images\about %281%29.jpg" />
     <Content Include="Images\about.jpg" />
     <Content Include="Images\Activities\187647811_304584551379025_7957960700911097826_n.jpg" />
+    <Content Include="Images\Activity\defualt.jpg" />
     <Content Include="Images\Admin\About\about.jpg" />
     <Content Include="Images\Admin\Services\1.jpg" />
     <Content Include="Images\Admin\Services\3.jpg" />
@@ -809,6 +811,7 @@
     <Content Include="Views\Users\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="APIs\" />
     <Folder Include="App_Data\" />
     <Folder Include="Attachments\ActivityCompany\" />
     <Folder Include="Attachments\Hotel\" />
@@ -870,6 +873,9 @@
     <Content Include="Views\Hotels\LockedRooms.cshtml" />
     <Content Include="Views\Hotels\CreateLockedRoom.cshtml" />
     <Content Include="Views\Hotels\EditLockedRoom.cshtml" />
+    <Content Include="Views\Activites\ActivityDetails.cshtml" />
+    <Content Include="Views\Activites\ActivityGallery.cshtml" />
+    <Content Include="Views\Activites\CreateAvtivityPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

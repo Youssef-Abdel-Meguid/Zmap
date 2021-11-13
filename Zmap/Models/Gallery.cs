@@ -27,5 +27,6 @@ namespace Zmap.Models
         public Nullable<int> CompanyId { get; set; }
         public Nullable<bool> Active { get; set; }
         public Nullable<bool> IsMain { get; set; }
+        public Nullable<int> ActivityId { get; set; }
     }
 }

@@ -59,6 +59,13 @@
                                         edit
                                     </i>
                                 </a>
+
+                                <a href="@Url.Action("ActivityDetails", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm green">
+                                    <i class="material-icons">
+                                        info
+                                    </i>
+                                </a>
+
                                 <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteActivity", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
                                     <i class="material-icons">
                                         delete

@@ -114,6 +114,16 @@
                                             </div>
                                         </div>
 
+                                         <div class="row">
+                                            <div class="input-field col l9">
+                                                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @data_val = "true", @required = "required" } })*@
+                                                <textarea class="form-control" required name="Safety"></textarea>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>اجرائات السلامة</label>
+                                            </div>
+                                        </div>
+
                                         @Html.HiddenFor(m => m.CompanyId)
                                         <div class="row">
                                             <div class="input-field col l12">

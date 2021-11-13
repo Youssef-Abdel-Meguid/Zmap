@@ -46,6 +46,8 @@
           <Property Name="Active" Type="bit" />
           <Property Name="ActivityDate" Type="datetime" />
           <Property Name="SubAreaId" Type="int" />
+          <Property Name="Safety" Type="ntext" />
+          <Property Name="CityID" Type="int" />
         </EntityType>
         <EntityType Name="ActivityCategories">
           <Key>
@@ -268,6 +270,7 @@
           <Property Name="CompanyId" Type="int" />
           <Property Name="Active" Type="bit" />
           <Property Name="IsMain" Type="bit" />
+          <Property Name="ActivityId" Type="int" />
         </EntityType>
         <EntityType Name="HotelAddsOn">
           <Key>
@@ -782,6 +785,8 @@
           <Property Name="Active" Type="Boolean" />
           <Property Name="ActivityDate" Type="DateTime" Precision="3" />
           <Property Name="SubAreaId" Type="Int32" />
+          <Property Name="Safety" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CityID" Type="Int32" />
         </EntityType>
         <EntityType Name="ActivityCategory">
           <Key>
@@ -923,6 +928,7 @@
           <Property Name="CompanyId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
           <Property Name="IsMain" Type="Boolean" />
+          <Property Name="ActivityId" Type="Int32" />
         </EntityType>
         <EntityType Name="HotelAddsOn">
           <Key>
@@ -1524,6 +1530,8 @@
           <EntitySetMapping Name="Activities">
             <EntityTypeMapping TypeName="ZmapModel.Activity">
               <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Safety" ColumnName="Safety" />
                 <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
@@ -1679,6 +1687,7 @@
           <EntitySetMapping Name="Galleries">
             <EntityTypeMapping TypeName="ZmapModel.Gallery">
               <MappingFragment StoreEntitySet="Gallery">
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
                 <ScalarProperty Name="IsMain" ColumnName="IsMain" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />

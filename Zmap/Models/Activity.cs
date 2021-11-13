@@ -30,5 +30,7 @@ namespace Zmap.Models
         public Nullable<bool> Active { get; set; }
         public Nullable<System.DateTime> ActivityDate { get; set; }
         public Nullable<int> SubAreaId { get; set; }
+        public string Safety { get; set; }
+        public Nullable<int> CityID { get; set; }
     }
 }

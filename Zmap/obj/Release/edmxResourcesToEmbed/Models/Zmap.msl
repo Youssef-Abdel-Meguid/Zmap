@@ -4,6 +4,8 @@
     <EntitySetMapping Name="Activities">
       <EntityTypeMapping TypeName="ZmapModel.Activity">
         <MappingFragment StoreEntitySet="Activities">
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Safety" ColumnName="Safety" />
           <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
@@ -159,6 +161,7 @@
     <EntitySetMapping Name="Galleries">
       <EntityTypeMapping TypeName="ZmapModel.Gallery">
         <MappingFragment StoreEntitySet="Gallery">
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
           <ScalarProperty Name="IsMain" ColumnName="IsMain" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />

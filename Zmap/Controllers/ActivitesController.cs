@@ -93,15 +93,9 @@ namespace Zmap.Controllers
 
                 copnayDto = new ActivityCompanyDto()
                 {
-                    About = company.About,
                     Id = company.Id,
-                    PrivacyPolicy = company.PrivacyPolicy,
-                    CreatedDate = company.CreatedDate,
                     Name = company.Name,
-                    IsConfirmed = company.IsConfirmed,
-                    ManagerEmail = company.ManagerEmail,
-                    ManagerPhonenumber = company.ManagerPhonenumber,
-                    Photo = await db.Galleries.Where(g => g.Active == true && g.CompanyId == company.Id).FirstOrDefaultAsync()
+                    IsConfirmed = company.IsConfirmed
                 };
 
             }
@@ -1141,6 +1135,182 @@ namespace Zmap.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> ActivityDetails(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            var activity = new Activity();
+
+            try
+            {
+                activity = await db.Activities.FindAsync(id);
+
+                if(activity == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "activity is null", UserId = userId });
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(activity);
+        }
+
+        public async Task<ActionResult> ActivityGallery(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            var gallery = new PhotoDetailsDto();
+
+            try
+            {
+                gallery = new PhotoDetailsDto()
+                {
+                    ActivityId = id,
+                    Photos = await db.Galleries.Where(g => g.Active == true && g.ActivityId == id).ToListAsync()
+                };
+            }
+            catch (Exception e)
+            {
+
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(gallery);
+        }
+
+        public ActionResult CreateAvtivityPhoto(int? Id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+
+            if (Id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            return View(new Gallery() { ActivityId = Id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateAvtivityPhoto(Gallery gallery, HttpPostedFileBase uploadFile)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            try
+            {
+                if (uploadFile == null)
+                    return View();
+
+                uploadFile.SaveAs(HttpContext.Server.MapPath("~/images/Activity/" + uploadFile.FileName));
+                gallery.Active = true;
+                gallery.CreatedDate = DateTime.Now;
+                gallery.CreatedByUserId = userId;
+                gallery.PhotoUrl = uploadFile.FileName;
+                gallery.IsMain = false;
+
+                db.Galleries.Add(gallery);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("ActivityGallery", "Activites", new { Id = gallery.ActivityId });
+        }
+
+        public async Task<ActionResult> DeleteActivityPhoto(int? Id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+            if (Id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            var galley = new Gallery();
+
+            try
+            {
+                galley = await db.Galleries.FindAsync(Id);
+                if (galley == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+                }
+
+                galley.Active = false;
+                galley.ModifiedDate = DateTime.Now;
+                galley.ModifiedByUserId = userId;
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+            return RedirectToAction("ActivityGallery", "Activites", new { Id = galley.ActivityId });
         }
 
         protected override void Dispose(bool disposing)

@@ -6,6 +6,8 @@
     int? seats = Model.NumberOfSeats;
     int? tripId = Model.BusTripId;
     string userType = Session["UserType"] == null ? null : Session["UserType"].ToString();
+    string uId = Session["UserId"] == null ? null : Session["UserId"].ToString();
+    int? userId = int.Parse(uId);
 
     string[] seatsNumberArray = new string[Model.SeatsNumber.Count];
 
@@ -50,7 +52,6 @@
     <link rel="stylesheet" type="text/css" href="~/Content/jquery.seat-charts.css" />
     <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <style>
-       
         a {
             color: #b71a4c;
         }
@@ -86,15 +87,15 @@
             height: 401px;
         }
 
-        .booking-details h2 {
-            margin: 25px 0 20px 0;
-            font-size: 17px;
-        }
+            .booking-details h2 {
+                margin: 25px 0 20px 0;
+                font-size: 17px;
+            }
 
-        .booking-details h3 {
-            margin: 5px 5px 0 0;
-            font-size: 14px;
-        }
+            .booking-details h3 {
+                margin: 5px 5px 0 0;
+                font-size: 14px;
+            }
 
         div.seatCharts-cell {
             color: #182C4E;
@@ -116,10 +117,10 @@
             background-color: #B9DEA0;
         }
 
-        div.seatCharts-seat.available.first-class {
-            /* 	background: url(vip.png); */
-            background-color: #3a78c3;
-        }
+            div.seatCharts-seat.available.first-class {
+                /* 	background: url(vip.png); */
+                background-color: #3a78c3;
+            }
 
         div.seatCharts-seat.focused {
             background-color: #76B474;
@@ -169,7 +170,7 @@
     </style>
 </head>
 
-<body onload="seats(@tripId, @seats, @seatsNumber)">
+<body onload="seats(@tripId, @seats, @seatsNumber, @userId)">
 
 
 
@@ -293,6 +294,7 @@
             <div id="seat-map">
                 <div class="front-indicator">السائق</div>
             </div>
+
             <div class="booking-details" id="checkOut">
                 <h2>تفاصيل الحجز</h2>
                 <h3> المقاعد المحددة (<span id="counter">0</span>):</h3>
@@ -301,7 +303,18 @@
                 <button class="checkout-button btn-large">تسجيل &raquo;</button>
                 <div id="legend"></div>
             </div>
+
+            @*<div class="booking-details" id="cancel" style="margin-top: -149px;">
+                
+                <h2>تفاصيل الالغاء</h2>
+                <h3> المقاعد المحددة (<span id="counter">0</span>):</h3>
+                <ul id="selected-seats">
+                </ul>
+                <button class="cancel-button btn-large">الغاء &raquo;</button>
+
+            </div>*@
         </div>
+
     </div>
 
 
@@ -420,10 +433,11 @@
 
     <script>
 
-        function seats(tripId, numberOfSeats, seatsNumber) {
+        function seats(tripId, numberOfSeats, seatsNumber, userId) {
             var firstSeatLabel = 1;
             if (numberOfSeats == 49) {
                 var selectedSeats = [];
+                var canceledSeats = [];
                 $(document).ready(function () {
                     var $cart = $('#selected-seats'),
                         $counter = $('#counter'),
@@ -511,7 +525,7 @@
                         console.log(tripId);
                         console.log(selectedSeats);
                         $.ajax({
-                            url: "/Transportation/UpdateBusTripReservations/" + tripId,
+                            url: "/api/SeatMap/" + tripId + '/' + userId,
                             method: "POST",
                             contentType: 'application/json;charset=utf-8',
                             data: JSON.stringify({
@@ -522,6 +536,22 @@
                             }
                         });
                     });
+
+                    //$('#cancel').on('click', '.checkout-button', function () {
+                    //    console.log(tripId);
+                    //    console.log(canceledSeats);
+                    //    $.ajax({
+                    //        url: "/Transportation/CancelBusTripReservations/" + tripId,
+                    //        method: "POST",
+                    //        contentType: 'application/json;charset=utf-8',
+                    //        data: JSON.stringify({
+                    //            seatsNumber: canceledSeats
+                    //        }),
+                    //        success: function () {
+                    //            location.reload();
+                    //        }
+                    //    });
+                    //});
 
                     sc.get(seatsNumber).status('unavailable');
 
@@ -608,7 +638,7 @@
                         console.log(tripId);
                         console.log(selectedSeats);
                         $.ajax({
-                            url: "/Transportation/UpdateBusTripReservations/" + tripId,
+                            url: "/api/SeatMap/" + tripId + '/' + userId,
                             method: "POST",
                             contentType: 'application/json;charset=utf-8',
                             data: JSON.stringify({

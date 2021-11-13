@@ -20,6 +20,8 @@
     <Property Name="Active" Type="Boolean" />
     <Property Name="ActivityDate" Type="DateTime" Precision="3" />
     <Property Name="SubAreaId" Type="Int32" />
+    <Property Name="Safety" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CityID" Type="Int32" />
   </EntityType>
   <EntityType Name="ActivityCategory">
     <Key>
@@ -161,6 +163,7 @@
     <Property Name="CompanyId" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
     <Property Name="IsMain" Type="Boolean" />
+    <Property Name="ActivityId" Type="Int32" />
   </EntityType>
   <EntityType Name="HotelAddsOn">
     <Key>

@@ -41,6 +41,8 @@
     <Property Name="Active" Type="bit" />
     <Property Name="ActivityDate" Type="datetime" />
     <Property Name="SubAreaId" Type="int" />
+    <Property Name="Safety" Type="ntext" />
+    <Property Name="CityID" Type="int" />
   </EntityType>
   <EntityType Name="ActivityCategories">
     <Key>
@@ -263,6 +265,7 @@
     <Property Name="CompanyId" Type="int" />
     <Property Name="Active" Type="bit" />
     <Property Name="IsMain" Type="bit" />
+    <Property Name="ActivityId" Type="int" />
   </EntityType>
   <EntityType Name="HotelAddsOn">
     <Key>

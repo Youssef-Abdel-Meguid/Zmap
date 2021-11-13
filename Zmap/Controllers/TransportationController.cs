@@ -94,15 +94,9 @@ namespace Zmap.Controllers
 
                 companyDto = new TransportationDetailsDto()
                 {
-                    About = company.About,
-                    CreatedDate = company.CreatedDate,
                     Id = company.Id,
                     Name = company.Name,
-                    PrivacyPolicy = company.PrivacyPolicy,
-                    Photo = await db.Galleries.Where(g => g.Active == true && g.CompanyId == id).FirstOrDefaultAsync(),
-                    IsConfirmed = company.IsConfirmed,
-                    ManagerEmail = company.ManagerEmail,
-                    ManagerPhonenumber = company.ManagerPhonenumber
+                    IsConfirmed = company.IsConfirmed
                 };
             }
             catch (Exception e)
@@ -1491,22 +1485,12 @@ namespace Zmap.Controllers
                 {
                     return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
                 }
-
-                var cat = await db.BusCategories.FindAsync(bus.CategoryId);
-                var map = await db.BusSeatsMaps.FindAsync(bus.SeatsMapId);
                
                 busDto = new BusDto()
                 {
-                    BusNumber = bus.BusNumber,
-                    CreatedDate = bus.CreatedDate,
                     Id = bus.Id,
                     Name = bus.Name,
-                    Photo = await db.Galleries.Where(g => g.Active == true && g.BusId == bus.Id).FirstOrDefaultAsync(),
-                    CategoryId = bus.CategoryId,
-                    Category = cat.CategoryName,
-                    BusSeatMapId = bus.SeatsMapId,
-                    BusSeatMap = map.MapName,
-                    CompanyId = bus.CompanyId,
+                    CompanyId = bus.CompanyId
                 };
             }
             catch (Exception e)
@@ -2627,53 +2611,83 @@ namespace Zmap.Controllers
             return View(reservedSeatsDto);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<bool> UpdateBusTripReservations([System.Web.Http.FromUri]int? id, [System.Web.Http.FromBody]List<string> seatsNumber)
-        {
-            SetIdenitiy();
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public async Task<bool> UpdateBusTripReservations([System.Web.Http.FromUri]int? id, [System.Web.Http.FromBody]List<string> seatsNumber)
+        //{
+        //    SetIdenitiy();
 
-            try
-            {
+        //    try
+        //    {
 
-                foreach (var item in seatsNumber)
-                {
+        //        foreach (var item in seatsNumber)
+        //        {
                     
-                    var reservedSeat = new ReservedSeat()
-                    {
-                        Active = true,
-                        BusTripId = id,
-                        ByAdmin = true,
-                        CreatedByUserId = userId,
-                        CreatedDate = DateTime.Now,
-                        SeatNumber = item
-                    };
+        //            var reservedSeat = new ReservedSeat()
+        //            {
+        //                Active = true,
+        //                BusTripId = id,
+        //                ByAdmin = true,
+        //                CreatedByUserId = userId,
+        //                CreatedDate = DateTime.Now,
+        //                SeatNumber = item
+        //            };
 
-                    db.ReservedSeats.Add(reservedSeat);
-                }
+        //            db.ReservedSeats.Add(reservedSeat);
+        //        }
 
-                await db.SaveChangesAsync();
+        //        await db.SaveChangesAsync();
 
                 
-            }
-            catch (Exception e)
-            {
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                logger.ErrorLoggers.Add(new ErrorLogger()
-                {
-                    ActionName = "update seats map",
-                    CreatedDate = DateTime.Now,
-                    Error = e.Message.ToString(),
-                    UserId = userId
-                });
+        //        logger.ErrorLoggers.Add(new ErrorLogger()
+        //        {
+        //            ActionName = "update seats map",
+        //            CreatedDate = DateTime.Now,
+        //            Error = e.Message.ToString(),
+        //            UserId = userId
+        //        });
 
-                await logger.SaveChangesAsync();
-                return false;
-            }
+        //        await logger.SaveChangesAsync();
+        //        return false;
+        //    }
 
-            return true;
+        //    return true;
 
-        }
+        //}
+
+        //public async Task<ActionResult> LineBusDetails(int? id)
+        //{
+        //    SetIdenitiy();
+        //    if (userId == 0 || userId == null)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
+
+        //    if (userType != 1 && userType != 3)
+        //    {
+        //        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "not authorized", UserId = userId });
+        //    }
+
+        //    if (id == null)
+        //    {
+        //        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = "id is null", UserId = userId });
+        //    }
+
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in transportations", Error = e.Message.ToString(), UserId = userId });
+        //    }
+
+        //    return View();
+        //}
 
         protected override void Dispose(bool disposing)
         {
