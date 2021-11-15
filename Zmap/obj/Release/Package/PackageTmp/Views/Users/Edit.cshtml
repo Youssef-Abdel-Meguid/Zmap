@@ -27,7 +27,7 @@
                         <div class="head-typo typo-com collap-expand book-form inn-com-form">
                             <h2>بيانات الفندق</h2>
 
-                            <div class="aminities">
+                            <div style="overflow: overlay;">
                                 @using (Html.BeginForm("Edit", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
                                     @Html.AntiForgeryToken()

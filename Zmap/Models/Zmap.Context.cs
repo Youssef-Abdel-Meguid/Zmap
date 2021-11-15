@@ -76,5 +76,6 @@ namespace Zmap.Models
         public virtual DbSet<LockedRoom> LockedRooms { get; set; }
         public virtual DbSet<ChildAccommodationPercentage> ChildAccommodationPercentages { get; set; }
         public virtual DbSet<ChildPolicy> ChildPolicies { get; set; }
+        public virtual DbSet<ActivityAvailability> ActivityAvailabilities { get; set; }
     }
 }

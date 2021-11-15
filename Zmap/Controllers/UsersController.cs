@@ -50,7 +50,7 @@ namespace Zmap.Controllers
 
             try
             {
-                var users = await db.Users.Where(u => u.Active == true && u.UserTypeId != 5).ToListAsync();
+                var users = await db.Users.Where(u => u.Active == true).ToListAsync();
                 foreach (var user in users)
                 {
                     var userType = await db.UserTypes.FindAsync(user.UserTypeId);

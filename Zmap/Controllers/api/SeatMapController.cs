@@ -32,7 +32,6 @@ namespace Zmap.Controllers
 
                 foreach (var item in numbers)
                 {
-
                     var reservedSeat = new ReservedSeat()
                     {
                         Active = true,

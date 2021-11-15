@@ -221,6 +221,7 @@
     <Compile Include="Controllers\TransportationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Dtos\AccommodationDto.cs" />
+    <Compile Include="Dtos\ActivityAvailabilityDto.cs" />
     <Compile Include="Dtos\ActivityCompanyDto.cs" />
     <Compile Include="Dtos\ActivityDetailsDto.cs" />
     <Compile Include="Dtos\ActivityDto.cs" />
@@ -276,6 +277,9 @@
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ActivityAvailability.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ActivityCategory.cs">
@@ -876,6 +880,8 @@
     <Content Include="Views\Activites\ActivityDetails.cshtml" />
     <Content Include="Views\Activites\ActivityGallery.cshtml" />
     <Content Include="Views\Activites\CreateAvtivityPhoto.cshtml" />
+    <Content Include="Views\Activites\ActivityAvailabilities.cshtml" />
+    <Content Include="Views\Activites\CreateActivityAvailability.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

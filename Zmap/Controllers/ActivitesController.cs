@@ -1313,6 +1313,139 @@ namespace Zmap.Controllers
             return RedirectToAction("ActivityGallery", "Activites", new { Id = galley.ActivityId });
         }
 
+        public async Task<ActionResult> ActivityAvailabilities(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            ActivityAvailabilityDto activityAvailabilityDto = new ActivityAvailabilityDto();
+
+            try
+            {
+                activityAvailabilityDto = new ActivityAvailabilityDto()
+                {
+                    ActivityAvailabilities = await db.ActivityAvailabilities.Where(a => a.Active == true && a.ActivityId == id).ToListAsync(),
+                    ActivityId = id
+                };
+
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(activityAvailabilityDto);
+        }
+
+        public ActionResult CreateActivityAvailability(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            return View(new ActivityAvailability() { ActivityId = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateActivityAvailability(ActivityAvailability activityAvailability)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                if (!ModelState.IsValid)
+                    return View(activityAvailability);
+
+                activityAvailability.CreatedDate = DateTime.Now;
+                activityAvailability.CreatedByUserId = userId;
+                activityAvailability.Active = true;
+
+                db.ActivityAvailabilities.Add(activityAvailability);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("ActivityAvailabilities", "Activites", new { id = activityAvailability.ActivityId });
+        }
+
+        public async Task<ActionResult> DeleteActivityAvailability(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            int? activityId;
+
+            try
+            {
+                var activityAva = await db.ActivityAvailabilities.FindAsync(id);
+
+                if(activityAva == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "activity availability is null", UserId = userId });
+                }
+
+                activityId = activityAva.ActivityId;
+                activityAva.ModifiedByUserId = userId;
+                activityAva.ModifiedDate = DateTime.Now;
+                activityAva.Active = false;
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("ActivityAvailabilities", "Activites", new { id = activityId });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

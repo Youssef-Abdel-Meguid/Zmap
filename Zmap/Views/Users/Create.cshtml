@@ -27,7 +27,7 @@
                         <div class="head-typo typo-com collap-expand book-form inn-com-form">
                             <h2>بيانات المستخدم</h2>
 
-                            <div class="aminities">
+                            <div style="overflow: overlay;">
                                 @using (Html.BeginForm("Create", "Users", FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()

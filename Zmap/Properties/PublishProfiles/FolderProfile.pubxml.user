@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Jo\Work\Zmap publish</_PublishTargetUrl>
-    <History>True|2021-11-08T20:35:49.8926698Z;True|2021-11-08T22:33:46.7700547+02:00;</History>
+    <History>True|2021-11-15T23:37:20.6831106Z;True|2021-11-16T01:29:06.1546721+02:00;True|2021-11-16T01:27:21.3035727+02:00;True|2021-11-08T22:35:49.8926698+02:00;True|2021-11-08T22:33:46.7700547+02:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -21,10 +21,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>11/08/2021 22:35:48</publishTime>
+      <publishTime>11/16/2021 01:37:14</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>11/08/2021 22:35:48</publishTime>
+      <publishTime>11/16/2021 01:37:14</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/25/2021 00:34:04</publishTime>
@@ -174,10 +174,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:04</publishTime>
     </File>
     <File Include="bin/Zmap.dll">
-      <publishTime>11/08/2021 22:35:41</publishTime>
+      <publishTime>11/16/2021 01:36:00</publishTime>
     </File>
     <File Include="bin/Zmap.pdb">
-      <publishTime>11/08/2021 22:35:41</publishTime>
+      <publishTime>11/16/2021 01:36:00</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -978,13 +978,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:03</publishTime>
     </File>
     <File Include="Models/Zmap.edmx.diagram">
-      <publishTime>11/02/2021 01:46:59</publishTime>
+      <publishTime>11/16/2021 00:31:05</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>10/25/2021 00:34:04</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>11/08/2021 22:35:43</publishTime>
+      <publishTime>11/16/2021 01:37:03</publishTime>
     </File>
     <File Include="Scripts/angular.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1031,8 +1031,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/Activites/Activities.cshtml">
       <publishTime>11/08/2021 00:28:34</publishTime>
     </File>
+    <File Include="Views/Activites/ActivityAvailabilities.cshtml">
+      <publishTime>11/16/2021 00:52:38</publishTime>
+    </File>
     <File Include="Views/Activites/ActivityDetails.cshtml">
-      <publishTime>11/08/2021 22:02:16</publishTime>
+      <publishTime>11/16/2021 00:33:56</publishTime>
     </File>
     <File Include="Views/Activites/ActivityGallery.cshtml">
       <publishTime>11/08/2021 22:03:01</publishTime>
@@ -1045,6 +1048,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Activites/CreateActivity.cshtml">
       <publishTime>11/08/2021 00:23:48</publishTime>
+    </File>
+    <File Include="Views/Activites/CreateActivityAvailability.cshtml">
+      <publishTime>11/16/2021 01:24:34</publishTime>
     </File>
     <File Include="Views/Activites/CreateAttachment.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1269,7 +1275,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Transportation/BusTripReservations.cshtml">
-      <publishTime>11/07/2021 01:11:39</publishTime>
+      <publishTime>11/13/2021 19:43:15</publishTime>
     </File>
     <File Include="Views/Transportation/BusTrips.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1359,10 +1365,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Users/Create.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/16/2021 01:35:52</publishTime>
     </File>
     <File Include="Views/Users/Edit.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>11/16/2021 01:35:24</publishTime>
     </File>
     <File Include="Views/Users/Index.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>

@@ -44,6 +44,22 @@
     <Property Name="Safety" Type="ntext" />
     <Property Name="CityID" Type="int" />
   </EntityType>
+  <EntityType Name="ActivityAvailabilities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ActivityId" Type="int" />
+    <Property Name="DateFrom" Type="date" />
+    <Property Name="DateTo" Type="date" />
+    <Property Name="TimeFrom" Type="time" Precision="7" />
+    <Property Name="TimeTo" Type="time" Precision="7" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedByUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
   <EntityType Name="ActivityCategories">
     <Key>
       <PropertyRef Name="Id" />
@@ -707,6 +723,7 @@
     <EntitySet Name="AboutUs" EntityType="Self.AboutUs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Accommodations" EntityType="Self.Accommodations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActivityAvailabilities" EntityType="Self.ActivityAvailabilities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActivityCategories" EntityType="Self.ActivityCategories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AddsOn" EntityType="Self.AddsOn" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Attachments" EntityType="Self.Attachments" Schema="dbo" store:Type="Tables" />

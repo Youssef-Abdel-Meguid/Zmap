@@ -24,6 +24,13 @@
                 <div class="hp-amini hp-amini-block db-div-card">
                     <ul>
                         <li class="db-card">
+                            <a href="@Url.Action("ActivityAvailabilities", "Activites", new { Id = Model.Id })">
+                                <img src="~/Images/icon/roomdate.png" class="db-card-img" />
+                                <p>مواعيد النشاط</p>
+                            </a>
+                        </li>
+
+                        <li class="db-card">
                             <a href="@Url.Action("ActivityGallery", "Activites", new { Id = Model.Id })">
                                 <img src="~/Images/icon/gallery.png" class="db-card-img" />
                                 <p>صور النشاط</p>
