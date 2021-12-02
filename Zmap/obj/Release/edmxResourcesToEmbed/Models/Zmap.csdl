@@ -309,14 +309,6 @@
     <Property Name="Active" Type="Boolean" />
     <Property Name="CityId" Type="Int32" Nullable="false" />
   </EntityType>
-  <EntityType Name="TripType">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TripType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Active" Type="Boolean" />
-  </EntityType>
   <EntityType Name="UserHobby">
     <Key>
       <PropertyRef Name="Id" />
@@ -345,13 +337,13 @@
     <Property Name="TransportationCost" Type="Double" />
     <Property Name="ActivityCost" Type="Double" />
     <Property Name="TotalCost" Type="Double" />
-    <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateFrom" Type="DateTime" Precision="3" />
+    <Property Name="DateTo" Type="DateTime" Precision="3" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="RoomAvailabilityId" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
-    <Property Name="PyamentStatusId" Type="Int32" />
+    <Property Name="UserPaymentId" Type="Int32" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -391,31 +383,6 @@
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="Active" Type="Boolean" />
   </EntityType>
-  <EntityType Name="UserTrip">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="TripTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="TripDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Home" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="DateFrom" Type="DateTime" Precision="3" />
-    <Property Name="DateTo" Type="DateTime" Precision="3" />
-    <Property Name="Cost" Type="Double" />
-    <Property Name="TripDays" Type="Int32" />
-    <Property Name="TripNights" Type="Int32" />
-    <Property Name="TripTypeId" Type="Int32" />
-    <Property Name="NumberOfAdults" Type="Int32" />
-    <Property Name="NumberOfKids" Type="Int32" />
-    <Property Name="NumberOfBoys" Type="Int32" />
-    <Property Name="NuumberOfGirls" Type="Int32" />
-    <Property Name="IsGroup" Type="Boolean" />
-    <Property Name="Active" Type="Boolean" />
-  </EntityType>
   <EntityType Name="UserType">
     <Key>
       <PropertyRef Name="Id" />
@@ -447,12 +414,10 @@
     <EntitySet Name="RoomReservationCancellations" EntityType="Self.RoomReservationCancellation" />
     <EntitySet Name="RoomStatus" EntityType="Self.RoomStatu" />
     <EntitySet Name="Stations" EntityType="Self.Station" />
-    <EntitySet Name="TripTypes" EntityType="Self.TripType" />
     <EntitySet Name="UserHobbies" EntityType="Self.UserHobby" />
     <EntitySet Name="UserReservations" EntityType="Self.UserReservation" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="UserTripActivities" EntityType="Self.UserTripActivity" />
-    <EntitySet Name="UserTrips" EntityType="Self.UserTrip" />
     <EntitySet Name="UserTypes" EntityType="Self.UserType" />
     <EntitySet Name="Accommodations" EntityType="ZmapModel.Accommodation" />
     <EntitySet Name="RoomAddsOns" EntityType="ZmapModel.RoomAddsOn" />
@@ -477,6 +442,9 @@
     <EntitySet Name="ChildAccommodationPercentages" EntityType="ZmapModel.ChildAccommodationPercentage" />
     <EntitySet Name="ChildPolicies" EntityType="ZmapModel.ChildPolicy" />
     <EntitySet Name="ActivityAvailabilities" EntityType="ZmapModel.ActivityAvailability" />
+    <EntitySet Name="UserPayments" EntityType="ZmapModel.UserPayment" />
+    <EntitySet Name="UserTripDetails" EntityType="ZmapModel.UserTripDetail" />
+    <EntitySet Name="UserTrips" EntityType="ZmapModel.UserTrip" />
   </EntityContainer>
   <EntityType Name="Accommodation">
     <Key>
@@ -772,5 +740,47 @@
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedByUserId" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="UserPayment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="PaymentStatusId" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="UserTripDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserTripId" Type="Int32" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="UserTrip">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="TripTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="TripDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Home" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="DateFrom" Type="DateTime" Precision="3" />
+    <Property Name="DateTo" Type="DateTime" Precision="3" />
+    <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TripDays" Type="Int32" />
+    <Property Name="TripNights" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="PhotoUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

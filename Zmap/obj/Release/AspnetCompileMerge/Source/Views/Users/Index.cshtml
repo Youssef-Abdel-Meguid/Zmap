@@ -85,14 +85,14 @@
                             </td>
                             <td>
                                 <a href="@Url.Action("Edit", "Users", new { id = item.Id })" class="btn-floating waves-effect waves-light orange">
-                                    <i class="material-icons">
-                                        edit
-                                    </i>
+                                    <i class="material-icons">edit</i>
                                 </a>
-                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("Delete", "Users", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
-                                    <i class="material-icons">
-                                        delete
-                                    </i>
+                                <a href="@Url.Action("ChangeAdminPassword", "Users", new { id = item.Id })" class="btn-floating waves-effect waves-light">
+                                    <i class="material-icons">vpn_key</i>
+                                </a>
+                                <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("Delete", "Users", new { id = item.Id })" 
+                                   class="btn-floating waves-effect waves-light-sm purple" style="margin-left: 20px;">
+                                    <i class="material-icons">delete</i>
                                 </a>
                             </td>
                         </tr>

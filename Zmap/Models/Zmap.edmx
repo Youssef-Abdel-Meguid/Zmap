@@ -609,14 +609,6 @@
           <Property Name="HomeCityId" Type="int" />
           <Property Name="DestinationCityId" Type="int" />
         </EntityType>
-        <EntityType Name="TripTypes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TripType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Active" Type="bit" />
-        </EntityType>
         <EntityType Name="UserHobbies">
           <Key>
             <PropertyRef Name="Id" />
@@ -624,6 +616,17 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Hobby" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserPayments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="PaymentStatusId" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="Active" Type="bit" />
@@ -645,13 +648,13 @@
           <Property Name="TransportationCost" Type="float" />
           <Property Name="ActivityCost" Type="float" />
           <Property Name="TotalCost" Type="float" />
-          <Property Name="DateFrom" Type="datetime" Nullable="false" />
-          <Property Name="DateTo" Type="datetime" Nullable="false" />
+          <Property Name="DateFrom" Type="datetime" />
+          <Property Name="DateTo" Type="datetime" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="RoomAvailabilityId" Type="int" />
           <Property Name="Active" Type="bit" />
-          <Property Name="PyamentStatusId" Type="int" />
+          <Property Name="UserPaymentId" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -691,30 +694,36 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="Active" Type="bit" />
         </EntityType>
+        <EntityType Name="UserTripDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserTripId" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="UserTrips">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="TripTitle" Type="nvarchar" MaxLength="50" />
-          <Property Name="TripDescription" Type="nvarchar(max)" />
+          <Property Name="TripTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="TripDescription" Type="ntext" />
           <Property Name="Home" Type="nvarchar" MaxLength="50" />
           <Property Name="Destination" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="DateFrom" Type="datetime" />
           <Property Name="DateTo" Type="datetime" />
-          <Property Name="Cost" Type="float" />
+          <Property Name="Cost" Type="money" />
           <Property Name="TripDays" Type="int" />
           <Property Name="TripNights" Type="int" />
-          <Property Name="TripTypeId" Type="int" />
-          <Property Name="NumberOfAdults" Type="int" />
-          <Property Name="NumberOfKids" Type="int" />
-          <Property Name="NumberOfBoys" Type="int" />
-          <Property Name="NuumberOfGirls" Type="int" />
-          <Property Name="IsGroup" Type="bit" />
           <Property Name="Active" Type="bit" />
+          <Property Name="PhotoUrl" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="UserTypes">
           <Key>
@@ -770,11 +779,12 @@
           <EntitySet Name="Stations" EntityType="Self.Stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubAreas" EntityType="Self.SubAreas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransportationCompanyLines" EntityType="Self.TransportationCompanyLines" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TripTypes" EntityType="Self.TripTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserHobbies" EntityType="Self.UserHobbies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPayments" EntityType="Self.UserPayments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserReservations" EntityType="Self.UserReservations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTripActivities" EntityType="Self.UserTripActivities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTripDetails" EntityType="Self.UserTripDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTrips" EntityType="Self.UserTrips" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -1091,14 +1101,6 @@
           <Property Name="Active" Type="Boolean" />
           <Property Name="CityId" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="TripType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TripType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Active" Type="Boolean" />
-        </EntityType>
         <EntityType Name="UserHobby">
           <Key>
             <PropertyRef Name="Id" />
@@ -1127,13 +1129,13 @@
           <Property Name="TransportationCost" Type="Double" />
           <Property Name="ActivityCost" Type="Double" />
           <Property Name="TotalCost" Type="Double" />
-          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateFrom" Type="DateTime" Precision="3" />
+          <Property Name="DateTo" Type="DateTime" Precision="3" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="RoomAvailabilityId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
-          <Property Name="PyamentStatusId" Type="Int32" />
+          <Property Name="UserPaymentId" Type="Int32" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1173,31 +1175,6 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
         </EntityType>
-        <EntityType Name="UserTrip">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="TripTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TripDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Home" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="DateFrom" Type="DateTime" Precision="3" />
-          <Property Name="DateTo" Type="DateTime" Precision="3" />
-          <Property Name="Cost" Type="Double" />
-          <Property Name="TripDays" Type="Int32" />
-          <Property Name="TripNights" Type="Int32" />
-          <Property Name="TripTypeId" Type="Int32" />
-          <Property Name="NumberOfAdults" Type="Int32" />
-          <Property Name="NumberOfKids" Type="Int32" />
-          <Property Name="NumberOfBoys" Type="Int32" />
-          <Property Name="NuumberOfGirls" Type="Int32" />
-          <Property Name="IsGroup" Type="Boolean" />
-          <Property Name="Active" Type="Boolean" />
-        </EntityType>
         <EntityType Name="UserType">
           <Key>
             <PropertyRef Name="Id" />
@@ -1229,12 +1206,10 @@
           <EntitySet Name="RoomReservationCancellations" EntityType="Self.RoomReservationCancellation" />
           <EntitySet Name="RoomStatus" EntityType="Self.RoomStatu" />
           <EntitySet Name="Stations" EntityType="Self.Station" />
-          <EntitySet Name="TripTypes" EntityType="Self.TripType" />
           <EntitySet Name="UserHobbies" EntityType="Self.UserHobby" />
           <EntitySet Name="UserReservations" EntityType="Self.UserReservation" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserTripActivities" EntityType="Self.UserTripActivity" />
-          <EntitySet Name="UserTrips" EntityType="Self.UserTrip" />
           <EntitySet Name="UserTypes" EntityType="Self.UserType" />
           <EntitySet Name="Accommodations" EntityType="ZmapModel.Accommodation" />
           <EntitySet Name="RoomAddsOns" EntityType="ZmapModel.RoomAddsOn" />
@@ -1259,6 +1234,9 @@
           <EntitySet Name="ChildAccommodationPercentages" EntityType="ZmapModel.ChildAccommodationPercentage" />
           <EntitySet Name="ChildPolicies" EntityType="ZmapModel.ChildPolicy" />
           <EntitySet Name="ActivityAvailabilities" EntityType="ZmapModel.ActivityAvailability" />
+          <EntitySet Name="UserPayments" EntityType="ZmapModel.UserPayment" />
+          <EntitySet Name="UserTripDetails" EntityType="ZmapModel.UserTripDetail" />
+          <EntitySet Name="UserTrips" EntityType="ZmapModel.UserTrip" />
           </EntityContainer>
         <EntityType Name="Accommodation">
           <Key>
@@ -1554,6 +1532,48 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="UserPayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="PaymentStatusId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="UserTripDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTripId" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="UserTrip">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TripTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TripDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Home" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="DateFrom" Type="DateTime" Precision="3" />
+          <Property Name="DateTo" Type="DateTime" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TripDays" Type="Int32" />
+          <Property Name="TripNights" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="PhotoUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1892,15 +1912,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TripTypes">
-            <EntityTypeMapping TypeName="ZmapModel.TripType">
-              <MappingFragment StoreEntitySet="TripTypes">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TripType1" ColumnName="TripType" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserHobbies">
             <EntityTypeMapping TypeName="ZmapModel.UserHobby">
               <MappingFragment StoreEntitySet="UserHobbies">
@@ -1916,6 +1927,7 @@
           <EntitySetMapping Name="UserReservations">
             <EntityTypeMapping TypeName="ZmapModel.UserReservation">
               <MappingFragment StoreEntitySet="UserReservations">
+                <ScalarProperty Name="UserPaymentId" ColumnName="UserPaymentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="HotelId" ColumnName="HotelId" />
@@ -1935,7 +1947,6 @@
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="RoomAvailabilityId" ColumnName="RoomAvailabilityId" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="PyamentStatusId" ColumnName="PyamentStatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1975,32 +1986,6 @@
                 <ScalarProperty Name="UserTripId" ColumnName="UserTripId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserTrips">
-            <EntityTypeMapping TypeName="ZmapModel.UserTrip">
-              <MappingFragment StoreEntitySet="UserTrips">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="TripTitle" ColumnName="TripTitle" />
-                <ScalarProperty Name="TripDescription" ColumnName="TripDescription" />
-                <ScalarProperty Name="Home" ColumnName="Home" />
-                <ScalarProperty Name="Destination" ColumnName="Destination" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
-                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-                <ScalarProperty Name="TripDays" ColumnName="TripDays" />
-                <ScalarProperty Name="TripNights" ColumnName="TripNights" />
-                <ScalarProperty Name="TripTypeId" ColumnName="TripTypeId" />
-                <ScalarProperty Name="NumberOfAdults" ColumnName="NumberOfAdults" />
-                <ScalarProperty Name="NumberOfKids" ColumnName="NumberOfKids" />
-                <ScalarProperty Name="NumberOfBoys" ColumnName="NumberOfBoys" />
-                <ScalarProperty Name="NuumberOfGirls" ColumnName="NuumberOfGirls" />
-                <ScalarProperty Name="IsGroup" ColumnName="IsGroup" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2328,6 +2313,51 @@
                 <ScalarProperty Name="DateTo" ColumnName="DateTo" />
                 <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
                 <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPayments">
+            <EntityTypeMapping TypeName="ZmapModel.UserPayment">
+              <MappingFragment StoreEntitySet="UserPayments">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PaymentStatusId" ColumnName="PaymentStatusId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTripDetails">
+            <EntityTypeMapping TypeName="ZmapModel.UserTripDetail">
+              <MappingFragment StoreEntitySet="UserTripDetails">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="UserTripId" ColumnName="UserTripId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTrips">
+            <EntityTypeMapping TypeName="ZmapModel.UserTrip">
+              <MappingFragment StoreEntitySet="UserTrips">
+                <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="TripNights" ColumnName="TripNights" />
+                <ScalarProperty Name="TripDays" ColumnName="TripDays" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Home" ColumnName="Home" />
+                <ScalarProperty Name="TripDescription" ColumnName="TripDescription" />
+                <ScalarProperty Name="TripTitle" ColumnName="TripTitle" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

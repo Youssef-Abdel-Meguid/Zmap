@@ -76,7 +76,6 @@ namespace Zmap.Controllers
             return View(usersDto);
         }
 
-
         public async Task<ActionResult> Edit(int? id)
         {
             SetIdenitiy();
@@ -145,6 +144,89 @@ namespace Zmap.Controllers
             }
 
             return View(user);
+        }
+
+        public async Task<ActionResult> ChangeAdminPassword(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in users", Error = "not authorized", UserId = userId });
+            }
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in users", Error = "id is null", UserId = userId });
+            }
+
+            ChangeAdminPasswordDto changeAdminPasswordDto = new ChangeAdminPasswordDto();
+
+            try
+            {
+                var user = await db.Users.FindAsync(id);
+                if (user == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in users", Error = "user is null", UserId = userId });
+                }
+                changeAdminPasswordDto.UserId = user.Id;
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in users", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(changeAdminPasswordDto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeAdminPassword(ChangeAdminPasswordDto changeAdminPasswordDto)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in users", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = await db.Users.FindAsync(changeAdminPasswordDto.UserId);
+
+                    if(user == null)
+                    {
+                        return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in users", Error = "user is null", UserId = userId });
+
+                    }
+
+                    var hmac = new HMACSHA512();
+
+                    user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(changeAdminPasswordDto.Password));
+                    user.PasswordSalt = hmac.Key;
+                    user.ModifiedDate = DateTime.Now;
+
+                    db.Entry(user).State = EntityState.Modified;
+
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in users", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(changeAdminPasswordDto);
         }
 
         public async Task<ActionResult> Delete(int? id)

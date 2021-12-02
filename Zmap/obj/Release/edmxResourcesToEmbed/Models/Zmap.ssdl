@@ -604,14 +604,6 @@
     <Property Name="HomeCityId" Type="int" />
     <Property Name="DestinationCityId" Type="int" />
   </EntityType>
-  <EntityType Name="TripTypes">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TripType" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Active" Type="bit" />
-  </EntityType>
   <EntityType Name="UserHobbies">
     <Key>
       <PropertyRef Name="Id" />
@@ -619,6 +611,17 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="Hobby" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserPayments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="PaymentStatusId" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="Active" Type="bit" />
@@ -640,13 +643,13 @@
     <Property Name="TransportationCost" Type="float" />
     <Property Name="ActivityCost" Type="float" />
     <Property Name="TotalCost" Type="float" />
-    <Property Name="DateFrom" Type="datetime" Nullable="false" />
-    <Property Name="DateTo" Type="datetime" Nullable="false" />
+    <Property Name="DateFrom" Type="datetime" />
+    <Property Name="DateTo" Type="datetime" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="RoomAvailabilityId" Type="int" />
     <Property Name="Active" Type="bit" />
-    <Property Name="PyamentStatusId" Type="int" />
+    <Property Name="UserPaymentId" Type="int" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -686,30 +689,36 @@
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="Active" Type="bit" />
   </EntityType>
+  <EntityType Name="UserTripDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserTripId" Type="int" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" />
+    <Property Name="Description" Type="ntext" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
   <EntityType Name="UserTrips">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="TripTitle" Type="nvarchar" MaxLength="50" />
-    <Property Name="TripDescription" Type="nvarchar(max)" />
+    <Property Name="TripTitle" Type="nvarchar" MaxLength="250" />
+    <Property Name="TripDescription" Type="ntext" />
     <Property Name="Home" Type="nvarchar" MaxLength="50" />
     <Property Name="Destination" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="DateFrom" Type="datetime" />
     <Property Name="DateTo" Type="datetime" />
-    <Property Name="Cost" Type="float" />
+    <Property Name="Cost" Type="money" />
     <Property Name="TripDays" Type="int" />
     <Property Name="TripNights" Type="int" />
-    <Property Name="TripTypeId" Type="int" />
-    <Property Name="NumberOfAdults" Type="int" />
-    <Property Name="NumberOfKids" Type="int" />
-    <Property Name="NumberOfBoys" Type="int" />
-    <Property Name="NuumberOfGirls" Type="int" />
-    <Property Name="IsGroup" Type="bit" />
     <Property Name="Active" Type="bit" />
+    <Property Name="PhotoUrl" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="UserTypes">
     <Key>
@@ -765,11 +774,12 @@
     <EntitySet Name="Stations" EntityType="Self.Stations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubAreas" EntityType="Self.SubAreas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TransportationCompanyLines" EntityType="Self.TransportationCompanyLines" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TripTypes" EntityType="Self.TripTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserHobbies" EntityType="Self.UserHobbies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserPayments" EntityType="Self.UserPayments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserReservations" EntityType="Self.UserReservations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserTripActivities" EntityType="Self.UserTripActivities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserTripDetails" EntityType="Self.UserTripDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserTrips" EntityType="Self.UserTrips" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
   </EntityContainer>

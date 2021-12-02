@@ -1,6 +1,14 @@
 ﻿@{
     string userType = Session["UserType"] == null ? null : Session["UserType"].ToString();
-}}
+    string userIdStr = Session["UserId"] == null ? null : Session["UserId"].ToString();
+
+    int? userId = null;
+
+    if(userIdStr != null) 
+    {
+        userId = int.Parse(userIdStr);
+    }
+}
 
 <!DOCTYPE html>
 <html dir="rtl">
@@ -110,7 +118,7 @@
                         @if (!string.IsNullOrEmpty(userType))
                         {
                             <li>
-                                <a href="#"><img src="~/images/icon/15.png" alt=""> حسابي</a>
+                                <a href="@Url.Action("UserProfile", "UserProfile", new { id = userId})"><img src="~/images/icon/15.png" alt=""> حسابي</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Logout", "Account")"><img src="~/images/icon/db8.png" alt=""> تسجيل الخروج</a>

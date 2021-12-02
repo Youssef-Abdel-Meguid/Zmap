@@ -27,12 +27,12 @@ namespace Zmap.Models
         public Nullable<double> TransportationCost { get; set; }
         public Nullable<double> ActivityCost { get; set; }
         public Nullable<double> TotalCost { get; set; }
-        public System.DateTime DateFrom { get; set; }
-        public System.DateTime DateTo { get; set; }
+        public Nullable<System.DateTime> DateFrom { get; set; }
+        public Nullable<System.DateTime> DateTo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> RoomAvailabilityId { get; set; }
         public Nullable<bool> Active { get; set; }
-        public Nullable<int> PyamentStatusId { get; set; }
+        public Nullable<int> UserPaymentId { get; set; }
     }
 }

@@ -178,4 +178,3 @@ D:\Jo\Work\Zmap\Zmap\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Jo\Work\Zmap\Zmap\obj\Release\Zmap.csproj.CoreCompileInputs.cache
 D:\Jo\Work\Zmap\Zmap\obj\Release\Zmap.dll
 D:\Jo\Work\Zmap\Zmap\obj\Release\Zmap.pdb
-D:\Jo\Work\Zmap\Zmap\obj\Release\Zmap.csproj.AssemblyReference.cache

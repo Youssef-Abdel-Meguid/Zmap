@@ -1,0 +1,100 @@
+﻿@model Zmap.Dtos.UserTripsDto
+
+<section style="margin-top: -7px; margin-bottom: -53px;">
+    <div class="dashboard">
+        <div class="db-left">
+            <div class="db-left-1" style="margin-top: 14px; background: url('../../images/users/@Model.ProfilePhotoUrl') no-repeat center center;">
+                <h4>@Model.Username</h4>
+            </div>
+            <div class="db-left-2">
+                <ul>
+                    <li>
+                        <a href="@Url.Action("UserProfile", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db1.png" alt="" />الكل</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyBookings", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db2.png" alt="" />حجوزاتى</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyTrips", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db5.png" alt="" />رحلاتى</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyProfile", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db7.png" alt="" />ملفى</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="db-cent" style="margin-top: -5px">
+            <div class="db-cent-1">
+                <p>Hi @Model.FirstName @Model.LastName,</p>
+                <h4>Welcome to your dashboard</h4>
+            </div>
+            <div class="db-cent-3">
+                <div>
+                    <a class="btn-floating btn-large waves-effect waves-light red" 
+                       href="@Url.Action("AddTrip", "UserProfile", new { id = Model.UserId})"
+                       style="margin-right: -11px; margin-bottom: 14px;">
+                        <i class="material-icons">add</i>
+                    </a>
+                </div>
+                <div class="db-cent-table db-com-table">
+                    <div class="db-title">
+                        <h3><img src="~/Images/icon/dbc6.png" alt="" />رحلاتى</h3>
+                    </div>
+                    <table class="bordered responsive-table" id="trips">
+                        <thead>
+                            <tr>
+                                <th>المغادرة من</th>
+                                <th>الوصول الى</th>
+                                <th>التاريخ من</th>
+                                <th>التاريخ الى</th>
+                                <th>عدد الايام</th>
+                                <th>عدد الليالى</th>
+                                <th>التكلفة</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Trips)
+                            {
+                                <tr>
+                                    <td>@item.Home</td>
+                                    <td>@item.Destination</td>
+                                    <td>@item.DateFrom</td>
+                                    <td>@item.DateTo</td>
+                                    <td>@item.TripDays</td>
+                                    <td>@item.TripNights</td>
+                                    <td>@item.TotalCost</td>
+                                    <td>
+                                        <a href="@Url.Action("MyTripDetails", "UserProfile", new { id = item.UserId, userTripId = item.UserTripId })" 
+                                           class="btn-floating waves-effect waves-light-sm green action">
+                                            <i class="material-icons">
+                                                info
+                                            </i>
+                                        </a>
+
+                                        <a onclick="return confirm('هل تريد مسح البيانات')"
+                                           class="btn-floating waves-effect waves-light-sm purple"
+                                           href="@Url.Action("DeleteUserTrip", "UserProfile", new { id = item.UserId, userTripId = item.UserTripId })">
+                                            <i class="material-icons">
+                                                delete
+                                            </i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#trips').DataTable();
+        });
+    </script>
+}

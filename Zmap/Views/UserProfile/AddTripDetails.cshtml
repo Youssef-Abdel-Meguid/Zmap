@@ -1,0 +1,63 @@
+﻿@model Zmap.Dtos.AddUserTripDetailDto
+
+<section style="margin-top: -7px; margin-bottom: -53px;">
+    <div class="dashboard">
+        <div class="db-left">
+            <div class="db-left-1" style="margin-top: 14px; background: url('../../images/users/@Model.ProfilePhotoUrl') no-repeat center center;">
+                <h4>@Model.UserName</h4>
+            </div>
+            <div class="db-left-2">
+                <ul>
+                    <li>
+                        <a href="@Url.Action("UserProfile", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db1.png" alt="" />الكل</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyBookings", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db2.png" alt="" />حجوزاتى</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyTrips", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db5.png" alt="" />رحلاتى</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyProfile", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db7.png" alt="" />ملفى</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="db-cent" style="margin-top: -5px">
+            <div class="db-cent-1">
+                <p>Hi @Model.FirstName @Model.LastName,</p>
+                <h4>Welcome to your dashboard</h4>
+            </div>
+
+            <div class="db-profile-edit">
+                @using (Html.BeginForm("AddTripDetails", "UserProfile", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken();
+                    <form class="col s12">
+
+                        @Html.HiddenFor(m => m.UserId)
+                        @Html.HiddenFor(m => m.UserTripId)
+
+                        <div>
+                            <label class="col s4">Title</label>
+                            <div class="input-field col s8">
+                                <input type="text" name="Title" class="validate" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="col s4">Description</label>
+                            <div class="input-field col s12">
+                                <textarea name="Description" class="validate" required cols="10" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="input-field col s8">
+                                <input type="submit" value="Submit" class="waves-effect waves-light pro-sub-btn" id="pro-sub-btn">
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</section>

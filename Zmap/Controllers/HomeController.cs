@@ -17,6 +17,20 @@ namespace Zmap.Controllers
 
         private readonly ZmapEntities db = new ZmapEntities();
 
+        private int? userType = 0;
+        private int? userId = 0;
+
+        private void SetIdenitiy()
+        {
+            if (Session["UserType"] != null)
+            {
+                string type = Session["UserType"] == null ? null : Session["UserType"].ToString();
+                userType = int.Parse(type);
+
+                string id = Session["UserId"] == null ? null : Session["UserId"].ToString();
+                userId = int.Parse(id);
+            }
+        }
 
         public async Task<ActionResult> Services()
         {
@@ -35,7 +49,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home service", Error = e.Message.ToString() });
             }
 
             return View(services);
@@ -104,7 +118,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home blogs", Error = e.Message.ToString() });
             }
 
             return View(blogsDto);
@@ -185,15 +199,145 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home blog categories", Error = e.Message.ToString()});
             }
 
             return View(blogsDto);
         }
 
-        public ActionResult Trips()
+        public async Task<ActionResult> Trips()
         {
-            return View();
+            List<UserHomeTripDto> userHomeDto = new List<UserHomeTripDto>();
+            try
+            {
+                var trips = await db.UserTrips.Where(t => t.Active == true).ToListAsync();
+
+                foreach (var item in trips)
+                {
+                    var user = await db.Users.FindAsync(item.UserId);
+                    if(user != null)
+                    {
+                        userHomeDto.Add(new UserHomeTripDto()
+                        {
+                            Cost = item.Cost,
+                            CreatedBy = user.UserName,
+                            Description = item.TripDescription,
+                            Photo = item.PhotoUrl,
+                            PlaceName = item.Destination,
+                            Title = item.TripTitle,
+                            UserTripId = item.Id
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home trips", Error = e.Message.ToString()});
+            }
+            return View(userHomeDto);
+        }
+
+        public async Task<ActionResult> TripDetails(int? id)
+        {
+            List<AddUserTripDetailDto> tripDetailDto = new List<AddUserTripDetailDto>();
+            try
+            {
+                var userTripDetials = await db.UserTripDetails.Where(d => d.Active == true && d.UserTripId == id).ToListAsync();
+                var trip = await db.UserTrips.FindAsync(id);
+                var user = await db.Users.FindAsync(trip.UserId);
+
+                if(user != null)
+                {
+                    foreach (var item in userTripDetials)
+                    {
+                        tripDetailDto.Add(new AddUserTripDetailDto()
+                        {
+                            Description = item.Description,
+                            Title = item.Title,
+                            UserId = user.Id,
+                            UserTripId = item.UserTripId
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in trip details", Error = e.Message.ToString() });
+            }
+
+            return View(tripDetailDto);
+        }
+
+        public async Task<ActionResult> CreateSameTrip(int? userTripId)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 5)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error home create same trip", Error = "not authorized", UserId = userId });
+            }
+
+            if (userTripId == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error home create same trip", Error = "id is null", UserId = userId });
+            }
+
+            try
+            {
+                var trip = await db.UserTrips.FindAsync(userTripId);
+
+                if(trip == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error home create same trip", Error = "trip is null", UserId = userId });
+                }
+
+                var tripDetails = await db.UserTripDetails.Where(d => d.UserTripId == userTripId && d.Active == true).ToListAsync();
+
+                UserTrip userTrip = new UserTrip()
+                {
+                    Active = true,
+                    Cost = trip.Cost,
+                    CreatedDate = DateTime.Now,
+                    DateFrom = trip.DateFrom,
+                    DateTo = trip.DateTo,
+                    Destination = trip.Destination,
+                    Home = trip.Home,
+                    PhotoUrl = trip.PhotoUrl,
+                    TripDays = trip.TripDays,
+                    TripDescription = trip.TripDescription,
+                    UserId = (int)userId,
+                    TripTitle = trip.TripTitle,
+                    TripNights = trip.TripNights
+                };
+
+                db.UserTrips.Add(userTrip);
+                await db.SaveChangesAsync();
+
+                foreach (var item in tripDetails)
+                {
+                    UserTripDetail userTripDetail = new UserTripDetail()
+                    {
+                        Active = true,
+                        CreatedDate = DateTime.Now,
+                        Description = item.Description,
+                        Title = item.Title,
+                        UserTripId = userTrip.Id
+                    };
+                    db.UserTripDetails.Add(userTripDetail);
+                }
+
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home create same trip", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("TripDetails", "Home", new { id = userTripId });
         }
 
         public ActionResult Index()
@@ -210,7 +354,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home about", Error = e.Message.ToString() });
             }
             return View(about);
         }
@@ -225,7 +369,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home contact", Error = e.Message.ToString() });
             }
             return View(contact);
         }

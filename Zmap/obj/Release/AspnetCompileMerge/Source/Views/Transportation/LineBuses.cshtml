@@ -34,6 +34,7 @@
                     <tr>
                         <th>اسم الاتوبيس</th>
                         <th>رقم الاتوبيس</th>
+                        <th>سعر المقعد</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -43,6 +44,7 @@
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.BusName)</td>
                             <td>@Html.DisplayFor(modelItem => item.BusNumber)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SeatPrice)</td>
                             <td>
                                 <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteLineBus", "Transportation", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
                                     <i class="material-icons">

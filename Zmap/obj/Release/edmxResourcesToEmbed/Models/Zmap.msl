@@ -332,15 +332,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TripTypes">
-      <EntityTypeMapping TypeName="ZmapModel.TripType">
-        <MappingFragment StoreEntitySet="TripTypes">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="TripType1" ColumnName="TripType" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UserHobbies">
       <EntityTypeMapping TypeName="ZmapModel.UserHobby">
         <MappingFragment StoreEntitySet="UserHobbies">
@@ -356,6 +347,7 @@
     <EntitySetMapping Name="UserReservations">
       <EntityTypeMapping TypeName="ZmapModel.UserReservation">
         <MappingFragment StoreEntitySet="UserReservations">
+          <ScalarProperty Name="UserPaymentId" ColumnName="UserPaymentId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="HotelId" ColumnName="HotelId" />
@@ -375,7 +367,6 @@
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="RoomAvailabilityId" ColumnName="RoomAvailabilityId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="PyamentStatusId" ColumnName="PyamentStatusId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -415,32 +406,6 @@
           <ScalarProperty Name="UserTripId" ColumnName="UserTripId" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserTrips">
-      <EntityTypeMapping TypeName="ZmapModel.UserTrip">
-        <MappingFragment StoreEntitySet="UserTrips">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="TripTitle" ColumnName="TripTitle" />
-          <ScalarProperty Name="TripDescription" ColumnName="TripDescription" />
-          <ScalarProperty Name="Home" ColumnName="Home" />
-          <ScalarProperty Name="Destination" ColumnName="Destination" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
-          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
-          <ScalarProperty Name="TripDays" ColumnName="TripDays" />
-          <ScalarProperty Name="TripNights" ColumnName="TripNights" />
-          <ScalarProperty Name="TripTypeId" ColumnName="TripTypeId" />
-          <ScalarProperty Name="NumberOfAdults" ColumnName="NumberOfAdults" />
-          <ScalarProperty Name="NumberOfKids" ColumnName="NumberOfKids" />
-          <ScalarProperty Name="NumberOfBoys" ColumnName="NumberOfBoys" />
-          <ScalarProperty Name="NuumberOfGirls" ColumnName="NuumberOfGirls" />
-          <ScalarProperty Name="IsGroup" ColumnName="IsGroup" />
           <ScalarProperty Name="Active" ColumnName="Active" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -768,6 +733,51 @@
           <ScalarProperty Name="DateTo" ColumnName="DateTo" />
           <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
           <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserPayments">
+      <EntityTypeMapping TypeName="ZmapModel.UserPayment">
+        <MappingFragment StoreEntitySet="UserPayments">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="PaymentStatusId" ColumnName="PaymentStatusId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTripDetails">
+      <EntityTypeMapping TypeName="ZmapModel.UserTripDetail">
+        <MappingFragment StoreEntitySet="UserTripDetails">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="UserTripId" ColumnName="UserTripId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTrips">
+      <EntityTypeMapping TypeName="ZmapModel.UserTrip">
+        <MappingFragment StoreEntitySet="UserTrips">
+          <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="TripNights" ColumnName="TripNights" />
+          <ScalarProperty Name="TripDays" ColumnName="TripDays" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Destination" ColumnName="Destination" />
+          <ScalarProperty Name="Home" ColumnName="Home" />
+          <ScalarProperty Name="TripDescription" ColumnName="TripDescription" />
+          <ScalarProperty Name="TripTitle" ColumnName="TripTitle" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

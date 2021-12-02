@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Zmap.Dtos.AddUserTripDetailDto>
+@{
+    string userType = Session["UserType"] == null ? null : Session["UserType"].ToString();
+    bool sameUser = false;
+    string userIdStr = Session["UserId"] == null ? null : Session["UserId"].ToString();
+    int userIdSession = 0;
+
+    if (!string.IsNullOrEmpty(userIdStr))
+    {
+        userIdSession = int.Parse(userIdStr);
+    }
+    int? tripId = null;
+}
+
+
+<div class="inn-body-section pad-bot-55">
+    <div class="container">
+        <div class="page-head">
+            <h2>تفاصيل الرحلة</h2>
+            <div class="head-title">
+                <div class="hl-1"></div>
+                <div class="hl-2"></div>
+                <div class="hl-3"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="head-typo typo-com">
+                    @foreach (var item in Model)
+                    {
+                        if (userIdSession == item.UserId)
+                        {
+                            sameUser = true;
+                        }
+                        tripId = item.UserTripId;
+                        <div class="row events">
+                            <div class="col-md-12">
+                                <a data-dismiss="modal" data-toggle="modal"
+                                   data-target="#modal4">
+                                    <h3 style="word-break: break-all;">@item.Title</h3>
+                                </a>
+                                <p style="word-break: break-all;">@item.Description </p>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        @if (sameUser == false)
+        {
+            <center>
+                <div class="input-field col s12">
+                    <a href="@Url.Action("CreateSameTrip", "Home", new { userTripId = tripId })" class="btn form-btn">إنشاء رحلة مطابقة</a>
+                </div>
+            </center>
+        }
+    </div>
+</div>

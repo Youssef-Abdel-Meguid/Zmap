@@ -1,10 +1,68 @@
-﻿
+﻿@model IEnumerable<Zmap.Dtos.UserHomeTripDto>
 @{
-    ViewBag.Title = "Trips";
+    ViewBag.Title = "Blogs";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="inn-body-section pad-bot-55">
+<div class="inn-body-section pad-bot-50">
+    <div class="container">
+        <div class="row inn-page-com">
+            <div class="page-head">
+                <h2>رحلات المابرز</h2>
+                <div class="head-title">
+                    <div class="hl-1"></div>
+                    <div class="hl-2"></div>
+                    <div class="hl-3"></div>
+                </div>
+            </div>
+            <!--SERVICES SECTION-->
+            <div class="col-md-12">
+                @foreach (var item in Model)
+                {
+                    <div class="row inn-services in-blog">
+                        <div class="col-md-4"> <img src="~/Images/UserTrips/@item.Photo" alt="" /> </div>
+                        <div class="col-md-8">
+                            <h3>@item.Title</h3> <span class="blog-author">بواسطة: @item.CreatedBy</span>
+                            <p>@item.Description</p> <a href="@Url.Action("TripDetails", "Home", new { id = item.UserTripId})" class="waves-effect waves-light inn-re-mo-btn">قرأة المزيد</a>
+                        </div>
+                    </div>
+                }
+            </div>
+            @*<div class="col-md-4">
+                @using (Html.BeginForm("Blogs", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="head-typo typo-com rec-post">
+                        <h3>بحث</h3>
+
+                        <ul>
+                            @for (int i = 0; i < Model.Categories.CategorList.Count; i++)
+                            {
+                                <li>
+                                    <div class="rec-po-title">
+                                        @Html.CheckBoxFor(m => Model.Categories.CategorList[i].IsChecked, new { Style = "left: 28px; opacity: 1; top: -1px" })
+                                        @Model.Categories.CategorList[i].Name
+                                        @Html.HiddenFor(m => Model.Categories.CategorList[i].Id)
+                                        @Html.HiddenFor(m => Model.Categories.CategorList[i].Name)
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <input type="submit" value="ابحث" class="btn btn-success" />
+                }
+            </div>*@
+            <!--END SERVICES SECTION-->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!--<div class="inn-body-section pad-bot-55">
     <div class="container">
         <div class="row">
             <div class="page-head">
@@ -13,86 +71,86 @@
                     <div class="hl-1"></div>
                     <div class="hl-2"></div>
                     <div class="hl-3"></div>
-                </div>
-                <!-- <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p> -->
-            </div>
-            <!--TYPOGRAPHY SECTION-->
-            <div class="col-md-12">
-                <div class="head-typo typo-com">
-                    <h2>5 أيام</h2>
-                    <!-- <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. </p> -->
-                    <!--EVENT-->
-                    <div class="row events">
-                        <div class="col-md-2"> <img src="~/Images/extra/9.jpg" alt="" /> </div>
-                        <div class="col-md-8">
-                            <a href="#" data-dismiss="modal" data-toggle="modal"
-                               data-target="#modal4">
-                                <h3>إسم الفندق</h3>
-                            </a>
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. </p>
-                        </div>
-                        <div class="col-md-2">
-                            <a href="#" data-dismiss="modal" data-toggle="modal"
-                               data-target="#modal4" class="waves-effect waves-light event-regi">اليوم#1</a>
-                        </div>
-                    </div>
-                    <!--END EVENT-->
-                    <!--EVENT-->
-                    <div class="row events">
-                        <div class="col-md-2"> <img src="~/Images/extra/9.jpg" alt="" /> </div>
-                        <div class="col-md-8">
-                            <a href="#" data-dismiss="modal" data-toggle="modal"
-                               data-target="#modal4">
-                                <h3>إسم النشاط</h3>
-                            </a>
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. </p>
-                        </div>
-                        <div class="col-md-2">
-                            <a href="#" data-dismiss="modal" data-toggle="modal"
-                               data-target="#modal4" class="waves-effect waves-light event-regi">اليوم#2</a>
-                        </div>
-                    </div>
-                    <!--END EVENT-->
-                    <!--EVENT-->
-                    <div class="row events">
-                        <div class="col-md-2"> <img src="~/Images/extra/9.jpg" alt="" /> </div>
-                        <div class="col-md-8">
-                            <a href="#" data-dismiss="modal" data-toggle="modal"
-                               data-target="#modal4">
-                                <h3>إسم النشاط</h3>
-                            </a>
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. </p>
-                        </div>
-                        <div class="col-md-2">
-                            <a href="#" data-dismiss="modal" data-toggle="modal"
-                               data-target="#modal4" class="waves-effect waves-light event-regi">اليوم#3</a>
-                        </div>
-                    </div>
-                    <!--END EVENT-->
-                    <!--EVENT-->
-                    <div class="row events">
-                        <div class="col-md-2"> <img src="~/Images/extra/9.jpg" alt="" /> </div>
-                        <div class="col-md-8">
-                            <a href="#" data-dismiss="modal" data-toggle="modal"
-                               data-target="#modal4">
-                                <h3>إسم الفندق</h3>
-                            </a>
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. </p>
-                        </div>
-                        <div class="col-md-2">
-                            <a href="#" data-dismiss="modal" data-toggle="modal"
-                               data-target="#modal4" class="waves-effect waves-light event-regi">اليوم#4</a>
-                        </div>
-                    </div>
-                    <!--END EVENT-->
-                </div>
-            </div>
-            <!--END TYPOGRAPHY SECTION-->
-        </div>
+                </div>-->
+<!-- <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p> -->
+<!--</div>-->
+<!--TYPOGRAPHY SECTION-->
+<!--<div class="col-md-12">
+    <div class="head-typo typo-com">
+        <h2>5 أيام</h2>-->
+<!-- <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. </p> -->
+<!--EVENT-->
+<!--<div class="row events">
+    <div class="col-md-2"> <img src="~/Images/extra/9.jpg" alt="" /> </div>
+    <div class="col-md-8">
+        <a href="#" data-dismiss="modal" data-toggle="modal"
+           data-target="#modal4">
+            <h3>إسم الفندق</h3>
+        </a>
+        <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. </p>
+    </div>
+    <div class="col-md-2">
+        <a href="#" data-dismiss="modal" data-toggle="modal"
+           data-target="#modal4" class="waves-effect waves-light event-regi">اليوم#1</a>
+    </div>
+</div>-->
+<!--END EVENT-->
+<!--EVENT-->
+<!--<div class="row events">
+    <div class="col-md-2"> <img src="~/Images/extra/9.jpg" alt="" /> </div>
+    <div class="col-md-8">
+        <a href="#" data-dismiss="modal" data-toggle="modal"
+           data-target="#modal4">
+            <h3>إسم النشاط</h3>
+        </a>
+        <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. </p>
+    </div>
+    <div class="col-md-2">
+        <a href="#" data-dismiss="modal" data-toggle="modal"
+           data-target="#modal4" class="waves-effect waves-light event-regi">اليوم#2</a>
+    </div>
+</div>-->
+<!--END EVENT-->
+<!--EVENT-->
+<!--<div class="row events">
+    <div class="col-md-2"> <img src="~/Images/extra/9.jpg" alt="" /> </div>
+    <div class="col-md-8">
+        <a href="#" data-dismiss="modal" data-toggle="modal"
+           data-target="#modal4">
+            <h3>إسم النشاط</h3>
+        </a>
+        <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. </p>
+    </div>
+    <div class="col-md-2">
+        <a href="#" data-dismiss="modal" data-toggle="modal"
+           data-target="#modal4" class="waves-effect waves-light event-regi">اليوم#3</a>
+    </div>
+</div>-->
+<!--END EVENT-->
+<!--EVENT-->
+<!--<div class="row events">
+    <div class="col-md-2"> <img src="~/Images/extra/9.jpg" alt="" /> </div>
+    <div class="col-md-8">
+        <a href="#" data-dismiss="modal" data-toggle="modal"
+           data-target="#modal4">
+            <h3>إسم الفندق</h3>
+        </a>
+        <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. </p>
+    </div>
+    <div class="col-md-2">
+        <a href="#" data-dismiss="modal" data-toggle="modal"
+           data-target="#modal4" class="waves-effect waves-light event-regi">اليوم#4</a>
+    </div>
+</div>-->
+<!--END EVENT-->
+<!--</div>
+</div>-->
+<!--END TYPOGRAPHY SECTION-->
+<!--</div>
         <center>
             <div class="input-field col s12">
                 <input type="submit" value="إنشاء رحلة مطابقة" class="form-btn">
             </div>
         </center>
     </div>
-</div>
+</div>-->

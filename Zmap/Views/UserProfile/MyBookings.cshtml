@@ -1,0 +1,86 @@
+﻿@model Zmap.Dtos.UserBookingsDto
+
+<section style="margin-top: -7px; margin-bottom: -53px;">
+    <div class="dashboard">
+        <div class="db-left">
+            <div class="db-left-1" style="margin-top: 14px; background: url('../../images/users/@Model.ProfilePhotoUrl') no-repeat center center;">
+                <h4>@Model.Username</h4>
+            </div>
+            <div class="db-left-2">
+                <ul>
+                    <li>
+                        <a href="@Url.Action("UserProfile", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db1.png" alt="" />الكل</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyBookings", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db2.png" alt="" />حجوزاتى</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyTrips", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db5.png" alt="" />رحلاتى</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("MyProfile", "UserProfile", new { id = Model.UserId })"><img src="~/Images/icon/db7.png" alt="" />ملفى</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="db-cent" style="margin-top: -5px">
+            <div class="db-cent-1">
+                <p>Hi @Model.FirstName @Model.LastName,</p>
+                <h4>Welcome to your dashboard</h4>
+            </div>
+           
+            <div class="db-cent-3">
+                <div class="db-cent-table db-com-table">
+                    <div class="db-title">
+                        <h3><img src="~/Images/icon/dbc5.png" alt="" />حجوزاتى</h3>
+                    </div>
+                    <table class="bordered responsive-table" id="bookings">
+                        <thead>
+                            <tr>
+                                <th>رقم الحجز</th>
+                                <th>التاريخ من</th>
+                                <th>التاريخ الى</th>
+                                <th>اسم الفندق</th>
+                                <th>اسم شركة النقل</th>
+                                <th>عدد الافراد</th>
+                                <th>حالة الدفع</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Bookings)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.DateFrom</td>
+                                    <td>@item.DateTo</td>
+                                    <td>@item.HotelName</td>
+                                    <td>@item.TransportationCompanyName</td>
+                                    <td>@item.NumberOfSeats</td>
+                                    <td>
+                                        @if (item.IsPaid == true)
+                                        {
+                                            <a href="#" class="db-success">@item.PaymentStatus</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="db-not-success">@item.PaymentStatus</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#bookings').DataTable();
+        });
+    </script>
+}

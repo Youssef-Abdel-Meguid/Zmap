@@ -1736,7 +1736,6 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .db-left-1 {
     padding: 116px 50px 30px 50px;
-    background: url('../images/user.jpg') no-repeat center center;
     background-size: cover;
     position: relative;
     /* overflow: hidden; */
@@ -3676,6 +3675,15 @@ footer ul li a {
     display: block;
 }
 .db-profile-edit form input {
+    border: 1px solid #dfdfdf;
+    padding: 8px;
+    box-sizing: border-box;
+    height: 45px;
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+
+.db-profile-edit form textarea {
     border: 1px solid #dfdfdf;
     padding: 8px;
     box-sizing: border-box;

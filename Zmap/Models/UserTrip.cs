@@ -24,15 +24,10 @@ namespace Zmap.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<System.DateTime> DateFrom { get; set; }
         public Nullable<System.DateTime> DateTo { get; set; }
-        public Nullable<double> Cost { get; set; }
+        public Nullable<decimal> Cost { get; set; }
         public Nullable<int> TripDays { get; set; }
         public Nullable<int> TripNights { get; set; }
-        public Nullable<int> TripTypeId { get; set; }
-        public Nullable<int> NumberOfAdults { get; set; }
-        public Nullable<int> NumberOfKids { get; set; }
-        public Nullable<int> NumberOfBoys { get; set; }
-        public Nullable<int> NuumberOfGirls { get; set; }
-        public Nullable<bool> IsGroup { get; set; }
         public Nullable<bool> Active { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }

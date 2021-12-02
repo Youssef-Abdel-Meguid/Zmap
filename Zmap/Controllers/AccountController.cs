@@ -8,6 +8,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Data.Entity;
 using System.Web;
+using System.Collections.Generic;
 
 namespace Zmap.Controllers
 {
@@ -99,7 +100,7 @@ namespace Zmap.Controllers
 
             try
             {
-                user = await db.Users.Where(u => u.UserName == loginDto.Username).SingleOrDefaultAsync();
+                user = await db.Users.Where(u => u.UserName == loginDto.Username).FirstOrDefaultAsync();
             }
             catch (Exception e)
             {
@@ -163,6 +164,5 @@ namespace Zmap.Controllers
             Session.Remove("UserId");
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

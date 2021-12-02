@@ -219,6 +219,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelsController.cs" />
     <Compile Include="Controllers\TransportationController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Dtos\AccommodationDto.cs" />
     <Compile Include="Dtos\ActivityAvailabilityDto.cs" />
@@ -227,15 +228,19 @@
     <Compile Include="Dtos\ActivityDto.cs" />
     <Compile Include="Dtos\AddOnDetailsDto.cs" />
     <Compile Include="Dtos\AddOnDto.cs" />
+    <Compile Include="Dtos\AddUserTripDetailDto.cs" />
+    <Compile Include="Dtos\AddUserTripDto.cs" />
     <Compile Include="Dtos\BlogCreateDto.cs" />
     <Compile Include="Dtos\BlogDetailsDto.cs" />
     <Compile Include="Dtos\BlogsDto.cs" />
+    <Compile Include="Dtos\BookingsDto.cs" />
     <Compile Include="Dtos\BusDetailsDto.cs" />
     <Compile Include="Dtos\BusDto.cs" />
     <Compile Include="Dtos\BusTripDetailsDto.cs" />
     <Compile Include="Dtos\BusTripScheduleDto.cs" />
     <Compile Include="Dtos\Categories.cs" />
     <Compile Include="Dtos\CategoryListDto.cs" />
+    <Compile Include="Dtos\ChangeAdminPasswordDto.cs" />
     <Compile Include="Dtos\ChildPolicyDetailsDto.cs" />
     <Compile Include="Dtos\ChildPolicyDto.cs" />
     <Compile Include="Dtos\ContactDetailsDto.cs" />
@@ -257,6 +262,7 @@
     <Compile Include="Dtos\NewUserDto.cs" />
     <Compile Include="Dtos\PageDto.cs" />
     <Compile Include="Dtos\PhotoDetailsDto.cs" />
+    <Compile Include="Dtos\ProfileDto.cs" />
     <Compile Include="Dtos\RegisterDto.cs" />
     <Compile Include="Dtos\ReservedSeatsDto.cs" />
     <Compile Include="Dtos\RoomDataDto.cs" />
@@ -266,7 +272,14 @@
     <Compile Include="Dtos\StationDetailsDto.cs" />
     <Compile Include="Dtos\StationDto.cs" />
     <Compile Include="Dtos\TransportationDetailsDto.cs" />
+    <Compile Include="Dtos\TripsDto.cs" />
+    <Compile Include="Dtos\UserBookingsDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
+    <Compile Include="Dtos\UserHomeBlogDto.cs" />
+    <Compile Include="Dtos\UserHomeDto.cs" />
+    <Compile Include="Dtos\UserHomeTripDto.cs" />
+    <Compile Include="Dtos\UserProfileDto.cs" />
+    <Compile Include="Dtos\UserTripsDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -405,13 +418,13 @@
     <Compile Include="Models\TransportationCompanyLine.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TripType.cs">
-      <DependentUpon>Zmap.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserHobby.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserPayment.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserReservation.cs">
@@ -421,6 +434,9 @@
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserTripActivity.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserTripDetail.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserType.cs">
@@ -820,6 +836,7 @@
     <Folder Include="Attachments\ActivityCompany\" />
     <Folder Include="Attachments\Hotel\" />
     <Folder Include="Attachments\TransportationCompany\" />
+    <Folder Include="Images\UserTrips\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -882,6 +899,15 @@
     <Content Include="Views\Activites\CreateAvtivityPhoto.cshtml" />
     <Content Include="Views\Activites\ActivityAvailabilities.cshtml" />
     <Content Include="Views\Activites\CreateActivityAvailability.cshtml" />
+    <Content Include="Views\UserProfile\UserProfile.cshtml" />
+    <Content Include="Views\Users\ChangeAdminPassword.cshtml" />
+    <Content Include="Views\UserProfile\MyBookings.cshtml" />
+    <Content Include="Views\UserProfile\MyTrips.cshtml" />
+    <Content Include="Views\UserProfile\MyProfile.cshtml" />
+    <Content Include="Views\UserProfile\AddTrip.cshtml" />
+    <Content Include="Views\UserProfile\MyTripDetails.cshtml" />
+    <Content Include="Views\UserProfile\AddTripDetails.cshtml" />
+    <Content Include="Views\Home\TripDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
