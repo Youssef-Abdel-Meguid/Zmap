@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Jo\Work\Zmap publish</_PublishTargetUrl>
-    <History>True|2021-12-02T21:02:17.9685583Z;True|2021-11-23T20:48:30.9258357+02:00;True|2021-11-22T00:00:37.8519825+02:00;True|2021-11-16T01:37:20.6831106+02:00;True|2021-11-16T01:29:06.1546721+02:00;True|2021-11-16T01:27:21.3035727+02:00;True|2021-11-08T22:35:49.8926698+02:00;True|2021-11-08T22:33:46.7700547+02:00;</History>
+    <History>True|2021-12-15T14:06:22.6598373Z;True|2021-12-02T23:02:17.9685583+02:00;True|2021-11-23T20:48:30.9258357+02:00;True|2021-11-22T00:00:37.8519825+02:00;True|2021-11-16T01:37:20.6831106+02:00;True|2021-11-16T01:29:06.1546721+02:00;True|2021-11-16T01:27:21.3035727+02:00;True|2021-11-08T22:35:49.8926698+02:00;True|2021-11-08T22:33:46.7700547+02:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -21,10 +21,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>12/02/2021 23:02:16</publishTime>
+      <publishTime>12/15/2021 16:06:21</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>12/02/2021 23:02:16</publishTime>
+      <publishTime>12/15/2021 16:06:20</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/25/2021 00:34:04</publishTime>
@@ -174,10 +174,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:04</publishTime>
     </File>
     <File Include="bin/Zmap.dll">
-      <publishTime>12/02/2021 23:02:10</publishTime>
+      <publishTime>12/15/2021 15:53:20</publishTime>
     </File>
     <File Include="bin/Zmap.pdb">
-      <publishTime>12/02/2021 23:02:10</publishTime>
+      <publishTime>12/15/2021 15:53:20</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -195,7 +195,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Content/materialize.css">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>12/15/2021 13:13:44</publishTime>
     </File>
     <File Include="Content/owl.carousel.min.css">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -984,7 +984,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:04</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>12/02/2021 23:02:12</publishTime>
+      <publishTime>12/15/2021 16:06:17</publishTime>
     </File>
     <File Include="Scripts/angular.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1014,7 +1014,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Scripts/materialize.min.js">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>12/13/2021 00:01:28</publishTime>
     </File>
     <File Include="Scripts/owl.carousel.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1137,7 +1137,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>12/02/2021 20:28:13</publishTime>
+      <publishTime>12/12/2021 14:47:47</publishTime>
     </File>
     <File Include="Views/Home/Services.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1147,6 +1147,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Home/TripDetails.cshtml">
       <publishTime>12/02/2021 22:50:56</publishTime>
+    </File>
+    <File Include="Views/Home/TripPlan.cshtml">
+      <publishTime>12/15/2021 16:03:34</publishTime>
     </File>
     <File Include="Views/Home/Trips.cshtml">
       <publishTime>12/02/2021 21:35:46</publishTime>
@@ -1410,7 +1413,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/02/2021 23:02:11</publishTime>
+      <publishTime>12/15/2021 16:06:16</publishTime>
     </File>
   </ItemGroup>
 </Project>

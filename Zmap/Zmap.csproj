@@ -272,7 +272,11 @@
     <Compile Include="Dtos\StationDetailsDto.cs" />
     <Compile Include="Dtos\StationDto.cs" />
     <Compile Include="Dtos\TransportationDetailsDto.cs" />
+    <Compile Include="Dtos\TripActivityDto.cs" />
+    <Compile Include="Dtos\TripHotelDto.cs" />
+    <Compile Include="Dtos\TripPlanDto.cs" />
     <Compile Include="Dtos\TripsDto.cs" />
+    <Compile Include="Dtos\TripTransportationDto.cs" />
     <Compile Include="Dtos\UserBookingsDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Dtos\UserHomeBlogDto.cs" />
@@ -908,6 +912,7 @@
     <Content Include="Views\UserProfile\MyTripDetails.cshtml" />
     <Content Include="Views\UserProfile\AddTripDetails.cshtml" />
     <Content Include="Views\Home\TripDetails.cshtml" />
+    <Content Include="Views\Home\TripPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

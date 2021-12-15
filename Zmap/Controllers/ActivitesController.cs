@@ -1389,6 +1389,7 @@ namespace Zmap.Controllers
                 if (!ModelState.IsValid)
                     return View(activityAvailability);
 
+                activityAvailability.Id = 0;
                 activityAvailability.CreatedDate = DateTime.Now;
                 activityAvailability.CreatedByUserId = userId;
                 activityAvailability.Active = true;
@@ -1398,7 +1399,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.InnerException.Message.ToString(), UserId = userId });
             }
 
             return RedirectToAction("ActivityAvailabilities", "Activites", new { id = activityAvailability.ActivityId });

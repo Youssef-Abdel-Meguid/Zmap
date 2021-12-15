@@ -53,7 +53,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ActivityId" Type="int" />
           <Property Name="DateFrom" Type="date" />
           <Property Name="DateTo" Type="date" />
@@ -624,7 +624,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" />
           <Property Name="PaymentStatusId" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
