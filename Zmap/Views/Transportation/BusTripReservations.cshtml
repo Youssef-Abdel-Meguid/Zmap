@@ -654,6 +654,101 @@
 
                 });
             }
+            else if (numberOfSeats == 14) {
+                var selectedSeats = [];
+                $(document).ready(function () {
+                    var $cart = $('#selected-seats'),
+                        $counter = $('#counter'),
+                        sc = $('#seat-map').seatCharts({
+                            map: [
+                                '___e',
+                                'eee',
+                                'eee',
+                                'eee',
+                                'eeee'
+                            ],
+                            naming: {
+                                top: false,
+                                getLabel: function (character, row, column) {
+                                    return firstSeatLabel++;
+                                },
+                            },
+                            legend: {
+                                node: $('#legend'),
+                                items: [
+                                    ['e', 'available', 'لم يتم الحجز بعد'],
+                                    ['f', 'unavailable', 'تم الحجز مسبفا']
+                                ]
+                            },
+                            click: function () {
+                                if (this.status() == 'available') {
+                                    //let's create a new <li> which we'll add to the cart items
+                                    $('<li>' + ' مقعد # ' + this.settings.label + '<a href="#" class="cancel-cart-item">[الغاء]</a></li>')
+                                        .attr('id', 'cart-item-' + this.settings.id)
+                                        .data('seatId', this.settings.id)
+                                        .appendTo($cart);
+
+                                    /*
+                                     * Lets update the counter and total
+                                     *
+                                     * .find function will not find the current seat, because it will change its stauts only after return
+                                     * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                                     */
+                                    $counter.text(sc.find('selected').length + 1);
+                                    selectedSeats.push(this.settings.id);
+                                    console.log(selectedSeats);
+
+                                    return 'selected';
+                                } else if (this.status() == 'selected') {
+                                    //update the counter
+                                    $counter.text(sc.find('selected').length - 1);
+                                    //and total
+
+                                    //remove the item from our cart
+                                    $('#cart-item-' + this.settings.id).remove();
+
+                                    var index = selectedSeats.indexOf(this.settings.id);
+                                    if (index > -1)
+                                        selectedSeats.splice(index, 1);
+
+                                    console.log(selectedSeats);
+
+                                    //seat has been vacated
+                                    return 'available';
+                                } else if (this.status() == 'unavailable') {
+                                    //seat has been already booked
+                                    return 'unavailable';
+                                } else {
+                                    return this.style();
+                                }
+                            }
+                        });
+
+                    $('#selected-seats').on('click', '.cancel-cart-item', function () {
+                        //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                        sc.get($(this).parents('li:first').data('seatId')).click();
+                    });
+
+                    $('#checkOut').on('click', '.checkout-button', function () {
+                        console.log(tripId);
+                        console.log(selectedSeats);
+                        $.ajax({
+                            url: "/api/SeatMap/" + tripId + '/' + userId,
+                            method: "POST",
+                            contentType: 'application/json;charset=utf-8',
+                            data: JSON.stringify({
+                                seatsNumber: selectedSeats
+                            }),
+                            success: function () {
+                                location.reload();
+                            }
+                        });
+                    });
+
+                    sc.get(seatsNumber).status('unavailable');
+
+                });
+            }
         }
     </script>
 </body>
