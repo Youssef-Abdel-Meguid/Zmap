@@ -1,28 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ZmapModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="Activity">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ActivityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="CostWithTransportation" Type="Double" />
-    <Property Name="Morning" Type="Boolean" />
-    <Property Name="Evening" Type="Boolean" />
-    <Property Name="CompanyId" Type="Int32" Nullable="false" />
-    <Property Name="ActivityCategoryId" Type="Int32" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="CostWithoutTrasnportation" Type="Double" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedByUserId" Type="Int32" />
-    <Property Name="ModifiedByUserId" Type="Int32" />
-    <Property Name="Active" Type="Boolean" />
-    <Property Name="ActivityDate" Type="DateTime" Precision="3" />
-    <Property Name="SubAreaId" Type="Int32" />
-    <Property Name="Safety" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="CityID" Type="Int32" />
-  </EntityType>
   <EntityType Name="ActivityCategory">
     <Key>
       <PropertyRef Name="Id" />
@@ -392,7 +369,6 @@
     <Property Name="Active" Type="Boolean" />
   </EntityType>
   <EntityContainer Name="ZmapEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Activities" EntityType="Self.Activity" />
     <EntitySet Name="ActivityCategories" EntityType="Self.ActivityCategory" />
     <EntitySet Name="AddsOns" EntityType="Self.AddsOn" />
     <EntitySet Name="BusAddOns" EntityType="Self.BusAddOn" />
@@ -441,10 +417,12 @@
     <EntitySet Name="LockedRooms" EntityType="ZmapModel.LockedRoom" />
     <EntitySet Name="ChildAccommodationPercentages" EntityType="ZmapModel.ChildAccommodationPercentage" />
     <EntitySet Name="ChildPolicies" EntityType="ZmapModel.ChildPolicy" />
-    <EntitySet Name="ActivityAvailabilities" EntityType="ZmapModel.ActivityAvailability" />
     <EntitySet Name="UserPayments" EntityType="ZmapModel.UserPayment" />
     <EntitySet Name="UserTripDetails" EntityType="ZmapModel.UserTripDetail" />
     <EntitySet Name="UserTrips" EntityType="ZmapModel.UserTrip" />
+    <EntitySet Name="Activities" EntityType="ZmapModel.Activity" />
+    <EntitySet Name="ActivityAvailabilities" EntityType="ZmapModel.ActivityAvailability" />
+    <EntitySet Name="ActivityLockedDates" EntityType="ZmapModel.ActivityLockedDate" />
   </EntityContainer>
   <EntityType Name="Accommodation">
     <Key>
@@ -531,6 +509,7 @@
     <Property Name="ArrivalDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="DepartureDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="TripName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LineId" Type="Int32" />
   </EntityType>
   <EntityType Name="PostCategory">
     <Key>
@@ -725,22 +704,6 @@
     <Property Name="ModifiedByUserId" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
   </EntityType>
-  <EntityType Name="ActivityAvailability">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="ActivityId" Type="Int32" />
-    <Property Name="DateFrom" Type="DateTime" Precision="0" />
-    <Property Name="DateTo" Type="DateTime" Precision="0" />
-    <Property Name="TimeFrom" Type="Time" Precision="7" />
-    <Property Name="TimeTo" Type="Time" Precision="7" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedByUserId" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="ModifiedByUserId" Type="Int32" />
-    <Property Name="Active" Type="Boolean" />
-  </EntityType>
   <EntityType Name="UserPayment">
     <Key>
       <PropertyRef Name="Id" />
@@ -782,5 +745,58 @@
     <Property Name="TripNights" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
     <Property Name="PhotoUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActivityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Morning" Type="Boolean" />
+    <Property Name="Evening" Type="Boolean" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="ActivityCategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="ModifiedByUserId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="ActivityDate" Type="DateTime" Precision="3" />
+    <Property Name="SubAreaId" Type="Int32" />
+    <Property Name="Safety" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CityID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ActivityAvailability">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActivityId" Type="Int32" />
+    <Property Name="DateFrom" Type="DateTime" Precision="0" />
+    <Property Name="DateTo" Type="DateTime" Precision="0" />
+    <Property Name="TimeFrom" Type="Time" Precision="7" />
+    <Property Name="TimeTo" Type="Time" Precision="7" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedByUserId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="CostWithTransportation" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CostWithoutTrasnportation" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="ActivityLockedDate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActivityId" Type="Int32" />
+    <Property Name="DateFrom" Type="DateTime" Precision="3" />
+    <Property Name="DateTo" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedByUserId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
   </EntityType>
 </Schema>

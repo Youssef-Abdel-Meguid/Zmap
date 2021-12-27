@@ -1,30 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ZmapModelStoreContainer" CdmEntityContainer="ZmapEntities">
-    <EntitySetMapping Name="Activities">
-      <EntityTypeMapping TypeName="ZmapModel.Activity">
-        <MappingFragment StoreEntitySet="Activities">
-          <ScalarProperty Name="CityID" ColumnName="CityID" />
-          <ScalarProperty Name="Safety" ColumnName="Safety" />
-          <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
-          <ScalarProperty Name="CostWithTransportation" ColumnName="CostWithTransportation" />
-          <ScalarProperty Name="Morning" ColumnName="Morning" />
-          <ScalarProperty Name="Evening" ColumnName="Evening" />
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="ActivityCategoryId" ColumnName="ActivityCategoryId" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="CostWithoutTrasnportation" ColumnName="CostWithoutTrasnportation" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ActivityCategories">
       <EntityTypeMapping TypeName="ZmapModel.ActivityCategory">
         <MappingFragment StoreEntitySet="ActivityCategories">
@@ -494,6 +470,7 @@
     <EntitySetMapping Name="BusTripSchedules">
       <EntityTypeMapping TypeName="ZmapModel.BusTripSchedule">
         <MappingFragment StoreEntitySet="BusTripSchedule">
+          <ScalarProperty Name="LineId" ColumnName="LineId" />
           <ScalarProperty Name="TripName" ColumnName="TripName" />
           <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
           <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
@@ -720,23 +697,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ActivityAvailabilities">
-      <EntityTypeMapping TypeName="ZmapModel.ActivityAvailability">
-        <MappingFragment StoreEntitySet="ActivityAvailabilities">
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
-          <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
-          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
-          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
-          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UserPayments">
       <EntityTypeMapping TypeName="ZmapModel.UserPayment">
         <MappingFragment StoreEntitySet="UserPayments">
@@ -778,6 +738,62 @@
           <ScalarProperty Name="TripDescription" ColumnName="TripDescription" />
           <ScalarProperty Name="TripTitle" ColumnName="TripTitle" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Activities">
+      <EntityTypeMapping TypeName="ZmapModel.Activity">
+        <MappingFragment StoreEntitySet="Activities">
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Safety" ColumnName="Safety" />
+          <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+          <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ActivityCategoryId" ColumnName="ActivityCategoryId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Evening" ColumnName="Evening" />
+          <ScalarProperty Name="Morning" ColumnName="Morning" />
+          <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActivityAvailabilities">
+      <EntityTypeMapping TypeName="ZmapModel.ActivityAvailability">
+        <MappingFragment StoreEntitySet="ActivityAvailabilities">
+          <ScalarProperty Name="CostWithoutTrasnportation" ColumnName="CostWithoutTrasnportation" />
+          <ScalarProperty Name="CostWithTransportation" ColumnName="CostWithTransportation" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
+          <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActivityLockedDates">
+      <EntityTypeMapping TypeName="ZmapModel.ActivityLockedDate">
+        <MappingFragment StoreEntitySet="ActivityLockedDates">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

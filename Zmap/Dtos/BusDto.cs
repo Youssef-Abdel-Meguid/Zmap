@@ -9,6 +9,7 @@ namespace Zmap.Dtos
     public class BusDto
     {
         public int Id { get; set; }
+        public int LineId { get; set; }
         public string Name { get; set; }
         public string BusNumber { get; set; }
         public int CategoryId { get; set; }

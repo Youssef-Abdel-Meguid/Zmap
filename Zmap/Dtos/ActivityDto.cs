@@ -13,8 +13,6 @@ namespace Zmap.Dtos
         public DateTime? CreatedDate { get; set; }
         public bool? Morning { get; set; }
         public bool? Evening { get; set; }
-        public double? CostWithTrans { get; set; }
-        public double? CostWithoutTrans { get; set; }
         public int? CityId { get; set; }
         public string City { get; set; }
         public int SubAreaId { get; set; }

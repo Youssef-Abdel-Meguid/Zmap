@@ -36,8 +36,6 @@
                         <th>نوع النشاط</th>
                         <th>مكان النشاط</th>
                         <th>المدينة</th>
-                        <th>السعر بالانتقالات</th>
-                        <th>السعر بدون الانتقالات</th>
                         <th>تاريخ الاضافة</th>
                         <th></th>
                     </tr>
@@ -50,8 +48,6 @@
                             <td>@Html.DisplayFor(modelItem => item.ActivityCategory)</td>
                             <td>@Html.DisplayFor(modelItem => item.SubArea)</td>
                             <td>@Html.DisplayFor(modelItem => item.City)</td>
-                            <td>@Html.DisplayFor(modelItem => item.CostWithTrans)</td>
-                            <td>@Html.DisplayFor(modelItem => item.CostWithoutTrans)</td>
                             <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
                             <td>
                                 <a href="@Url.Action("EditActivity", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light orange">

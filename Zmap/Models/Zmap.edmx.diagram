@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="ba6d3c73be03465eb737f719d67da217" Name="Diagram1">
-        <EntityTypeShape EntityType="ZmapModel.Activity" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ZmapModel.ActivityCategory" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ZmapModel.AddsOn" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ZmapModel.BusAddOn" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -54,10 +53,12 @@
         <EntityTypeShape EntityType="ZmapModel.LockedRoom" Width="1.5" PointX="21.375" PointY="8.75" />
         <EntityTypeShape EntityType="ZmapModel.ChildAccommodationPercentage" Width="1.5" PointX="9.375" PointY="21.75" />
         <EntityTypeShape EntityType="ZmapModel.ChildPolicy" Width="1.5" PointX="11.375" PointY="21.75" />
-        <EntityTypeShape EntityType="ZmapModel.ActivityAvailability" Width="1.5" PointX="21.375" PointY="12.75" />
         <EntityTypeShape EntityType="ZmapModel.UserPayment" Width="1.5" PointX="13.375" PointY="21.75" />
         <EntityTypeShape EntityType="ZmapModel.UserTripDetail" Width="1.5" PointX="21.375" PointY="16.75" />
         <EntityTypeShape EntityType="ZmapModel.UserTrip" Width="1.5" PointX="21.375" PointY="19.75" />
+        <EntityTypeShape EntityType="ZmapModel.Activity" Width="1.5" PointX="23.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ZmapModel.ActivityAvailability" Width="1.5" PointX="0.75" PointY="23.75" />
+        <EntityTypeShape EntityType="ZmapModel.ActivityLockedDate" Width="1.5" PointX="21.75" PointY="12.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

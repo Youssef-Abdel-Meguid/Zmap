@@ -25,7 +25,6 @@ namespace Zmap.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Activity> Activities { get; set; }
         public virtual DbSet<ActivityCategory> ActivityCategories { get; set; }
         public virtual DbSet<AddsOn> AddsOns { get; set; }
         public virtual DbSet<BusAddOn> BusAddOns { get; set; }
@@ -74,9 +73,11 @@ namespace Zmap.Models
         public virtual DbSet<LockedRoom> LockedRooms { get; set; }
         public virtual DbSet<ChildAccommodationPercentage> ChildAccommodationPercentages { get; set; }
         public virtual DbSet<ChildPolicy> ChildPolicies { get; set; }
-        public virtual DbSet<ActivityAvailability> ActivityAvailabilities { get; set; }
         public virtual DbSet<UserPayment> UserPayments { get; set; }
         public virtual DbSet<UserTripDetail> UserTripDetails { get; set; }
         public virtual DbSet<UserTrip> UserTrips { get; set; }
+        public virtual DbSet<Activity> Activities { get; set; }
+        public virtual DbSet<ActivityAvailability> ActivityAvailabilities { get; set; }
+        public virtual DbSet<ActivityLockedDate> ActivityLockedDates { get; set; }
     }
 }

@@ -486,7 +486,7 @@ namespace Zmap.Controllers
 
 
 
-                    return RedirectToAction("Index", "Hotels");
+                    return RedirectToAction("Create", "Hotels");
                 }
                 catch (Exception e)
                 {
@@ -549,7 +549,7 @@ namespace Zmap.Controllers
                     new ErrorLogger() { ActionName = "Error in create hotel photo", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Details", "Hotels",new { Id = gallery.HotelId });
+            return RedirectToAction("CreatePhoto", "Hotels",new { Id = gallery.HotelId });
         }
 
         public async Task<ActionResult> Edit(int? id)
@@ -750,7 +750,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("AddsOn", "Hotels", new { Id = hotelAddsOn.HotelId });
+            return RedirectToAction("CreateAddon", "Hotels", new { Id = hotelAddsOn.HotelId });
         }
 
         public async Task<ActionResult> DeleteAddOn(int? Id)
@@ -933,7 +933,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Contacts", "Hotels", new { Id = contact.HotelId });
+            return RedirectToAction("CreateContact", "Hotels", new { Id = contact.HotelId });
         }
 
         public async Task<ActionResult> DeleteContact(int? Id)
@@ -1044,7 +1044,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Rooms", "Hotels", new { Id = room.HotleId});
+            return RedirectToAction("CreateRoom", "Hotels", new { Id = room.HotleId});
         }
 
         public async Task<ActionResult> EditRoom(int? id)
@@ -1389,7 +1389,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("Gallery", "Hotels", new { Id = gallery.RoomId, isHotel = false });
+            return RedirectToAction("CreateRoomPhoto", "Hotels", new { Id = gallery.RoomId });
         }
 
         public ActionResult CreateRoomPhoto(int? Id)
@@ -1478,7 +1478,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("AddsOn", "Hotels",new { Id = roomSpecial.RoomId, isHotel = false });
+            return RedirectToAction("CreateRoomSpecial", "Hotels",new { Id = roomSpecial.RoomId });
         }
 
         public async Task<ActionResult> CreateRoomAvailability(int? Id)
@@ -1543,7 +1543,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("RoomAvailabilities", "Hotels",new { Id = roomAvailability.RoomId });
+            return RedirectToAction("CreateRoomAvailability", "Hotels", new { Id = roomAvailability.RoomId });
         }
 
         public ActionResult CreateFAQ(int? id)
@@ -1597,7 +1597,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("FAQs", "Hotels", new { Id = fAQ.HotelId });
+            return RedirectToAction("CreateFAQ", "Hotels", new { Id = fAQ.HotelId });
         }
 
         public async Task<ActionResult> DeleteFAQ(int? Id)
@@ -1699,7 +1699,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("Files", "Hotels", new { Id = attachment.HotelId });
+            return RedirectToAction("CreateAttachment", "Hotels", new { Id = attachment.HotelId });
         }
 
         public ActionResult DownloadAttachment(string filePath)
@@ -1948,7 +1948,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("HotelCustomAdds", "Hotels", new { id = hotelCustomAdd.RoomId });
+            return RedirectToAction("CreateHotelCustomAdds", "Hotels", new { id = hotelCustomAdd.RoomId });
         }
 
         public async Task<ActionResult> EditHotelCustomAdds(int? id)
@@ -2223,7 +2223,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("LockedRooms", "Hotels", new { id = lockedRoom.RoomId});
+            return RedirectToAction("CreateLockedRoom", "Hotels", new { id = lockedRoom.RoomId});
         }
 
         public async Task<ActionResult> EditLockedRoom(int? id)
@@ -2489,7 +2489,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("ChildPolicy", "Hotels", new { id = childPolicy.HotelId });
+            return RedirectToAction("CreateChildPolicy", "Hotels", new { id = childPolicy.HotelId });
         }
 
         //public async Task<ActionResult> EditChildPolicy(int? id)

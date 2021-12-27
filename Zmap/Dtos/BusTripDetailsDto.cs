@@ -8,6 +8,7 @@ namespace Zmap.Dtos
     public class BusTripDetailsDto
     {
         public int? BusId { get; set; }
+        public int? LineId { get; set; }
         public string BusName { get; set; }
         public List<BusTripScheduleDto> BusTrips { get; set; }
     }

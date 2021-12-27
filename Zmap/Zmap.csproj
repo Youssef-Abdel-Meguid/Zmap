@@ -226,6 +226,7 @@
     <Compile Include="Dtos\ActivityCompanyDto.cs" />
     <Compile Include="Dtos\ActivityDetailsDto.cs" />
     <Compile Include="Dtos\ActivityDto.cs" />
+    <Compile Include="Dtos\ActivityLockedDateDto.cs" />
     <Compile Include="Dtos\AddOnDetailsDto.cs" />
     <Compile Include="Dtos\AddOnDto.cs" />
     <Compile Include="Dtos\AddUserTripDetailDto.cs" />
@@ -300,6 +301,9 @@
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ActivityCategory.cs">
+      <DependentUpon>Zmap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ActivityLockedDate.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AddsOn.cs">
@@ -913,6 +917,9 @@
     <Content Include="Views\UserProfile\AddTripDetails.cshtml" />
     <Content Include="Views\Home\TripDetails.cshtml" />
     <Content Include="Views\Home\TripPlan.cshtml" />
+    <Content Include="Views\Activites\CreateLockedDate.cshtml" />
+    <Content Include="Views\Activites\LockedDates.cshtml" />
+    <Content Include="Views\Transportation\LineBusDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

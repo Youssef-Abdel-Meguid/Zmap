@@ -12,23 +12,16 @@ namespace Zmap.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BusTripSchedule
+    public partial class ActivityLockedDate
     {
         public int Id { get; set; }
-        public int BusId { get; set; }
-        public System.TimeSpan DepartureTime { get; set; }
-        public System.TimeSpan ArrivalTime { get; set; }
-        public int StationFromId { get; set; }
-        public int StationToId { get; set; }
-        public Nullable<bool> IsCompleted { get; set; }
+        public Nullable<int> ActivityId { get; set; }
+        public Nullable<System.DateTime> DateFrom { get; set; }
+        public Nullable<System.DateTime> DateTo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> CreatedByUserId { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedByUserId { get; set; }
         public Nullable<bool> Active { get; set; }
-        public System.DateTime ArrivalDate { get; set; }
-        public System.DateTime DepartureDate { get; set; }
-        public string TripName { get; set; }
-        public Nullable<int> LineId { get; set; }
     }
 }

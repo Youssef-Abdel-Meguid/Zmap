@@ -509,7 +509,6 @@ namespace Zmap.Controllers
                             tripActivityDtos.Add(new TripActivityDto()
                             {
                                 ActivityName = activity.ActivityName,
-                                TotalCost = activity.CostWithoutTrasnportation * numberOfDays,
                                 Area = area.Name,
                                 CompanyId = company.Id,
                                 ActivtyId = activity.Id
@@ -616,7 +615,6 @@ namespace Zmap.Controllers
                             tripActivityDtos.Add(new TripActivityDto()
                             {
                                 ActivityName = activity.ActivityName,
-                                TotalCost = activity.CostWithoutTrasnportation * numberOfDays,
                                 Area = area.Name,
                                 CompanyId = comapny.Id,
                                 ActivtyId = activity.Id

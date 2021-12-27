@@ -286,7 +286,7 @@
    
     <div class="wrapper">
         <div style="margin-left: 700px;">
-            <a href="@Url.Action("BusTrips", "Transportation", new { id = Model.BusId})" class="btn-floating btn-large waves-effect waves-light blue">
+            <a href="@Url.Action("BusTrips", "Transportation", new { busId = Model.BusId, lineId = Model.LineId })" class="btn-floating btn-large waves-effect waves-light blue">
                 <i class="material-icons">arrow_back</i>
             </a>
         </div>

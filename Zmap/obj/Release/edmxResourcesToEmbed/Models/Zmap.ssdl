@@ -27,13 +27,11 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ActivityName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="CostWithTransportation" Type="float" />
     <Property Name="Morning" Type="bit" />
     <Property Name="Evening" Type="bit" />
     <Property Name="CompanyId" Type="int" Nullable="false" />
     <Property Name="ActivityCategoryId" Type="int" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="255" />
-    <Property Name="CostWithoutTrasnportation" Type="float" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="CreatedByUserId" Type="int" />
@@ -59,6 +57,8 @@
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedByUserId" Type="int" />
     <Property Name="Active" Type="bit" />
+    <Property Name="CostWithTransportation" Type="money" />
+    <Property Name="CostWithoutTrasnportation" Type="money" />
   </EntityType>
   <EntityType Name="ActivityCategories">
     <Key>
@@ -66,6 +66,20 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="ActivityLockedDates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActivityId" Type="int" />
+    <Property Name="DateFrom" Type="datetime" />
+    <Property Name="DateTo" Type="datetime" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedByUserId" Type="int" />
     <Property Name="Active" Type="bit" />
   </EntityType>
   <EntityType Name="AddsOn">
@@ -159,6 +173,7 @@
     <Property Name="ArrivalDate" Type="date" Nullable="false" />
     <Property Name="DepartureDate" Type="date" Nullable="false" />
     <Property Name="TripName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LineId" Type="int" />
   </EntityType>
   <EntityType Name="ChildAccommodationPercentage">
     <Key>
@@ -734,6 +749,7 @@
     <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActivityAvailabilities" EntityType="Self.ActivityAvailabilities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActivityCategories" EntityType="Self.ActivityCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActivityLockedDates" EntityType="Self.ActivityLockedDates" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AddsOn" EntityType="Self.AddsOn" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Attachments" EntityType="Self.Attachments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BusAddOn" EntityType="Self.BusAddOn" Schema="dbo" store:Type="Tables" />

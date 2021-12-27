@@ -25,5 +25,7 @@ namespace Zmap.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedByUserId { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Nullable<decimal> CostWithTransportation { get; set; }
+        public Nullable<decimal> CostWithoutTrasnportation { get; set; }
     }
 }

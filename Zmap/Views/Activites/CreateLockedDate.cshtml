@@ -1,4 +1,4 @@
-﻿@model Zmap.Models.ActivityAvailability
+﻿@model Zmap.Models.ActivityLockedDate
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,12 +10,12 @@
         <div class="container">
             <div class="row">
                 <div>
-                    <a href="@Url.Action("ActivityAvailabilities", "Activites", new { id = Model.ActivityId })" class="btn-floating btn-large waves-effect waves-light blue">
+                    <a href="@Url.Action("LockedDates", "Activites", new { id = Model.ActivityId })" class="btn-floating btn-large waves-effect waves-light blue">
                         <i class="material-icons">arrow_back</i>
                     </a>
                 </div>
                 <div class="page-head">
-                    <h2>اضافة مواعيد النشاط</h2>
+                    <h2>اضافة المواعيد المغلقة</h2>
                     <div class="head-title">
                         <div class="hl-1"></div>
                         <div class="hl-2"></div>
@@ -27,27 +27,10 @@
                             <h2>بيانات النشاط</h2>
 
                             <div class="aminities">
-                                @using (Html.BeginForm("CreateActivityAvailability", "Activites"))
+                                @using (Html.BeginForm("CreateLockedDate", "Activites"))
                                 {
                                     @Html.AntiForgeryToken()
                                     <form class="col l12">
-                                        <div class="row">
-                                            <div class="input-field col l9">
-                                                <input type="time" name="TimeFrom" required>
-                                            </div>
-                                            <div class="input-field col l3">
-                                                <label>الوقت من</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="input-field col l9 m4">
-                                                <input type="time" name="TimeTo" required>
-                                            </div>
-                                            <div class="input-field col l3">
-                                                <label>الوقت الى</label>
-                                            </div>
-                                        </div>
 
                                         <div class="row">
                                             <div class="input-field col l9">
@@ -57,6 +40,7 @@
                                                 <label>التاريخ من</label>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="input-field col l9 m4">
                                                 <input type="date" name="DateTo" required>
@@ -66,25 +50,8 @@
                                             </div>
                                         </div>
 
-                                         <div class="row">
-                                            <div class="input-field col l7">
-                                                <input type="number" class="form-control" name="CostWithoutTrasnportation" required step="0.01"/>
-                                            </div>
-                                            <div class="input-field col l5">
-                                                <label>سعر النشاط بدون انتقالات</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="input-field col l9">
-                                                <input type="number" class="form-control" name="CostWithTransportation" required step="0.01"/>
-                                            </div>
-                                            <div class="input-field col l3">
-                                                <label>سعر النشاط بالانتقالات</label>
-                                            </div>
-                                        </div>
-
                                         @Html.HiddenFor(m => m.ActivityId)
+
                                         <div class="row">
                                             <div class="input-field col l12">
                                                 <input type="submit" value="تسجيل" />

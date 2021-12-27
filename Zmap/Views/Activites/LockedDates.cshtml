@@ -1,4 +1,4 @@
-﻿@model Zmap.Dtos.ActivityAvailabilityDto
+﻿@model Zmap.Dtos.ActivityLockedDateDto
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-12">
             <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red"
-               href="@Url.Action("CreateActivityAvailability", "Activites", new { id = Model.ActivityId})">
+               href="@Url.Action("CreateLockedDate", "Activites", new { id = Model.ActivityId})">
                 <i class="material-icons">add</i>
             </a>
             <h2>
@@ -34,30 +34,22 @@
 
                 <thead>
                     <tr>
-                        <th>التاريخ من</th>
-                        <th>الوقت من</th>
                         <th>التاريخ الى</th>
                         <th>الوقت الى</th>
-                        <th>السعر بالانتقالات</th>
-                        <th>السعر بدون الانتقالات</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    @foreach (var item in Model.ActivityAvailabilities)
+                    @foreach (var item in Model.activityLockedDates)
                     {
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.DateFrom)</td>
-                            <td>@Html.DisplayFor(modelItem => item.TimeFrom)</td>
                             <td>@Html.DisplayFor(modelItem => item.DateTo)</td>
-                            <td>@Html.DisplayFor(modelItem => item.TimeTo)</td>
-                            <td>@Html.DisplayFor(modelItem => item.CostWithTransportation)</td>
-                            <td>@Html.DisplayFor(modelItem => item.CostWithoutTrasnportation)</td>
                             <td>
                                 <a onclick="return confirm('هل تريد مسح البيانات')"
-                                   href="@Url.Action("DeleteActivityAvailability", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
+                                   href="@Url.Action("DeleteLockedDate", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
                                     <i class="material-icons">
                                         delete
                                     </i>
@@ -88,4 +80,5 @@
         });
     </script>
 }
+
 

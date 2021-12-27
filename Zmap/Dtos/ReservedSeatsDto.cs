@@ -9,6 +9,7 @@ namespace Zmap.Dtos
     public class ReservedSeatsDto
     {
         public int? BusId { get; set; }
+        public int? LineId { get; set; }
         public int? BusTripId { get; set; }
         public int? NumberOfSeats { get; set; }
         public List<string> SeatsNumber { get; set; }

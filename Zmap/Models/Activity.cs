@@ -16,13 +16,11 @@ namespace Zmap.Models
     {
         public int Id { get; set; }
         public string ActivityName { get; set; }
-        public Nullable<double> CostWithTransportation { get; set; }
         public Nullable<bool> Morning { get; set; }
         public Nullable<bool> Evening { get; set; }
         public int CompanyId { get; set; }
         public int ActivityCategoryId { get; set; }
         public string Description { get; set; }
-        public Nullable<double> CostWithoutTrasnportation { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> CreatedByUserId { get; set; }

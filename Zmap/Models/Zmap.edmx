@@ -32,13 +32,11 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ActivityName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CostWithTransportation" Type="float" />
           <Property Name="Morning" Type="bit" />
           <Property Name="Evening" Type="bit" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
           <Property Name="ActivityCategoryId" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="255" />
-          <Property Name="CostWithoutTrasnportation" Type="float" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="CreatedByUserId" Type="int" />
@@ -64,6 +62,8 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedByUserId" Type="int" />
           <Property Name="Active" Type="bit" />
+          <Property Name="CostWithTransportation" Type="money" />
+          <Property Name="CostWithoutTrasnportation" Type="money" />
         </EntityType>
         <EntityType Name="ActivityCategories">
           <Key>
@@ -71,6 +71,20 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ActivityLockedDates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActivityId" Type="int" />
+          <Property Name="DateFrom" Type="datetime" />
+          <Property Name="DateTo" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedByUserId" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedByUserId" Type="int" />
           <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="AddsOn">
@@ -164,6 +178,7 @@
           <Property Name="ArrivalDate" Type="date" Nullable="false" />
           <Property Name="DepartureDate" Type="date" Nullable="false" />
           <Property Name="TripName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LineId" Type="int" />
         </EntityType>
         <EntityType Name="ChildAccommodationPercentage">
           <Key>
@@ -739,6 +754,7 @@
           <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ActivityAvailabilities" EntityType="Self.ActivityAvailabilities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ActivityCategories" EntityType="Self.ActivityCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActivityLockedDates" EntityType="Self.ActivityLockedDates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AddsOn" EntityType="Self.AddsOn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attachments" EntityType="Self.Attachments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusAddOn" EntityType="Self.BusAddOn" Schema="dbo" store:Type="Tables" />
@@ -792,29 +808,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ZmapModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Activity">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ActivityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CostWithTransportation" Type="Double" />
-          <Property Name="Morning" Type="Boolean" />
-          <Property Name="Evening" Type="Boolean" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="ActivityCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CostWithoutTrasnportation" Type="Double" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedByUserId" Type="Int32" />
-          <Property Name="ModifiedByUserId" Type="Int32" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="ActivityDate" Type="DateTime" Precision="3" />
-          <Property Name="SubAreaId" Type="Int32" />
-          <Property Name="Safety" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CityID" Type="Int32" />
-        </EntityType>
         <EntityType Name="ActivityCategory">
           <Key>
             <PropertyRef Name="Id" />
@@ -1184,7 +1177,6 @@
           <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="ZmapEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Activities" EntityType="Self.Activity" />
           <EntitySet Name="ActivityCategories" EntityType="Self.ActivityCategory" />
           <EntitySet Name="AddsOns" EntityType="Self.AddsOn" />
           <EntitySet Name="BusAddOns" EntityType="Self.BusAddOn" />
@@ -1233,10 +1225,12 @@
           <EntitySet Name="LockedRooms" EntityType="ZmapModel.LockedRoom" />
           <EntitySet Name="ChildAccommodationPercentages" EntityType="ZmapModel.ChildAccommodationPercentage" />
           <EntitySet Name="ChildPolicies" EntityType="ZmapModel.ChildPolicy" />
-          <EntitySet Name="ActivityAvailabilities" EntityType="ZmapModel.ActivityAvailability" />
           <EntitySet Name="UserPayments" EntityType="ZmapModel.UserPayment" />
           <EntitySet Name="UserTripDetails" EntityType="ZmapModel.UserTripDetail" />
           <EntitySet Name="UserTrips" EntityType="ZmapModel.UserTrip" />
+          <EntitySet Name="Activities" EntityType="ZmapModel.Activity" />
+          <EntitySet Name="ActivityAvailabilities" EntityType="ZmapModel.ActivityAvailability" />
+          <EntitySet Name="ActivityLockedDates" EntityType="ZmapModel.ActivityLockedDate" />
           </EntityContainer>
         <EntityType Name="Accommodation">
           <Key>
@@ -1323,6 +1317,7 @@
           <Property Name="ArrivalDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DepartureDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="TripName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LineId" Type="Int32" />
         </EntityType>
         <EntityType Name="PostCategory">
           <Key>
@@ -1517,22 +1512,6 @@
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
         </EntityType>
-        <EntityType Name="ActivityAvailability">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="ActivityId" Type="Int32" />
-          <Property Name="DateFrom" Type="DateTime" Precision="0" />
-          <Property Name="DateTo" Type="DateTime" Precision="0" />
-          <Property Name="TimeFrom" Type="Time" Precision="7" />
-          <Property Name="TimeTo" Type="Time" Precision="7" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedByUserId" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedByUserId" Type="Int32" />
-          <Property Name="Active" Type="Boolean" />
-        </EntityType>
         <EntityType Name="UserPayment">
           <Key>
             <PropertyRef Name="Id" />
@@ -1575,36 +1554,65 @@
           <Property Name="Active" Type="Boolean" />
           <Property Name="PhotoUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Morning" Type="Boolean" />
+          <Property Name="Evening" Type="Boolean" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="ActivityCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="ModifiedByUserId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="ActivityDate" Type="DateTime" Precision="3" />
+          <Property Name="SubAreaId" Type="Int32" />
+          <Property Name="Safety" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CityID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ActivityAvailability">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityId" Type="Int32" />
+          <Property Name="DateFrom" Type="DateTime" Precision="0" />
+          <Property Name="DateTo" Type="DateTime" Precision="0" />
+          <Property Name="TimeFrom" Type="Time" Precision="7" />
+          <Property Name="TimeTo" Type="Time" Precision="7" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedByUserId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="CostWithTransportation" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CostWithoutTrasnportation" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="ActivityLockedDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityId" Type="Int32" />
+          <Property Name="DateFrom" Type="DateTime" Precision="3" />
+          <Property Name="DateTo" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedByUserId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ZmapModelStoreContainer" CdmEntityContainer="ZmapEntities">
-          <EntitySetMapping Name="Activities">
-            <EntityTypeMapping TypeName="ZmapModel.Activity">
-              <MappingFragment StoreEntitySet="Activities">
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="Safety" ColumnName="Safety" />
-                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
-                <ScalarProperty Name="CostWithTransportation" ColumnName="CostWithTransportation" />
-                <ScalarProperty Name="Morning" ColumnName="Morning" />
-                <ScalarProperty Name="Evening" ColumnName="Evening" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="ActivityCategoryId" ColumnName="ActivityCategoryId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CostWithoutTrasnportation" ColumnName="CostWithoutTrasnportation" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ActivityCategories">
             <EntityTypeMapping TypeName="ZmapModel.ActivityCategory">
               <MappingFragment StoreEntitySet="ActivityCategories">
@@ -2074,6 +2082,7 @@
           <EntitySetMapping Name="BusTripSchedules">
             <EntityTypeMapping TypeName="ZmapModel.BusTripSchedule">
               <MappingFragment StoreEntitySet="BusTripSchedule">
+                <ScalarProperty Name="LineId" ColumnName="LineId" />
                 <ScalarProperty Name="TripName" ColumnName="TripName" />
                 <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
                 <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
@@ -2300,23 +2309,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ActivityAvailabilities">
-            <EntityTypeMapping TypeName="ZmapModel.ActivityAvailability">
-              <MappingFragment StoreEntitySet="ActivityAvailabilities">
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
-                <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
-                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
-                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
-                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserPayments">
             <EntityTypeMapping TypeName="ZmapModel.UserPayment">
               <MappingFragment StoreEntitySet="UserPayments">
@@ -2358,6 +2350,62 @@
                 <ScalarProperty Name="TripDescription" ColumnName="TripDescription" />
                 <ScalarProperty Name="TripTitle" ColumnName="TripTitle" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="ZmapModel.Activity">
+              <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Safety" ColumnName="Safety" />
+                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+                <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ActivityCategoryId" ColumnName="ActivityCategoryId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Evening" ColumnName="Evening" />
+                <ScalarProperty Name="Morning" ColumnName="Morning" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityAvailabilities">
+            <EntityTypeMapping TypeName="ZmapModel.ActivityAvailability">
+              <MappingFragment StoreEntitySet="ActivityAvailabilities">
+                <ScalarProperty Name="CostWithoutTrasnportation" ColumnName="CostWithoutTrasnportation" />
+                <ScalarProperty Name="CostWithTransportation" ColumnName="CostWithTransportation" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
+                <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityLockedDates">
+            <EntityTypeMapping TypeName="ZmapModel.ActivityLockedDate">
+              <MappingFragment StoreEntitySet="ActivityLockedDates">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
