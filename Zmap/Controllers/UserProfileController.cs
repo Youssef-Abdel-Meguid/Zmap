@@ -79,7 +79,7 @@ namespace Zmap.Controllers
                         NumberOfSeats = item.NumberOfSeats,
                         PaymentStatus = paymentStatus.PaymentStatus,
                         HotelName = hotel.Name,
-                        TransportationCompanyName = transportationComapny.Name
+                        TransportationCompanyName = transportationComapny == null ? "" : transportationComapny.Name
                     });
                 }
 
@@ -176,7 +176,7 @@ namespace Zmap.Controllers
                         NumberOfSeats = item.NumberOfSeats,
                         PaymentStatus = paymentStatus.PaymentStatus,
                         HotelName = hotel.Name,
-                        TransportationCompanyName = transportationComapny.Name
+                        TransportationCompanyName = transportationComapny == null ? "" : transportationComapny.Name
                     });
                 }
 

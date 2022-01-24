@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateBusTrip", "Transportation", new { id = Model.BusId})">
+            <a style="margin-bottom: 10px" class="btn-floating btn-large waves-effect waves-light red" href="@Url.Action("CreateBusTrip", "Transportation", new { busId = Model.BusId, lineId = Model.LineId})">
                 <i class="material-icons">add</i>
             </a>
             <h2>جدول رحلات الاتوبيس</h2>
@@ -73,7 +73,7 @@
     </div>
 
     <div>
-        <a href="@Url.Action("BusDetails", "Transportation", new { id = Model.BusId })" class="btn-floating btn-large waves-effect waves-light blue">
+        <a href="@Url.Action("LineBusDetails", "Transportation", new { lineId = Model.LineId, busId = Model.BusId })" class="btn-floating btn-large waves-effect waves-light blue">
             <i class="material-icons">arrow_back</i>
         </a>
     </div>

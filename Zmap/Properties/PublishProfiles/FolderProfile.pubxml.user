@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Jo\Work\Zmap publish</_PublishTargetUrl>
-    <History>True|2021-12-15T14:06:22.6598373Z;True|2021-12-02T23:02:17.9685583+02:00;True|2021-11-23T20:48:30.9258357+02:00;True|2021-11-22T00:00:37.8519825+02:00;True|2021-11-16T01:37:20.6831106+02:00;True|2021-11-16T01:29:06.1546721+02:00;True|2021-11-16T01:27:21.3035727+02:00;True|2021-11-08T22:35:49.8926698+02:00;True|2021-11-08T22:33:46.7700547+02:00;</History>
+    <History>True|2022-01-10T18:02:28.2878369Z;True|2022-01-09T21:30:45.9224797+02:00;True|2021-12-27T02:16:53.0124771+02:00;True|2021-12-15T16:06:22.6598373+02:00;True|2021-12-02T23:02:17.9685583+02:00;True|2021-11-23T20:48:30.9258357+02:00;True|2021-11-22T00:00:37.8519825+02:00;True|2021-11-16T01:37:20.6831106+02:00;True|2021-11-16T01:29:06.1546721+02:00;True|2021-11-16T01:27:21.3035727+02:00;True|2021-11-08T22:35:49.8926698+02:00;True|2021-11-08T22:33:46.7700547+02:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -21,10 +21,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>12/15/2021 16:06:21</publishTime>
+      <publishTime>01/10/2022 20:02:26</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>12/15/2021 16:06:20</publishTime>
+      <publishTime>01/10/2022 20:02:26</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/25/2021 00:34:04</publishTime>
@@ -174,10 +174,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:04</publishTime>
     </File>
     <File Include="bin/Zmap.dll">
-      <publishTime>12/15/2021 15:53:20</publishTime>
+      <publishTime>01/10/2022 20:02:06</publishTime>
     </File>
     <File Include="bin/Zmap.pdb">
-      <publishTime>12/15/2021 15:53:20</publishTime>
+      <publishTime>01/10/2022 20:02:06</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -261,6 +261,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Images/Activities/187647811_304584551379025_7957960700911097826_n.jpg">
+      <publishTime>10/25/2021 00:34:02</publishTime>
+    </File>
+    <File Include="Images/Activities/2019-05-18-02-04-11_f659dd891d89bff004ffd84f9b440fd614de260d.jpg.jpg">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Images/Activity/defualt.jpg">
@@ -978,13 +981,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:03</publishTime>
     </File>
     <File Include="Models/Zmap.edmx.diagram">
-      <publishTime>12/02/2021 12:05:22</publishTime>
+      <publishTime>12/25/2021 13:16:41</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>10/25/2021 00:34:04</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>12/15/2021 16:06:17</publishTime>
+      <publishTime>01/10/2022 20:02:20</publishTime>
     </File>
     <File Include="Scripts/angular.min.js">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1032,13 +1035,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/21/2021 06:52:37</publishTime>
     </File>
     <File Include="Views/Activites/Activities.cshtml">
-      <publishTime>11/08/2021 00:28:34</publishTime>
+      <publishTime>12/25/2021 13:19:43</publishTime>
     </File>
     <File Include="Views/Activites/ActivityAvailabilities.cshtml">
-      <publishTime>11/16/2021 00:52:38</publishTime>
+      <publishTime>12/25/2021 13:27:55</publishTime>
     </File>
     <File Include="Views/Activites/ActivityDetails.cshtml">
-      <publishTime>11/16/2021 00:33:56</publishTime>
+      <publishTime>12/25/2021 13:29:10</publishTime>
     </File>
     <File Include="Views/Activites/ActivityGallery.cshtml">
       <publishTime>11/08/2021 22:03:01</publishTime>
@@ -1050,10 +1053,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Activites/CreateActivity.cshtml">
-      <publishTime>11/08/2021 00:23:48</publishTime>
+      <publishTime>12/25/2021 13:52:50</publishTime>
     </File>
     <File Include="Views/Activites/CreateActivityAvailability.cshtml">
-      <publishTime>11/16/2021 01:24:34</publishTime>
+      <publishTime>12/25/2021 13:21:27</publishTime>
     </File>
     <File Include="Views/Activites/CreateAttachment.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1066,6 +1069,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Activites/CreateFAQ.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
+    </File>
+    <File Include="Views/Activites/CreateLockedDate.cshtml">
+      <publishTime>12/25/2021 13:57:13</publishTime>
     </File>
     <File Include="Views/Activites/CreatePhoto.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1090,6 +1096,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Activites/Index.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
+    </File>
+    <File Include="Views/Activites/LockedDates.cshtml">
+      <publishTime>12/25/2021 13:55:16</publishTime>
     </File>
     <File Include="Views/Admin/ContactEdit.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1130,14 +1139,29 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/Home/About.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
+    <File Include="Views/Home/Activities.cshtml">
+      <publishTime>01/10/2022 20:02:01</publishTime>
+    </File>
+    <File Include="Views/Home/ActivityDetails.cshtml">
+      <publishTime>01/10/2022 19:58:40</publishTime>
+    </File>
     <File Include="Views/Home/Blogs.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>01/10/2022 18:28:25</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
+    <File Include="Views/Home/HotelDetails.cshtml">
+      <publishTime>01/09/2022 20:44:03</publishTime>
+    </File>
+    <File Include="Views/Home/Hotels.cshtml">
+      <publishTime>01/09/2022 21:30:13</publishTime>
+    </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>12/12/2021 14:47:47</publishTime>
+    </File>
+    <File Include="Views/Home/RoomBooking.cshtml">
+      <publishTime>01/09/2022 21:09:58</publishTime>
     </File>
     <File Include="Views/Home/Services.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1269,7 +1293,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/23/2021 11:19:26</publishTime>
+      <publishTime>01/10/2022 19:09:06</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1278,16 +1302,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Transportation/BusDetails.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>12/27/2021 01:18:02</publishTime>
     </File>
     <File Include="Views/Transportation/Buses.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Transportation/BusTripReservations.cshtml">
-      <publishTime>11/13/2021 19:43:15</publishTime>
+      <publishTime>12/27/2021 02:16:25</publishTime>
     </File>
     <File Include="Views/Transportation/BusTrips.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>12/27/2021 01:41:18</publishTime>
     </File>
     <File Include="Views/Transportation/Contacts.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1308,7 +1332,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Views/Transportation/CreateBusTrip.cshtml">
-      <publishTime>10/25/2021 00:34:02</publishTime>
+      <publishTime>12/27/2021 01:43:57</publishTime>
     </File>
     <File Include="Views/Transportation/CreateContact.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1355,8 +1379,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/Transportation/Index.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
+    <File Include="Views/Transportation/LineBusDetails.cshtml">
+      <publishTime>12/27/2021 01:23:07</publishTime>
+    </File>
     <File Include="Views/Transportation/LineBuses.cshtml">
-      <publishTime>11/23/2021 20:44:19</publishTime>
+      <publishTime>12/27/2021 01:37:29</publishTime>
     </File>
     <File Include="Views/Transportation/LineDetails.cshtml">
       <publishTime>10/25/2021 00:34:02</publishTime>
@@ -1413,7 +1440,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 00:34:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/15/2021 16:06:16</publishTime>
+      <publishTime>01/10/2022 20:02:19</publishTime>
     </File>
   </ItemGroup>
 </Project>

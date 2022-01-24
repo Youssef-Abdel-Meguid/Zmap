@@ -313,7 +313,7 @@ namespace Zmap.Controllers
         }
 
         // GET: Activites/Create
-        public ActionResult Create()
+        public ActionResult Create(bool? added)
         {
             SetIdenitiy();
             if (userId == 0 || userId == null)
@@ -325,6 +325,7 @@ namespace Zmap.Controllers
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
             }
+
             return View();
         }
 
@@ -360,7 +361,7 @@ namespace Zmap.Controllers
 
                     db.Companies.Add(company);
                     await db.SaveChangesAsync();
-                    return RedirectToAction("Create");
+                    return RedirectToAction("Create", "Activites", new { added = true });
                 }
             }
             catch (Exception e)
@@ -481,7 +482,7 @@ namespace Zmap.Controllers
             return RedirectToAction("Index", "Activites");
         }
 
-        public ActionResult CreatePhoto(int? Id)
+        public ActionResult CreatePhoto(int? Id, bool? added)
         {
             SetIdenitiy();
             if (userId == 0 || userId == null)
@@ -541,7 +542,7 @@ namespace Zmap.Controllers
             return RedirectToAction("Gallery", "Activites", new { Id = galley.CompanyId });
         }
 
-        public ActionResult CreateContact(int? Id)
+        public ActionResult CreateContact(int? Id, bool? added)
         {
             SetIdenitiy();
             if (userType != 1 && userType != 4)
@@ -593,7 +594,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("CreateContact", "Activites", new { Id = contact.CompanyId });
+            return RedirectToAction("CreateContact", "Activites", new { Id = contact.CompanyId, added = true });
         }
 
         public async Task<ActionResult> DeleteContact(int? Id)
@@ -637,7 +638,7 @@ namespace Zmap.Controllers
             return RedirectToAction("Contacts", "Activites", new { Id = contact.CompanyId });
         }
 
-        public ActionResult CreateFAQ(int? id)
+        public ActionResult CreateFAQ(int? id, bool? added)
         {
             SetIdenitiy();
             if (userId == 0 || userId == null)
@@ -690,7 +691,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("CreateFAQ", "Activites", new { Id = fAQ.CompanyId });
+            return RedirectToAction("CreateFAQ", "Activites", new { Id = fAQ.CompanyId, added = true });
         }
 
         [HttpPost]
@@ -732,7 +733,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("CreatePhoto", "Activites", new { Id = gallery.CompanyId });
+            return RedirectToAction("CreatePhoto", "Activites", new { Id = gallery.CompanyId, added = true });
         }
 
         public async Task<ActionResult> DeleteFAQ(int? Id)
@@ -776,7 +777,58 @@ namespace Zmap.Controllers
             return RedirectToAction("FAQs", "Activites", new { Id = faq.CompanyId });
         }
 
-        public async Task<ActionResult> CreateActivity(int? id)
+        public async Task<ActionResult> CreateActivityCity(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                ViewBag.Cities = await db.Cities.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(new Activity() { CompanyId = (int)id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateActivityCity(Activity activity)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Error = "Please Choose City";
+                return View(activity.CompanyId);
+            }
+
+
+            return RedirectToAction("CreateActivity", "Activites", new { id = activity.CompanyId, cityId = activity.CityID });
+
+        }
+
+        public async Task<ActionResult> CreateActivity(int? id, int? cityId, bool? added)
         {
             SetIdenitiy();
             if (userId == 0 || userId == null)
@@ -792,14 +844,14 @@ namespace Zmap.Controllers
             try
             {
                 ViewBag.Cat = await db.ActivityCategories.Where(a => a.Active == true).ToListAsync();
-                ViewBag.SubAreas = await db.SubAreas.Where(s => s.Active == true).ToListAsync();
+                ViewBag.SubAreas = await db.SubAreas.Where(s => s.Active == true && s.CityId == cityId).ToListAsync();
             }
             catch (Exception e)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return View(new Activity { CompanyId = (int)id, Morning = false, Evening = false});
+            return View(new Activity { CompanyId = (int)id, Morning = false, Evening = false, CityID = cityId });
         }
         
         [HttpPost]
@@ -843,7 +895,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString() , UserId = userId });
             }
 
-            return RedirectToAction("CreateActivity", "Activites", new { id = activity.CompanyId});
+            return RedirectToAction("CreateActivity", "Activites", new { id = activity.CompanyId, cityId = activity.CityID, added = true });
         }
 
         public async Task<ActionResult> DeleteActivity(int? Id)
@@ -963,7 +1015,7 @@ namespace Zmap.Controllers
             return View(activity);
         }
 
-        public ActionResult CreateAttachment(int? id)
+        public ActionResult CreateAttachment(int? id, bool? added)
         {
             SetIdenitiy();
             if (userId == 0 || userId == null)
@@ -1014,14 +1066,13 @@ namespace Zmap.Controllers
 
                 db.Attachments.Add(attachment);
                 await db.SaveChangesAsync();
-
             }
             catch (Exception e)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("CreateAttachment", "Activites", new { Id = attachment.CompanyId });
+            return RedirectToAction("CreateAttachment", "Activites", new { Id = attachment.CompanyId, added = true });
         }
 
         public ActionResult DownloadAttachment(string filePath)
@@ -1209,7 +1260,7 @@ namespace Zmap.Controllers
             return View(gallery);
         }
 
-        public ActionResult CreateAvtivityPhoto(int? Id)
+        public ActionResult CreateAvtivityPhoto(int? Id, bool? added)
         {
             SetIdenitiy();
             if (userId == 0 || userId == null)
@@ -1269,7 +1320,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("CreateAvtivityPhoto", "Activites", new { Id = gallery.ActivityId });
+            return RedirectToAction("CreateAvtivityPhoto", "Activites", new { Id = gallery.ActivityId, added = true });
         }
 
         public async Task<ActionResult> DeleteActivityPhoto(int? Id)
@@ -1347,7 +1398,7 @@ namespace Zmap.Controllers
             return View(activityAvailabilityDto);
         }
 
-        public ActionResult CreateActivityAvailability(int? id)
+        public ActionResult CreateActivityAvailability(int? id, bool? added)
         {
             SetIdenitiy();
             if (userId == 0 || userId == null)
@@ -1400,7 +1451,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.InnerException.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("CreateActivityAvailability", "Activites", new { id = activityAvailability.ActivityId });
+            return RedirectToAction("CreateActivityAvailability", "Activites", new { id = activityAvailability.ActivityId, added = true });
         }
 
         public async Task<ActionResult> DeleteActivityAvailability(int? id)
@@ -1482,7 +1533,7 @@ namespace Zmap.Controllers
             return View(lockedDatesDto);
         }
 
-        public ActionResult CreateLockedDate(int? id)
+        public ActionResult CreateLockedDate(int? id, bool? added)
         {
             SetIdenitiy();
             if (userId == 0 || userId == null)
@@ -1534,7 +1585,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("CreateLockedDate", "Activites", new { id = activityLockedDate.ActivityId });
+            return RedirectToAction("CreateLockedDate", "Activites", new { id = activityLockedDate.ActivityId, added = true });
         }
 
         public async Task<ActionResult> DeleteLockedDate(int? id)
@@ -1578,6 +1629,127 @@ namespace Zmap.Controllers
             }
 
             return RedirectToAction("LockedDates", "Activites", new { id = activityId });
+        }
+
+        public async Task<ActionResult> CopyActivityAvailability(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            int? activityId;
+
+            try
+            {
+                var activityAva = await db.ActivityAvailabilities.FindAsync(id);
+
+                if (activityAva == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "activity availability is null", UserId = userId });
+                }
+
+                activityId = activityAva.ActivityId;
+
+                var newActivityAva = new ActivityAvailability()
+                {
+                    Active = true,
+                    ActivityId = activityAva.ActivityId,
+                    CostWithoutTrasnportation = activityAva.CostWithoutTrasnportation,
+                    CostWithTransportation = activityAva.CostWithTransportation,
+                    CreatedByUserId = activityAva.CreatedByUserId,
+                    CreatedDate = DateTime.Now,
+                    DateFrom = activityAva.DateFrom,
+                    DateTo = activityAva.DateTo,
+                    TimeFrom = activityAva.TimeFrom,
+                    TimeTo = activityAva.TimeTo
+                };
+
+                db.ActivityAvailabilities.Add(newActivityAva);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("ActivityAvailabilities", "Activites", new { id = activityId });
+        } 
+
+        public async Task<ActionResult> EditActivityAvailability(int? id)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "id is null", UserId = userId });
+            }
+
+            var activityAva = new ActivityAvailability();
+
+            try
+            {
+                activityAva = await db.ActivityAvailabilities.FindAsync(id);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(activityAva);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditActivityAvailability(ActivityAvailability activityAvailability)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 4)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    activityAvailability.ModifiedDate = DateTime.Now;
+                    activityAvailability.ModifiedByUserId = userId;
+                    db.Entry(activityAvailability).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("ActivityAvailabilities", "Activites", new { id = activityAvailability.ActivityId });
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activities", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(activityAvailability);
         }
 
         protected override void Dispose(bool disposing)

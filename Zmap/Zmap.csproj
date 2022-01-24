@@ -231,6 +231,7 @@
     <Compile Include="Dtos\AddOnDto.cs" />
     <Compile Include="Dtos\AddUserTripDetailDto.cs" />
     <Compile Include="Dtos\AddUserTripDto.cs" />
+    <Compile Include="Dtos\AllActivitiesDto.cs" />
     <Compile Include="Dtos\BlogCreateDto.cs" />
     <Compile Include="Dtos\BlogDetailsDto.cs" />
     <Compile Include="Dtos\BlogsDto.cs" />
@@ -244,6 +245,9 @@
     <Compile Include="Dtos\ChangeAdminPasswordDto.cs" />
     <Compile Include="Dtos\ChildPolicyDetailsDto.cs" />
     <Compile Include="Dtos\ChildPolicyDto.cs" />
+    <Compile Include="Dtos\ClientActivityDetails.cs" />
+    <Compile Include="Dtos\ClientHotelDetailsDto.cs" />
+    <Compile Include="Dtos\ClientListAllRoomsDto.cs" />
     <Compile Include="Dtos\ContactDetailsDto.cs" />
     <Compile Include="Dtos\FAQDetailsDto.cs" />
     <Compile Include="Dtos\FAQDto.cs" />
@@ -257,6 +261,8 @@
     <Compile Include="Dtos\LineDto.cs" />
     <Compile Include="Dtos\LineStationDetailsDto.cs" />
     <Compile Include="Dtos\LineStationDto.cs" />
+    <Compile Include="Dtos\ListAllActivitiesDto.cs" />
+    <Compile Include="Dtos\ListAllHotelsDto.cs" />
     <Compile Include="Dtos\LockedRoomDetailsDto.cs" />
     <Compile Include="Dtos\LockedRoomDto.cs" />
     <Compile Include="Dtos\LoginDto.cs" />
@@ -327,10 +333,10 @@
     <Compile Include="Models\BusTripSchedule.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChildAccommodationPercentage.cs">
+    <Compile Include="Models\ChildPolicy.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChildPolicy.cs">
+    <Compile Include="Models\ChildPolicyCategory.cs">
       <DependentUpon>Zmap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\City.cs">
@@ -488,7 +494,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\about %281%29.jpg" />
     <Content Include="Images\about.jpg" />
-    <Content Include="Images\Activities\187647811_304584551379025_7957960700911097826_n.jpg" />
+    <Content Include="Images\Activities\2019-05-18-02-04-11_f659dd891d89bff004ffd84f9b440fd614de260d.jpg.jpg" />
     <Content Include="Images\Activity\defualt.jpg" />
     <Content Include="Images\Admin\About\about.jpg" />
     <Content Include="Images\Admin\Services\1.jpg" />
@@ -601,6 +607,7 @@
     <Content Include="Images\icon\bus.png" />
     <Content Include="Images\icon\bustime.png" />
     <Content Include="Images\icon\child.png" />
+    <Content Include="Images\icon\copy.png" />
     <Content Include="Images\icon\db1.png" />
     <Content Include="Images\icon\db2.png" />
     <Content Include="Images\icon\db3.png" />
@@ -920,6 +927,14 @@
     <Content Include="Views\Activites\CreateLockedDate.cshtml" />
     <Content Include="Views\Activites\LockedDates.cshtml" />
     <Content Include="Views\Transportation\LineBusDetails.cshtml" />
+    <Content Include="Views\Home\Hotels.cshtml" />
+    <Content Include="Views\Home\HotelDetails.cshtml" />
+    <Content Include="Views\Home\RoomBooking.cshtml" />
+    <Content Include="Views\Home\Activities.cshtml" />
+    <Content Include="Views\Home\ActivityDetails.cshtml" />
+    <Content Include="Views\Activites\CreateActivityCity.cshtml" />
+    <Content Include="Views\Activites\EditActivityAvailability.cshtml" />
+    <Content Include="Views\Transportation\EditBusTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

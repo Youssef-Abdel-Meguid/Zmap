@@ -1,0 +1,77 @@
+﻿@model Zmap.Dtos.ClientHotelDetailsDto
+
+<section>
+    <div class="inn-body-section inn-detail inn-hotel-1" style="background: url(../../Images/Hotels/@Model.Photos[0]) no-repeat;">
+        <div class="container">
+            <div class="row">
+                <div class="inn-bod">
+                    <div class="inn-detail-p1 inn-com">
+                        <h2>@Model.Name</h2>
+                        <div class="r2-ratt"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <img src="images/h-trip.png" alt=""> <span>ممتاز  4.5 / 5</span> </div>
+                        <p>@Model.Description</p>
+                    </div>
+                    <div class="inn-detail-p1 inn-com inn-com-list-point">
+                        <div class="detail-title">
+                            <h2>مرافق الفندق</h2>
+                        </div>
+                        <ul>
+                            @foreach (var item in Model.AddsOn)
+                            {
+                                <li><i class="fa fa-check" aria-hidden="true"></i> @item</li>
+                            }
+                        </ul>
+                    </div>
+
+                    <div class="inn-detail-p1 inn-com">
+                        <div class="detail-title">
+                            <h2>معرض الصور</h2>
+                        </div>
+                        <div class="room-photo-all">
+                            @foreach (var item in Model.Photos)
+                            {
+                                <div class="col-md-3 room-photo">
+                                    <div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="" src="~/Images/Hotels/@item" alt="" /> </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="inn-detail-p1 inn-com">
+                        <div class="detail-title">
+                            <h2>غرف الفندق</h2>
+                        </div>
+                        <div class="re-room">
+                            <ul>
+                                @foreach (var item in Model.Rooms)
+                                {
+                                    <li>
+                                        <div class="re-room-list">
+                                            <div class="col-md-3 re-room-list-1"><img src="~/Images/Rooms/@item.Photo" alt=""> </div>
+                                            <div class="col-md-6 re-room-list-2">
+                                                <h4>@item.RoomType - @item.Accommodation - @item.RoomView</h4>
+                                                <p>
+                                                    <b>المرافق: </b>
+                                                @foreach (var item2 in item.AddsOn)
+                                                {
+                                                    @item2
+                                                }
+                                                </p> 
+                                                <span>
+                                                <b>الوقت المتاح</b> @item.DateFrom : @item.DateTo</span> 
+                                            </div>
+                                            <div class="col-md-3 re-room-list-3"> 
+                                                <span class="hot-list-p3-1">سعر الليلة</span> 
+                                                <span class="hot-list-p3-2">ج.م @item.PricePerNight</span> 
+                                                <a href="@Url.Action("RoomBooking", "Home", new { hotelId = Model.HotelId, roomId = item.RoomId, roomAvaId = item.RoomAvaId})" class="hot-page2-alp-quot-btn spec-btn-text">حجز</a> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

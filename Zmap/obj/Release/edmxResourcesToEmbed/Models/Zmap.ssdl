@@ -175,21 +175,13 @@
     <Property Name="TripName" Type="nvarchar" MaxLength="50" />
     <Property Name="LineId" Type="int" />
   </EntityType>
-  <EntityType Name="ChildAccommodationPercentage">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AccommodationPercentage" Type="int" />
-    <Property Name="Active" Type="bit" />
-  </EntityType>
   <EntityType Name="ChildPolicy">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HotelId" Type="int" />
-    <Property Name="ChildAccommodationPercentageId" Type="int" />
+    <Property Name="AccommodationPercentage" Type="int" />
     <Property Name="AgeFrom" Type="int" />
     <Property Name="AgeTo" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -197,6 +189,14 @@
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedByUserId" Type="int" />
     <Property Name="Active" Type="bit" />
+    <Property Name="ChildPolicyCategoryId" Type="int" />
+  </EntityType>
+  <EntityType Name="ChildPolicyCategories">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Cities">
     <Key>
@@ -665,6 +665,14 @@
     <Property Name="RoomAvailabilityId" Type="int" />
     <Property Name="Active" Type="bit" />
     <Property Name="UserPaymentId" Type="int" />
+    <Property Name="NumberOfAdults" Type="int" />
+    <Property Name="NumberOfChilderLessThanSix" Type="int" />
+    <Property Name="NumberOfChildernBetweenSixAndTwelve" Type="int" />
+    <Property Name="HotelNote" Type="nvarchar(max)" />
+    <Property Name="TransportationNote" Type="nvarchar(max)" />
+    <Property Name="ActivityNote" Type="nvarchar(max)" />
+    <Property Name="ApprovedByAdmin" Type="bit" />
+    <Property Name="UserConfirmation" Type="bit" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -757,8 +765,8 @@
     <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BusSeatsMap" EntityType="Self.BusSeatsMap" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BusTripSchedule" EntityType="Self.BusTripSchedule" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ChildAccommodationPercentage" EntityType="Self.ChildAccommodationPercentage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ChildPolicy" EntityType="Self.ChildPolicy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChildPolicyCategories" EntityType="Self.ChildPolicyCategories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />

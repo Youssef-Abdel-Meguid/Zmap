@@ -180,21 +180,13 @@
           <Property Name="TripName" Type="nvarchar" MaxLength="50" />
           <Property Name="LineId" Type="int" />
         </EntityType>
-        <EntityType Name="ChildAccommodationPercentage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AccommodationPercentage" Type="int" />
-          <Property Name="Active" Type="bit" />
-        </EntityType>
         <EntityType Name="ChildPolicy">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HotelId" Type="int" />
-          <Property Name="ChildAccommodationPercentageId" Type="int" />
+          <Property Name="AccommodationPercentage" Type="int" />
           <Property Name="AgeFrom" Type="int" />
           <Property Name="AgeTo" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -202,6 +194,14 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedByUserId" Type="int" />
           <Property Name="Active" Type="bit" />
+          <Property Name="ChildPolicyCategoryId" Type="int" />
+        </EntityType>
+        <EntityType Name="ChildPolicyCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Cities">
           <Key>
@@ -670,6 +670,14 @@
           <Property Name="RoomAvailabilityId" Type="int" />
           <Property Name="Active" Type="bit" />
           <Property Name="UserPaymentId" Type="int" />
+          <Property Name="NumberOfAdults" Type="int" />
+          <Property Name="NumberOfChilderLessThanSix" Type="int" />
+          <Property Name="NumberOfChildernBetweenSixAndTwelve" Type="int" />
+          <Property Name="HotelNote" Type="nvarchar(max)" />
+          <Property Name="TransportationNote" Type="nvarchar(max)" />
+          <Property Name="ActivityNote" Type="nvarchar(max)" />
+          <Property Name="ApprovedByAdmin" Type="bit" />
+          <Property Name="UserConfirmation" Type="bit" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -762,8 +770,8 @@
           <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusSeatsMap" EntityType="Self.BusSeatsMap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusTripSchedule" EntityType="Self.BusTripSchedule" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ChildAccommodationPercentage" EntityType="Self.ChildAccommodationPercentage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChildPolicy" EntityType="Self.ChildPolicy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChildPolicyCategories" EntityType="Self.ChildPolicyCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
@@ -1129,6 +1137,14 @@
           <Property Name="RoomAvailabilityId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
           <Property Name="UserPaymentId" Type="Int32" />
+          <Property Name="NumberOfAdults" Type="Int32" />
+          <Property Name="NumberOfChilderLessThanSix" Type="Int32" />
+          <Property Name="NumberOfChildernBetweenSixAndTwelve" Type="Int32" />
+          <Property Name="HotelNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TransportationNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovedByAdmin" Type="Boolean" />
+          <Property Name="UserConfirmation" Type="Boolean" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1223,7 +1239,6 @@
           <EntitySet Name="Rooms" EntityType="ZmapModel.Room" />
           <EntitySet Name="HotelCustomAdds" EntityType="ZmapModel.HotelCustomAdd" />
           <EntitySet Name="LockedRooms" EntityType="ZmapModel.LockedRoom" />
-          <EntitySet Name="ChildAccommodationPercentages" EntityType="ZmapModel.ChildAccommodationPercentage" />
           <EntitySet Name="ChildPolicies" EntityType="ZmapModel.ChildPolicy" />
           <EntitySet Name="UserPayments" EntityType="ZmapModel.UserPayment" />
           <EntitySet Name="UserTripDetails" EntityType="ZmapModel.UserTripDetail" />
@@ -1231,6 +1246,7 @@
           <EntitySet Name="Activities" EntityType="ZmapModel.Activity" />
           <EntitySet Name="ActivityAvailabilities" EntityType="ZmapModel.ActivityAvailability" />
           <EntitySet Name="ActivityLockedDates" EntityType="ZmapModel.ActivityLockedDate" />
+          <EntitySet Name="ChildPolicyCategories" EntityType="ZmapModel.ChildPolicyCategory" />
           </EntityContainer>
         <EntityType Name="Accommodation">
           <Key>
@@ -1489,21 +1505,12 @@
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
         </EntityType>
-        <EntityType Name="ChildAccommodationPercentage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccommodationPercentage" Type="Int32" />
-          <Property Name="Active" Type="Boolean" />
-        </EntityType>
         <EntityType Name="ChildPolicy">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HotelId" Type="Int32" />
-          <Property Name="ChildAccommodationPercentageId" Type="Int32" />
           <Property Name="AgeFrom" Type="Int32" />
           <Property Name="AgeTo" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -1511,6 +1518,8 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
+          <Property Name="AccommodationPercentage" Type="Int32" />
+          <Property Name="ChildPolicyCategoryId" Type="Int32" />
         </EntityType>
         <EntityType Name="UserPayment">
           <Key>
@@ -1606,6 +1615,13 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ChildPolicyCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1935,6 +1951,14 @@
           <EntitySetMapping Name="UserReservations">
             <EntityTypeMapping TypeName="ZmapModel.UserReservation">
               <MappingFragment StoreEntitySet="UserReservations">
+                <ScalarProperty Name="UserConfirmation" ColumnName="UserConfirmation" />
+                <ScalarProperty Name="ApprovedByAdmin" ColumnName="ApprovedByAdmin" />
+                <ScalarProperty Name="ActivityNote" ColumnName="ActivityNote" />
+                <ScalarProperty Name="TransportationNote" ColumnName="TransportationNote" />
+                <ScalarProperty Name="HotelNote" ColumnName="HotelNote" />
+                <ScalarProperty Name="NumberOfChildernBetweenSixAndTwelve" ColumnName="NumberOfChildernBetweenSixAndTwelve" />
+                <ScalarProperty Name="NumberOfChilderLessThanSix" ColumnName="NumberOfChilderLessThanSix" />
+                <ScalarProperty Name="NumberOfAdults" ColumnName="NumberOfAdults" />
                 <ScalarProperty Name="UserPaymentId" ColumnName="UserPaymentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2284,18 +2308,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ChildAccommodationPercentages">
-            <EntityTypeMapping TypeName="ZmapModel.ChildAccommodationPercentage">
-              <MappingFragment StoreEntitySet="ChildAccommodationPercentage">
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="AccommodationPercentage" ColumnName="AccommodationPercentage" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ChildPolicies">
             <EntityTypeMapping TypeName="ZmapModel.ChildPolicy">
               <MappingFragment StoreEntitySet="ChildPolicy">
+                <ScalarProperty Name="ChildPolicyCategoryId" ColumnName="ChildPolicyCategoryId" />
+                <ScalarProperty Name="AccommodationPercentage" ColumnName="AccommodationPercentage" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
@@ -2303,7 +2320,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="AgeTo" ColumnName="AgeTo" />
                 <ScalarProperty Name="AgeFrom" ColumnName="AgeFrom" />
-                <ScalarProperty Name="ChildAccommodationPercentageId" ColumnName="ChildAccommodationPercentageId" />
                 <ScalarProperty Name="HotelId" ColumnName="HotelId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -2406,6 +2422,14 @@
                 <ScalarProperty Name="DateTo" ColumnName="DateTo" />
                 <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
                 <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChildPolicyCategories">
+            <EntityTypeMapping TypeName="ZmapModel.ChildPolicyCategory">
+              <MappingFragment StoreEntitySet="ChildPolicyCategories">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

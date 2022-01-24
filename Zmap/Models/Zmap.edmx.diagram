@@ -51,14 +51,14 @@
         <EntityTypeShape EntityType="ZmapModel.Room" Width="1.5" PointX="7.375" PointY="13.75" />
         <EntityTypeShape EntityType="ZmapModel.HotelCustomAdd" Width="1.5" PointX="21.375" PointY="4.75" />
         <EntityTypeShape EntityType="ZmapModel.LockedRoom" Width="1.5" PointX="21.375" PointY="8.75" />
-        <EntityTypeShape EntityType="ZmapModel.ChildAccommodationPercentage" Width="1.5" PointX="9.375" PointY="21.75" />
-        <EntityTypeShape EntityType="ZmapModel.ChildPolicy" Width="1.5" PointX="11.375" PointY="21.75" />
+        <EntityTypeShape EntityType="ZmapModel.ChildPolicy" Width="3.625" PointX="15.375" PointY="22.75" />
         <EntityTypeShape EntityType="ZmapModel.UserPayment" Width="1.5" PointX="13.375" PointY="21.75" />
         <EntityTypeShape EntityType="ZmapModel.UserTripDetail" Width="1.5" PointX="21.375" PointY="16.75" />
         <EntityTypeShape EntityType="ZmapModel.UserTrip" Width="1.5" PointX="21.375" PointY="19.75" />
         <EntityTypeShape EntityType="ZmapModel.Activity" Width="1.5" PointX="23.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZmapModel.ActivityAvailability" Width="1.5" PointX="0.75" PointY="23.75" />
         <EntityTypeShape EntityType="ZmapModel.ActivityLockedDate" Width="1.5" PointX="21.75" PointY="12.75" />
+        <EntityTypeShape EntityType="ZmapModel.ChildPolicyCategory" Width="1.5" PointX="13.375" PointY="18.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

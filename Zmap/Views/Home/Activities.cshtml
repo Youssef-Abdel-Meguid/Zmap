@@ -1,0 +1,59 @@
+﻿@model Zmap.Dtos.AllActivitiesDto
+<section dir="rtl">
+
+    <div class="inn-body-section pad-bot-60">
+        <div class="container">
+            <div class="row inn-page-com">
+                <div class="page-head">
+                    <h2>انشطاتنا</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    @foreach (var item in Model.Activities)
+                    {
+                        <div class="col-md-3">
+                            <a href="@Url.Action("ActivityDetails", "Home", new { companyId = item.CompanyId, activityId = item.ActivityId })">
+                                <div class="all-hotel-like-com">
+                                    <div class="all-hotel-lc-img"> <img src="~/Images/Activities/@item.PhotoUrl" alt=""> </div>
+                                    <div class="all-hotel-lc-con all-hotel-lc-con2">
+                                        <h5>@item.ActivityCategoryName - @item.CompanyName</h5>
+                                        <p>@item.Area - @item.City</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-3">
+                    @using (Html.BeginForm("Activities", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="head-typo typo-com rec-post">
+                            <h3>بحث</h3>
+                            <ul>
+                                @for (int i = 0; i < Model.Categories.CategorList.Count; i++)
+                                {
+                                    <li>
+                                        <div class="rec-po-title">
+                                            @Html.CheckBoxFor(m => Model.Categories.CategorList[i].IsChecked, new { Style = "left: 28px; opacity: 1; top: -1px" })
+                                            @Model.Categories.CategorList[i].Name
+                                            @Html.HiddenFor(m => Model.Categories.CategorList[i].Id)
+                                            @Html.HiddenFor(m => Model.Categories.CategorList[i].Name)
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <input type="submit" value="ابحث" class="btn btn-success" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

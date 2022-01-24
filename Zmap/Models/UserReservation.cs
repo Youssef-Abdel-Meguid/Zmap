@@ -34,5 +34,13 @@ namespace Zmap.Models
         public Nullable<int> RoomAvailabilityId { get; set; }
         public Nullable<bool> Active { get; set; }
         public Nullable<int> UserPaymentId { get; set; }
+        public Nullable<int> NumberOfAdults { get; set; }
+        public Nullable<int> NumberOfChilderLessThanSix { get; set; }
+        public Nullable<int> NumberOfChildernBetweenSixAndTwelve { get; set; }
+        public string HotelNote { get; set; }
+        public string TransportationNote { get; set; }
+        public string ActivityNote { get; set; }
+        public Nullable<bool> ApprovedByAdmin { get; set; }
+        public Nullable<bool> UserConfirmation { get; set; }
     }
 }

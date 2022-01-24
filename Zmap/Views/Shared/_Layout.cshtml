@@ -71,15 +71,18 @@
                     @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "2"))
                     {
                         <li>@Html.ActionLink("ادارة الفنادق", "Index", "Hotels")</li>
+                        <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
                     }
 
                     @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "3"))
                     {
                         <li>@Html.ActionLink("ادارة النقل", "Index", "Transportation")</li>
+                        <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
                     }
                     @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "4"))
                     {
                         <li>@Html.ActionLink("ادارة الانشطة", "Index", "Activites")</li>
+                        <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
                     }
 
                     @if (!string.IsNullOrEmpty(userType) && userType == "1")
@@ -87,6 +90,7 @@
                         <li>@Html.ActionLink("ادارة المستخدمين", "Index", "Users")</li>
                         <li>@Html.ActionLink("ادارة المدونة", "Index", "Blogs")</li>
                         <li>@Html.ActionLink("ادارة الموقع", "Index", "Admin")</li>
+                        <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
                     }
                 </ul>
             </div>
@@ -105,7 +109,8 @@
                         </li>
                         @if (string.IsNullOrEmpty(userType) || userType == "5")
                         {
-                            <li><a href="#">فنادقنا</a></li>
+                            <li><a href="@Url.Action("Hotels", "Home")">فنادقنا</a></li>
+                            <li><a href="@Url.Action("Activities", "Home")">انشطاتنا</a></li>
                         }
                         <li><a href="@Url.Action("About", "Home")">عن الشركة</a></li>
                         <li><a href="@Url.Action("Contact", "Home")">إتصل بنا</a></li>
@@ -187,12 +192,19 @@
                             <li>@Html.ActionLink("ادارة الانشطة", "Index", "Activites")</li>
                         }
 
+                        @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "4" || userType == "2" || userType == "1"))
+                        {
+                            <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
+                        }
+
                         @if (!string.IsNullOrEmpty(userType) && userType == "1")
                         {
                             <li>@Html.ActionLink("ادارة المستخدمين", "Index", "Users")</li>
                             <li>@Html.ActionLink("ادارة المدونة", "Index", "Blogs")</li>
                             <li>@Html.ActionLink("ادارة الموقع", "Index", "Admin")</li>
                         }
+
+
                     </ul>
                 </div>
             </div>
@@ -216,14 +228,14 @@
                                         <h4>الدعم و المساعدة</h4>
                                         <ul class="two-columns">
                                             <li>
-                                                <a href="contact-us.html">إتصل بنا</a>
+                                                <a href="@Url.Action("Contact", "Home")">إتصل بنا</a>
                                             </li>
                                             <li>
-                                                <a href="about-us.html">عن الشركة</a>
+                                                <a href="@Url.Action("About", "Home")">عن الشركة</a>
                                             </li>
 
                                             <li>
-                                                <a href="blog.html">المدونة</a>
+                                                <a href="@Url.Action("Blogs", "Home")">المدونة</a>
                                             </li>
 
                                         </ul>

@@ -105,7 +105,8 @@
                         </li>
                         @if (string.IsNullOrEmpty(userType) || userType == "5")
                         {
-                            <li><a href="#">فنادقنا</a></li>
+                            <li><a href="@Url.Action("Hotels", "Home")">فنادقنا</a></li>
+                            <li><a href="@Url.Action("Activities", "Home")">انشطاتنا</a></li>
                         }
                         <li><a href="@Url.Action("About", "Home")">عن الشركة</a></li>
                         <li><a href="@Url.Action("Contact", "Home")">إتصل بنا</a></li>
@@ -216,14 +217,14 @@
                                         <h4>الدعم و المساعدة</h4>
                                         <ul class="two-columns">
                                             <li>
-                                                <a href="contact-us.html">إتصل بنا</a>
+                                                <a href="@Url.Action("Contact", "Home")">إتصل بنا</a>
                                             </li>
                                             <li>
-                                                <a href="about-us.html">عن الشركة</a>
+                                                <a href="@Url.Action("About", "Home")">عن الشركة</a>
                                             </li>
 
                                             <li>
-                                                <a href="blog.html">المدونة</a>
+                                                <a href="@Url.Action("Blogs", "Home")">المدونة</a>
                                             </li>
 
                                         </ul>

@@ -71,7 +71,6 @@ namespace Zmap.Models
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<HotelCustomAdd> HotelCustomAdds { get; set; }
         public virtual DbSet<LockedRoom> LockedRooms { get; set; }
-        public virtual DbSet<ChildAccommodationPercentage> ChildAccommodationPercentages { get; set; }
         public virtual DbSet<ChildPolicy> ChildPolicies { get; set; }
         public virtual DbSet<UserPayment> UserPayments { get; set; }
         public virtual DbSet<UserTripDetail> UserTripDetails { get; set; }
@@ -79,5 +78,6 @@ namespace Zmap.Models
         public virtual DbSet<Activity> Activities { get; set; }
         public virtual DbSet<ActivityAvailability> ActivityAvailabilities { get; set; }
         public virtual DbSet<ActivityLockedDate> ActivityLockedDates { get; set; }
+        public virtual DbSet<ChildPolicyCategory> ChildPolicyCategories { get; set; }
     }
 }

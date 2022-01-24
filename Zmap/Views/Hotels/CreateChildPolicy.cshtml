@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string added = Request.QueryString["added"];
 }
 
 <div class="container">
@@ -26,11 +27,26 @@
                     <div class="col-md-12">
                         <div class="head-typo typo-com collap-expand book-form inn-com-form">
                             <h2>بيانات السياسة</h2>
-
+                            @if (!string.IsNullOrEmpty(added))
+                            {
+                                <h3 class="" style="background-color: goldenrod">تم الاضافة بنجاح</h3>
+                            }
+                            @if (ViewBag.Invalid != null    )
+                            {
+                                <h3 class="" style="background-color: indianred">@ViewBag.Invalid</h3>
+                            }
                             <div class="aminities">
                                 @using (Html.BeginForm("CreateChildPolicy", "Hotels", FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="input-field col l9">
+                                            @Html.DropDownList("ChildPolicyCategoryId", new SelectList(ViewBag.ChildPolicyCategories, "Id", "CategoryName"), new { @data_val = "true", @required = "required" })
+                                        </div>
+                                        <div class="input-field col l3">
+                                            <label>نسبة الاقامة</label>
+                                        </div>
+                                    </div>
                                     <form class="col l12">
                                         <div class="row">
                                             <div class="input-field col l9">
@@ -41,7 +57,7 @@
                                             </div>
                                         </div>
 
-                                         <div class="row">
+                                        <div class="row">
                                             <div class="input-field col l9">
                                                 <input type="text" name="AgeTo" required class="validate" />
                                             </div>
@@ -52,12 +68,13 @@
 
                                         <div class="row">
                                             <div class="input-field col l9">
-                                                @Html.DropDownList("ChildAccommodationPercentageId", new SelectList(ViewBag.AccoPercentage, "Id", "AccommodationPercentage"), new { @data_val = "true", @required = "required" })
+                                                <input type="number" name="AccommodationPercentage" required class="validate" />
                                             </div>
                                             <div class="input-field col l3">
                                                 <label>نسبة الاقامة</label>
                                             </div>
                                         </div>
+
                                         @Html.HiddenFor(m => m.HotelId)
                                         <div class="row">
                                             <div class="input-field col l12">

@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "CreateRoomAvailability";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string added = Request.QueryString["added"];
+    string invalidDate = Request.QueryString["invalidDate"];
 }
 
 <div class="container">
@@ -26,7 +28,15 @@
                     <div class="col-md-12">
                         <div class="head-typo typo-com collap-expand book-form inn-com-form">
                             <h2>بيانات الغرفة</h2>
+                            @if (!string.IsNullOrEmpty(added))
+                            {
+                                <h3 class="" style="background-color: goldenrod">تم الاضافة بنجاح</h3>
+                            }
 
+                            @if (!string.IsNullOrEmpty(invalidDate))
+                            {
+                                <h3 class="" style="background-color: indianred">الرجاء ادخال تاريخ صحيح</h3>
+                            }
                             <div class="aminities">
                                 @using (Html.BeginForm())
                                 {
@@ -63,7 +73,7 @@
                                         <div class="row">
                                             <div class="input-field col l9">
                                                 @*@Html.EditorFor(model => model.PricePerNight, new { htmlAttributes = new { @class = "validate" }, @data_val = "true", @required = "required" })*@
-                                                <input type="number" step="0.01" class="validate" name="PricePerNght" required/>
+                                                <input type="number" step="0.01" class="validate" name="PricePerNght" required />
                                             </div>
                                             <div class="input-field col l3">
                                                 <label>سعر الاقامة</label>

@@ -46,6 +46,11 @@
                             <td>@Html.DisplayFor(modelItem => item.BusNumber)</td>
                             <td>@Html.DisplayFor(modelItem => item.SeatPrice)</td>
                             <td>
+                                <a href="@Url.Action("LineBusDetails", "Transportation", new { lineId = Model.LineId, busId = item.BusId })" class="btn-floating waves-effect waves-light-sm green">
+                                    <i class="material-icons">
+                                        info
+                                    </i>
+                                </a>
                                 <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteLineBus", "Transportation", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
                                     <i class="material-icons">
                                         delete

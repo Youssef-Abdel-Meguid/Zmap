@@ -11,5 +11,7 @@ namespace Zmap.Dtos
         public int? AccommodationPercentage { get; set; }
         public int? AgeFrom { get; set; }
         public int? AgeTo { get; set; }
+        public string ChildPolicyCategory { get; set; }
+        public int? ChildPolicyCategoryId { get; set; }
     }
 }

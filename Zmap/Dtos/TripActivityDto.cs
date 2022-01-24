@@ -12,5 +12,6 @@ namespace Zmap.Dtos
         public string Area { get; set; }
         public int ActivtyId { get; set; }
         public int CompanyId { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }

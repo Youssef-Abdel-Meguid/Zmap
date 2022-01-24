@@ -12,10 +12,9 @@ namespace Zmap.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ChildAccommodationPercentage
+    public partial class ChildPolicyCategory
     {
         public int Id { get; set; }
-        public Nullable<int> AccommodationPercentage { get; set; }
-        public Nullable<bool> Active { get; set; }
+        public string CategoryName { get; set; }
     }
 }

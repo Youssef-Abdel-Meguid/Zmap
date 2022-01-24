@@ -87,10 +87,27 @@ namespace Zmap.Controllers
             return blogs;
         }
 
-        private async Task<Categories> GetCategoriesAsync()
+        private async Task<Categories> GetBlogCategoriesAsync()
         {
             var catList = new List<CategoryListDto>();
             var allCats = await db.PostCategories.Where(p => p.Active == true).ToListAsync();
+            foreach (var cat in allCats)
+            {
+                catList.Add(new CategoryListDto()
+                {
+                    Id = cat.Id,
+                    Name = cat.CategoryName,
+                    IsChecked = false
+                });
+            }
+
+            return new Categories() { CategorList = catList };
+        }
+
+        private async Task<Categories> GetActivityCategoriesAsync()
+        {
+            var catList = new List<CategoryListDto>();
+            var allCats = await db.ActivityCategories.Where(p => p.Active == true).ToListAsync();
             foreach (var cat in allCats)
             {
                 catList.Add(new CategoryListDto()
@@ -112,7 +129,7 @@ namespace Zmap.Controllers
                 blogsDto = new BlogsDto()
                 {
                     BlogDetails = await GetBlogDetailsAsync(),
-                    Categories = await GetCategoriesAsync()
+                    Categories = await GetBlogCategoriesAsync()
                 };
 
             }
@@ -135,7 +152,7 @@ namespace Zmap.Controllers
                 var allPosts = await db.Posts.Where(p => p.Active == true).ToListAsync();
                 int maxIndex = 0;
 
-                if(allPosts.Count > 0)
+                if (allPosts.Count > 0)
                     maxIndex = allPosts[allPosts.Count - 1].Id;
 
                 bool[] visited = new bool[maxIndex + 1];
@@ -146,14 +163,14 @@ namespace Zmap.Controllers
                 List<BlogDetailsDto> blogDetails = new List<BlogDetailsDto>();
                 foreach (var item in categories.CategorList)
                 {
-                    if(item.IsChecked)
+                    if (item.IsChecked)
                     {
                         isIn = true;
                         var catPosts = await db.PostsCategories.Where(p => p.Active == true && p.CategoryId == item.Id).ToListAsync();
 
                         foreach (var catPost in catPosts)
                         {
-                            if(visited[(int)catPost.PostId] == false)
+                            if (visited[(int)catPost.PostId] == false)
                             {
                                 visited[(int)catPost.PostId] = true;
 
@@ -165,7 +182,7 @@ namespace Zmap.Controllers
                                 foreach (var cat in allPostCats)
                                     postCategories.Add(await db.PostCategories.FindAsync(cat.CategoryId));
 
-                                blogDetails.Add(new BlogDetailsDto() 
+                                blogDetails.Add(new BlogDetailsDto()
                                 {
                                     Id = post.Id,
                                     Details = post.Details,
@@ -180,7 +197,7 @@ namespace Zmap.Controllers
                     }
                 }
 
-                if(isIn)
+                if (isIn)
                 {
                     blogsDto = new BlogsDto()
                     {
@@ -199,10 +216,112 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home blog categories", Error = e.Message.ToString()});
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home blog categories", Error = e.Message.ToString() });
             }
 
             return View(blogsDto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activities(Categories categories)
+        {
+            AllActivitiesDto allActivitiesDto = new AllActivitiesDto();
+
+            try
+            {
+                bool isIn = false;
+                var activities = await GetActiviesAsync();
+                List<ListAllActivitiesDto> selectedList = new List<ListAllActivitiesDto>();
+
+                foreach (var item in categories.CategorList)
+                {
+                    if (item.IsChecked)
+                    {
+                        isIn = true;
+                        foreach (var item2 in activities)
+                        {
+                            if (item.Id == item2.ActivityCategoryId)
+                            {
+                                selectedList.Add(item2);
+                            }
+                        }
+                    }
+                }
+
+                if (isIn == false)
+                {
+                    allActivitiesDto = new AllActivitiesDto()
+                    {
+                        Activities = await GetActiviesAsync(),
+                        Categories = await GetActivityCategoriesAsync()
+                    };
+                }
+                else
+                {
+                    allActivitiesDto = new AllActivitiesDto()
+                    {
+                        Activities = selectedList,
+                        Categories = await GetActivityCategoriesAsync()
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activity categories", Error = e.Message.ToString() });
+            }
+
+            return View(allActivitiesDto);
+        }
+
+        public async Task<List<ListAllActivitiesDto>> GetActiviesAsync()
+        {
+            var activityCategories = await db.ActivityCategories.Where(a => a.Active == true).ToListAsync();
+            var activites = await db.Activities.Where(a => a.Active == true).ToListAsync();
+
+            List<ListAllActivitiesDto> listAllActivitiesDtos = new List<ListAllActivitiesDto>();
+
+            foreach (var item in activites)
+            {
+                var area = await db.SubAreas.FindAsync(item.SubAreaId);
+                var city = await db.Cities.FindAsync(area.CityId);
+                var company = await db.Companies.FindAsync(item.CompanyId);
+                var category = await db.ActivityCategories.FindAsync(item.ActivityCategoryId);
+                var gallery = await db.Galleries.Where(g => g.Active == true && g.ActivityId == item.Id).FirstOrDefaultAsync();
+
+                listAllActivitiesDtos.Add(new ListAllActivitiesDto()
+                {
+                    ActivityCategoryName = category == null ? "" : category.CategoryName,
+                    ActivityId = item.Id,
+                    Area = area == null ? "" : area.Name,
+                    City = city == null ? "" : city.ArabicCityName,
+                    CompanyId = item.CompanyId,
+                    PhotoUrl = gallery == null ? "" : gallery.PhotoUrl,
+                    CompanyName = company == null ? "" : company.Name,
+                    ActivityCategoryId = category == null ? 0 : category.Id
+                });
+            }
+
+            return listAllActivitiesDtos;
+        }
+
+        public async Task<ActionResult> Activities()
+        {
+            AllActivitiesDto activitiesDtos = new AllActivitiesDto();
+            try
+            {
+                activitiesDtos = new AllActivitiesDto()
+                {
+                    Categories = await GetActivityCategoriesAsync(),
+                    Activities = await GetActiviesAsync()
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in list all activities", Error = e.InnerException.Message.ToString() });
+            }
+
+            return View(activitiesDtos);
         }
 
         public async Task<ActionResult> Trips()
@@ -215,7 +334,7 @@ namespace Zmap.Controllers
                 foreach (var item in trips)
                 {
                     var user = await db.Users.FindAsync(item.UserId);
-                    if(user != null)
+                    if (user != null)
                     {
                         userHomeDto.Add(new UserHomeTripDto()
                         {
@@ -232,7 +351,7 @@ namespace Zmap.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home trips", Error = e.Message.ToString()});
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home trips", Error = e.Message.ToString() });
             }
             return View(userHomeDto);
         }
@@ -246,7 +365,7 @@ namespace Zmap.Controllers
                 var trip = await db.UserTrips.FindAsync(id);
                 var user = await db.Users.FindAsync(trip.UserId);
 
-                if(user != null)
+                if (user != null)
                 {
                     foreach (var item in userTripDetials)
                     {
@@ -290,7 +409,7 @@ namespace Zmap.Controllers
             {
                 var trip = await db.UserTrips.FindAsync(userTripId);
 
-                if(trip == null)
+                if (trip == null)
                 {
                     return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error home create same trip", Error = "trip is null", UserId = userId });
                 }
@@ -420,7 +539,7 @@ namespace Zmap.Controllers
                 ViewBag.Adults = new SelectList(adults.ToList());
                 ViewBag.Child = new SelectList(child.ToList());
 
-                if(TempData["TripPlan"] != null)
+                if (TempData["TripPlan"] != null)
                     tripPlan = (TripPlanDto)TempData["TripPlan"];
 
                 if (tripPlan == null)
@@ -435,7 +554,7 @@ namespace Zmap.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> TripPlanData(TripPlanDto tripPlanDto, bool isSelected )
+        public async Task<ActionResult> TripPlanData(TripPlanDto tripPlanDto, bool isSelected)
         {
             try
             {
@@ -479,6 +598,7 @@ namespace Zmap.Controllers
                                 var bus = await db.Buses.FindAsync(item2.BusId);
                                 var busCat = await db.BusCategories.FindAsync(bus.CategoryId);
                                 var company = await db.Companies.FindAsync(bus.CompanyId);
+                                var busPhoto = await db.Galleries.Where(g => g.Active == true && g.BusId == bus.Id).FirstOrDefaultAsync();
 
                                 tripTransportationDtos.Add(new TripTransportationDto()
                                 {
@@ -492,7 +612,8 @@ namespace Zmap.Controllers
                                     BusCategory = busCat.CategoryName,
                                     CompanyName = company.Name,
                                     BusId = bus.Id,
-                                    CompanyId = company.Id
+                                    CompanyId = company.Id,
+                                    BusPhotoUrl = busPhoto == null ? "" : busPhoto.PhotoUrl
                                 });
                             }
                         }
@@ -506,19 +627,21 @@ namespace Zmap.Controllers
 
                         if (area.CityId == tripPlanDto.DestinationId)
                         {
+                            var photo = await db.Galleries.Where(g => g.Active == true && g.CompanyId == company.Id).FirstOrDefaultAsync();
                             tripActivityDtos.Add(new TripActivityDto()
                             {
                                 ActivityName = activity.ActivityName,
                                 Area = area.Name,
                                 CompanyId = company.Id,
-                                ActivtyId = activity.Id
+                                ActivtyId = activity.Id,
+                                PhotoUrl = photo == null ? "" : photo.PhotoUrl
                             });
                         }
                     }
 
                     foreach (var item in roomAvas)
                     {
-                        var room = await db.Rooms.FindAsync(item.RoomId);
+                        var room = await db.Rooms.Where(r => r.Active == true && r.Id == item.RoomId && r.RoomTypeId == 18 || r.RoomTypeId == 17).FirstOrDefaultAsync();
                         var hotel = await db.Hotels.FindAsync(room.HotleId);
 
                         if (hotel.CityId == tripPlanDto.DestinationId)
@@ -526,6 +649,7 @@ namespace Zmap.Controllers
                             var acco = await db.Accommodations.FindAsync(item.AccommodationId);
                             var roomType = await db.RoomTypes.FindAsync(room.RoomTypeId);
                             var roomView = await db.RoomViews.FindAsync(room.RoomViewId);
+                            var photo = await db.Galleries.Where(g => g.HotelId == hotel.Id && g.Active == true).FirstOrDefaultAsync();
 
                             tripHotelDtos.Add(new TripHotelDto()
                             {
@@ -535,7 +659,8 @@ namespace Zmap.Controllers
                                 RoomView = roomView.ArabicName,
                                 HotelName = hotel.Name,
                                 HotelId = hotel.Id,
-                                RoomId = room.Id
+                                RoomId = room.Id,
+                                PhotoUrl = photo == null ? "" : photo.PhotoUrl
                             });
                         }
                     }
@@ -547,7 +672,7 @@ namespace Zmap.Controllers
 
                     TempData["TripPlan"] = tripPlanDto;
                 }
-                else if(isSelected == true)
+                else if (isSelected == true)
                 {
                     TimeSpan t = (DateTime)tripPlanDto.to - (DateTime)tripPlanDto.from;
                     int numberOfDays = t.Days;
@@ -585,6 +710,7 @@ namespace Zmap.Controllers
                                 var bus = await db.Buses.FindAsync(item2.BusId);
                                 var busCat = await db.BusCategories.FindAsync(bus.CategoryId);
                                 var company = await db.Companies.FindAsync(bus.CompanyId);
+                                var busPhoto = await db.Galleries.Where(g => g.Active == true && g.BusId == bus.Id).FirstOrDefaultAsync();
 
                                 tripTransportationDtos.Add(new TripTransportationDto()
                                 {
@@ -597,8 +723,9 @@ namespace Zmap.Controllers
                                     BusName = bus.Name,
                                     BusCategory = busCat.CategoryName,
                                     CompanyName = company.Name,
+                                    BusId = bus.Id,
                                     CompanyId = company.Id,
-                                    BusId = bus.Id
+                                    BusPhotoUrl = busPhoto == null ? "" : busPhoto.PhotoUrl
                                 });
                             }
                         }
@@ -608,23 +735,25 @@ namespace Zmap.Controllers
                     {
                         var activity = await db.Activities.FindAsync(item.ActivityId);
                         var area = await db.SubAreas.FindAsync(activity.SubAreaId);
-                        var comapny = await db.Companies.FindAsync(activity.CompanyId);
+                        var company = await db.Companies.FindAsync(activity.CompanyId);
 
                         if (area.CityId == tripPlanDto.DestinationId)
                         {
+                            var photo = await db.Galleries.Where(g => g.Active == true && g.CompanyId == company.Id).FirstOrDefaultAsync();
                             tripActivityDtos.Add(new TripActivityDto()
                             {
                                 ActivityName = activity.ActivityName,
                                 Area = area.Name,
-                                CompanyId = comapny.Id,
-                                ActivtyId = activity.Id
+                                CompanyId = company.Id,
+                                ActivtyId = activity.Id,
+                                PhotoUrl = photo == null ? "" : photo.PhotoUrl
                             });
                         }
                     }
 
                     foreach (var item in roomAvas)
                     {
-                        var room = await db.Rooms.FindAsync(item.RoomId);
+                        var room = await db.Rooms.Where(r => r.Active == true && r.Id == item.RoomId && r.RoomTypeId == 18 || r.RoomTypeId == 17).FirstOrDefaultAsync();
                         var hotel = await db.Hotels.FindAsync(room.HotleId);
 
                         if (hotel.CityId == tripPlanDto.DestinationId)
@@ -632,6 +761,7 @@ namespace Zmap.Controllers
                             var acco = await db.Accommodations.FindAsync(item.AccommodationId);
                             var roomType = await db.RoomTypes.FindAsync(room.RoomTypeId);
                             var roomView = await db.RoomViews.FindAsync(room.RoomViewId);
+                            var photo = await db.Galleries.Where(g => g.HotelId == hotel.Id && g.Active == true).FirstOrDefaultAsync();
 
                             tripHotelDtos.Add(new TripHotelDto()
                             {
@@ -641,7 +771,8 @@ namespace Zmap.Controllers
                                 RoomView = roomView.ArabicName,
                                 HotelName = hotel.Name,
                                 HotelId = hotel.Id,
-                                RoomId = room.Id
+                                RoomId = room.Id,
+                                PhotoUrl = photo == null ? "" : photo.PhotoUrl
                             });
                         }
                     }
@@ -723,5 +854,253 @@ namespace Zmap.Controllers
             return RedirectToAction("TripPlan", "Home");
         }
 
+        public async Task<ActionResult> Hotels()
+        {
+
+            List<ListAllHotelsDto> hotelsDtos = new List<ListAllHotelsDto>();
+
+            try
+            {
+                var hotels = await db.Hotels.Where(h => h.Active == true).ToListAsync();
+
+                foreach (var item in hotels)
+                {
+                    var photo = await db.Galleries.Where(g => g.Active == true && g.HotelId == item.Id).FirstOrDefaultAsync();
+
+                    hotelsDtos.Add(new ListAllHotelsDto()
+                    {
+                        Name = item.Name,
+                        HotelId = item.Id,
+                        City = item.City,
+                        PhotoUrl = photo == null ? "" : photo.PhotoUrl
+                    });
+                }
+
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.InnerException.Message.ToString() });
+            }
+
+            return View(hotelsDtos);
+        }
+
+        public async Task<ActionResult> HotelDetails(int? hotelId)
+        {
+            if (hotelId == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel details", Error = "hotel id is null", UserId = userId });
+            }
+
+            ClientHotelDetailsDto hotelDetailsDto = new ClientHotelDetailsDto();
+            try
+            {
+                var hotel = await db.Hotels.FindAsync(hotelId);
+                var photos = await db.Galleries.Where(g => g.Active == true && g.HotelId == hotelId).ToListAsync();
+                var hotelAddsOn = await db.HotelAddsOns.Where(a => a.Active == true && a.HotelId == hotelId).ToListAsync();
+                var rooms = await db.Rooms.Where(r => r.Active == true && r.HotleId == hotelId).ToListAsync();
+
+                List<string> photoUrls = new List<string>();
+                List<string> addsOnName = new List<string>();
+                List<ClientListAllRoomsDto> roomsDtos = new List<ClientListAllRoomsDto>();
+
+                if (photos != null)
+                {
+                    foreach (var item in photos)
+                    {
+                        photoUrls.Add(item.PhotoUrl);
+                    }
+                }
+                else
+                {
+                    photoUrls.Add("bg.jpg");
+                }
+
+                foreach (var item in hotelAddsOn)
+                {
+                    var addOn = await db.AddsOns.FindAsync(item.AddOnId);
+
+                    if (addOn != null)
+                        addsOnName.Add(addOn.ArabicName);
+                }
+
+                foreach (var item in rooms)
+                {
+                    var roomView = await db.RoomViews.FindAsync(item.RoomViewId);
+                    var roomType = await db.RoomTypes.FindAsync(item.RoomTypeId);
+                    var photo = await db.Galleries.Where(g => g.Active == true && g.RoomId == item.Id).FirstOrDefaultAsync();
+                    var roomAva = await db.RoomAvailabilities.Where(r => r.Active == true && r.RoomId == item.Id).ToListAsync();
+                    var roomAddsOn = await db.RoomAddsOns.Where(r => r.Active == true && r.RoomId == item.Id).ToListAsync();
+                    List<string> roomAddOnNames = new List<string>();
+
+                    for (int i = 0; i < roomAddsOn.Count; i++)
+                    {
+                        var addOn = await db.AddsOns.FindAsync(roomAddsOn[i].AddOnId);
+                        if (addOn != null)
+                        {
+                            roomAddOnNames.Add(addOn.ArabicName);
+                            int tmp = i + 1;
+                            if (tmp < roomAddsOn.Count)
+                            {
+                                roomAddOnNames.Add(", ");
+                            }
+                        }
+                    }
+
+                    foreach (var item2 in roomAva)
+                    {
+                        var roomAcc = await db.Accommodations.FindAsync(item2.AccommodationId);
+                        roomsDtos.Add(new ClientListAllRoomsDto()
+                        {
+                            RoomView = roomView == null ? "" : roomView.ArabicName,
+                            RoomType = roomType == null ? "" : roomType.ArabicName,
+                            Photo = photo == null ? "" : photo.PhotoUrl,
+                            RoomId = item.Id,
+                            PricePerNight = item2.PricePerNght,
+                            Accommodation = roomAcc.ArabicName,
+                            AddsOn = roomAddOnNames,
+                            DateFrom = item2.DateFrom,
+                            DateTo = item2.DateTo,
+                            RoomAvaId = item2.Id
+                        });
+                    }
+                }
+
+
+                hotelDetailsDto = new ClientHotelDetailsDto()
+                {
+                    HotelId = (int)hotelId,
+                    Description = hotel.Description,
+                    Name = hotel.Name,
+                    AddsOn = addsOnName,
+                    Photos = photoUrls,
+                    Rooms = roomsDtos
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel details", Error = e.InnerException.Message.ToString() });
+            }
+
+            return View(hotelDetailsDto);
+        }
+
+        public ActionResult RoomBooking(int? hotelId, int? roomId, int? roomAvaId)
+        {
+            if (hotelId == null || roomId == null || roomAvaId == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in room booking", Error = "hotel id is null or room id is null", UserId = userId });
+            }
+
+            return View(new UserReservation() { HotelId = hotelId, RoomId = roomId, RoomAvailabilityId = roomAvaId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RoomBooking(UserReservation userReservation)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 5)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in room booking", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                UserPayment userPayment = new UserPayment()
+                {
+                    Active = true,
+                    CreatedDate = DateTime.Now,
+                    UserId = (int)userId,
+                    PaymentStatusId = 2
+                };
+
+                db.UserPayments.Add(userPayment);
+                await db.SaveChangesAsync();
+
+                userReservation.UserId = (int)userId;
+                userReservation.CreatedDate = DateTime.Now;
+                userReservation.Active = true;
+                userReservation.ApprovedByAdmin = false;
+                userReservation.UserPaymentId = userPayment.Id;
+                //userReservation.NumberOfSeats = userReservation.NumberOfAdults + userReservation.NumberOfChilderLessThanSix + userReservation.NumberOfChildernBetweenSixAndTwelve;
+
+                db.UserReservations.Add(userReservation);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in room booking", Error = e.InnerException.Message.ToString() });
+            }
+
+            return RedirectToAction("MyBookings", "UserProfile", new { id = userId });
+        }
+
+        public async Task<ActionResult> ActivityDetails(int? companyId, int? activityId)
+        {
+            if (companyId == null || activityId == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activity details", Error = "company id or activity id is null", UserId = userId });
+            }
+
+            ClientActivityDetails clientActivityDetails = new ClientActivityDetails();
+
+            try
+            {
+                var activity = await db.Activities.FindAsync(activityId);
+
+                if(activity == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activity details", Error = "company id or activity id is null", UserId = userId });
+                }
+
+                var company = await db.Companies.FindAsync(companyId);
+
+                if(company == null)
+                {
+                    return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activity details", Error = "company id or activity id is null", UserId = userId });
+                }
+
+                var gallery = await db.Galleries.Where(g => g.Active == true && g.ActivityId == activityId).ToListAsync();
+                var activityAva = await db.ActivityAvailabilities.Where(a => a.Active == true && a.ActivityId == activityId).ToListAsync();
+                var activityCategory = await db.ActivityCategories.FindAsync(activity.ActivityCategoryId);
+
+                List<string> photos = new List<string>();
+
+                foreach (var item in gallery)
+                {
+                    photos.Add(item.PhotoUrl);
+                }
+
+                if(photos.Count <= 0) 
+                {
+                    photos.Add("bg.png");
+                }
+
+                clientActivityDetails = new ClientActivityDetails()
+                {
+                    ActivityId = (int)activityId,
+                    CompanyId = (int)companyId,
+                    Photos = photos,
+                    CompanyName = company.Name,
+                    Sefty = activity.Safety,
+                    Description = activity.Description,
+                    ActivityAvailabilities = activityAva,
+                    ActivityCategoryId = activityCategory.Id,
+                    ActivityCategoryName = activityCategory.CategoryName
+                };
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in activity details", Error = e.InnerException.Message.ToString() });
+            }
+
+            return View(clientActivityDetails);
+        }
     }
 }

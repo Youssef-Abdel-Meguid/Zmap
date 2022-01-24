@@ -1,0 +1,63 @@
+﻿@model Zmap.Dtos.ClientActivityDetails
+
+<section>
+    <div class="inn-body-section inn-detail inn-hotel-1" style="background: url(../../Images/Activities/@Model.Photos[0]) no-repeat;">
+        <div class="container">
+            <div class="row">
+                <div class="inn-bod">
+                    <div class="inn-detail-p1 inn-com">
+                        <h2>@Model.CompanyName</h2>
+                        <div class="r2-ratt"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <img src="images/h-trip.png" alt=""> <span>ممتاز  4.5 / 5</span> </div>
+                        <p>@Model.Description</p>
+                    </div>
+                    <div class="inn-detail-p1 inn-com inn-com-list-point">
+                        <h2>اجرائات السلامة</h2>
+                        <p>@Model.Sefty</p>
+                    </div>
+
+                    <div class="inn-detail-p1 inn-com">
+                        <div class="detail-title">
+                            <h2>معرض الصور</h2>
+                        </div>
+                        <div class="room-photo-all">
+                            @foreach (var item in Model.Photos)
+                            {
+                                <div class="col-md-3 room-photo">
+                                    <div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="" src="~/Images/Activities/@item" alt="" /> </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="inn-detail-p1 inn-com">
+                        <div class="detail-title">
+                            <h2>المواعيد المتاحة</h2>
+                        </div>
+                        <div class="re-room">
+                            <ul>
+                                @foreach (var item in Model.ActivityAvailabilities)
+                                {
+                                    <li>
+                                        <div class="re-room-list">
+                                            <div class="col-md-3 re-room-list-1"><img src="~/Images/Activities/@Model.Photos[0]" alt=""> </div>
+                                            <div class="col-md-6 re-room-list-2">
+                                                <h4>@Model.ActivityCategoryName</h4>
+                                                <span>
+                                                    <b>الوقت المتاح</b> @item.DateFrom : @item.DateTo
+                                                </span>
+                                            </div>
+                                            <div class="col-md-3 re-room-list-3">
+                                                <span class="hot-list-p3-1">سعر الرحلة بدون الانتقالات</span>
+                                                <span class="hot-list-p3-2">ج.م @item.CostWithoutTrasnportation</span>
+                                                <a href="#" class="hot-page2-alp-quot-btn spec-btn-text">حجز</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

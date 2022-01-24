@@ -1,0 +1,44 @@
+﻿@model Zmap.Dtos.BusDto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="page-head">
+            <h2>ادارة النقل</h2>
+            <div class="head-title">
+                <div class="hl-1"></div>
+                <div class="hl-2"></div>
+                <div class="hl-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="hp-amini hp-amini-block db-div-card">
+                    <ul>
+                        <li class="db-card">
+                            <a href="@Url.Action("BusTrips", "Transportation", new { busId = Model.Id, lineId = Model.LineId })">
+                                <img src="~/Images/icon/bustime.png" class="db-card-img" />
+                                <p>مواعيد الاتوبيس</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <a href="@Url.Action("LineBuses", "Transportation", new { id = Model.LineId })" class="btn-floating btn-large waves-effect waves-light blue">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>

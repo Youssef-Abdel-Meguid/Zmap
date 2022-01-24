@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Zmap.Dtos.ListAllHotelsDto>
+<section dir="rtl">
+
+    <div class="inn-body-section pad-bot-60">
+        <div class="container">
+            <div class="row inn-page-com">
+                <div class="page-head">
+                    <h2>فنادقنا</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+                </div>
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3">
+                        <a href="@Url.Action("HotelDetails", "Home", new { hotelId = item.HotelId })">
+                            <div class="all-hotel-like-com">
+                                <div class="all-hotel-lc-img"> <img src="~/Images/Hotels/@item.PhotoUrl" alt=""> </div>
+                                <div class="all-hotel-lc-con all-hotel-lc-con2">
+                                    <h5>@item.Name</h5>
+                                    <p>@item.City</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>

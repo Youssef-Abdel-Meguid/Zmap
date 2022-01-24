@@ -33,6 +33,7 @@
                         <th>السن من</th>
                         <th>السن الى</th>
                         <th>نسبة الاقامة</th>
+                        <th>نوع السياسة</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -43,6 +44,7 @@
                             <td>@Html.DisplayFor(modelItem => item.AgeFrom)</td>
                             <td>@Html.DisplayFor(modelItem => item.AgeTo)</td>
                             <td>@Html.DisplayFor(modelItem => item.AccommodationPercentage)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ChildPolicyCategory)</td>
                             <td>
                                 <a onclick="return confirm('هل تريد مسح البيانات')" class="btn-floating waves-effect waves-light-sm purple" href="@Url.Action("DeleteChildPolicy", "Hotels", new { id = item.Id })">
                                     <i class="material-icons">

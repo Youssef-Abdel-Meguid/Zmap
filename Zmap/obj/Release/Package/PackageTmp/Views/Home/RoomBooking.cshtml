@@ -1,0 +1,60 @@
+﻿@model Zmap.Models.UserReservation
+<section>
+    <div class="inn-body-section inn-booking">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="book-form inn-com-form">
+                        @using (Html.BeginForm("RoomBooking", "Home", FormMethod.Post, new { @class = "col s12" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            @Html.HiddenFor(m => m.RoomId);
+                            @Html.HiddenFor(m => m.RoomAvailabilityId);
+                            @Html.HiddenFor(m => m.HotelId);
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" class="validate" placeholder="الاسم بالكامل" required>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input type="text" class="validate" placeholder="رقم التليفون" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s4">
+                                    <input type="number" class="validate" placeholder="عدد البالغين" required name="NumberOfAdults" />
+                                </div>
+                                <div class="input-field col s4">
+                                    <input type="number" class="validate" placeholder="عدد الاطفال من سن 6 سنوات حتى 12 سنة" required name="NumberOfChildernBetweenSixAndTwelve" />
+                                </div>
+                                <div class="input-field col s4">
+                                    <input type="number" class="validate" placeholder="عدد الاطفال الاقل من 6 سنوات" required name="NumberOfChilderLessThanSix" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" id="from" name="DateFrom" placeholder="معاد الوصول" required>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input type="text" id="to" name="DateTo" placeholder="معاد المغادرة" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea" name="HotelNote" required>لا توجد ملاحظات</textarea>
+                                    <label>ملاحظات</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="submit" value="تسجيــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــل" class="form-btn">
+                                </div>
+                            </div>
+                        }
+                        @*<form class="col s12">
+        </form>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
