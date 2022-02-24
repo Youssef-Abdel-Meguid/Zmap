@@ -15,7 +15,6 @@ namespace Zmap.Models
     public partial class ChildPolicy
     {
         public int Id { get; set; }
-        public Nullable<int> HotelId { get; set; }
         public Nullable<int> AgeFrom { get; set; }
         public Nullable<int> AgeTo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -23,7 +22,8 @@ namespace Zmap.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedByUserId { get; set; }
         public Nullable<bool> Active { get; set; }
-        public Nullable<int> AccommodationPercentage { get; set; }
         public Nullable<int> ChildPolicyCategoryId { get; set; }
+        public Nullable<int> RoomId { get; set; }
+        public Nullable<decimal> PricePerNight { get; set; }
     }
 }

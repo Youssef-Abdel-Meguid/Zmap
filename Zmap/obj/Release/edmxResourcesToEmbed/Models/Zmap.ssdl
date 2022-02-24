@@ -180,8 +180,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="HotelId" Type="int" />
-    <Property Name="AccommodationPercentage" Type="int" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="PricePerNight" Type="money" />
     <Property Name="AgeFrom" Type="int" />
     <Property Name="AgeTo" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />

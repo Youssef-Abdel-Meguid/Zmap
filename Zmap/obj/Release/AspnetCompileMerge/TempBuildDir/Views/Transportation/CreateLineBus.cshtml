@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string added = Request.QueryString["added"];
 }
 
 <div class="container">
@@ -26,7 +27,10 @@
                     <div class="col-md-12">
                         <div class="head-typo typo-com collap-expand book-form inn-com-form">
                             <h2>بيانات الخط</h2>
-
+                            @if (!string.IsNullOrEmpty(added))
+                            {
+                                <h3 class="" style="background-color: goldenrod">تم الاضافة بنجاح</h3>
+                            }
                             <div class="aminities">
                                 @using (Html.BeginForm("CreateLineBus", "Transportation", FormMethod.Post))
                                 {
@@ -43,7 +47,7 @@
 
                                         <div class="row">
                                             <div class="input-field col l9">
-                                               <input type="number" name="SeatPrice" required step="0.01"/>
+                                                <input type="number" name="SeatPrice" required step="0.01" />
                                             </div>
                                             <div class="input-field col l3">
                                                 <label>سعر المقعد</label>

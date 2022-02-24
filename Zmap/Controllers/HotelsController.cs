@@ -1535,7 +1535,7 @@ namespace Zmap.Controllers
                     return RedirectToAction("CreateRoomAvailability", "Hotels", new { Id = roomAvailability.RoomId, invalidDate = true });
                 }
 
-                var roomsAva = await db.RoomAvailabilities.Where(r => r.Active == true && r.AccommodationId == roomAvailability.AccommodationId).ToListAsync();
+                var roomsAva = await db.RoomAvailabilities.Where(r => r.Active == true && r.AccommodationId == roomAvailability.AccommodationId && r.RoomId == roomAvailability.RoomId).ToListAsync();
 
 
                 foreach (var item in roomsAva)
@@ -1559,6 +1559,101 @@ namespace Zmap.Controllers
 
             return RedirectToAction("CreateRoomAvailability", "Hotels", new { Id = roomAvailability.RoomId, added = true});
         }
+
+        public async Task<ActionResult> EditRoomAvailability(int? Id, bool? invalidDate)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            if (Id == null)
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "id is null", UserId = userId });
+
+            var roomAva = new RoomAvailability();
+
+            try
+            {
+                ViewBag.Accos = await db.Accommodations.Where(a => a.Active == true).ToListAsync();
+                roomAva = await db.RoomAvailabilities.FindAsync(Id);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(roomAva);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditRoomAvailability(RoomAvailability roomAvailability)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotel", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Accos = await db.Accommodations.Where(a => a.Active == true).ToListAsync();
+                    return View(roomAvailability);
+                }
+
+                if (roomAvailability.DateTo < roomAvailability.DateFrom)
+                {
+                    return RedirectToAction("EditRoomAvailability", "Hotels", new { Id = roomAvailability.Id, invalidDate = true });
+                }
+
+                var roomsAva = await db.RoomAvailabilities.Where(r => r.Active == true && r.AccommodationId == roomAvailability.AccommodationId && r.RoomId == roomAvailability.RoomId && r.Id != roomAvailability.Id).ToListAsync();
+
+
+                foreach (var item in roomsAva)
+                {
+                    if (item.DateFrom <= roomAvailability.DateFrom && item.DateTo >= roomAvailability.DateTo)
+                    {
+                        return RedirectToAction("EditRoomAvailability", "Hotels", new { Id = roomAvailability.Id, invalidDate = true });
+                    }
+                }
+
+                var roomAvaOld = await db.RoomAvailabilities.FindAsync(roomAvailability.Id);
+
+                roomAvaOld.ModifiedByUserId = userId;
+                roomAvaOld.ModifiedDate = DateTime.Now;
+                roomAvaOld.PricePerNght = roomAvailability.PricePerNght;
+                roomAvaOld.AccommodationId = roomAvailability.AccommodationId;
+                roomAvaOld.DateFrom = roomAvailability.DateFrom;
+                roomAvaOld.DateTo = roomAvailability.DateTo;
+                
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("RoomAvailabilities", "Hotels", new { Id = roomAvailability.RoomId });
+        }
+
+
+
+
+
+
 
         public ActionResult CreateFAQ(int? id, bool? added)
         {
@@ -2204,7 +2299,7 @@ namespace Zmap.Controllers
 
                 if (lockedRoom.NumberOfLockedRooms <= 0)
                 {
-                    ViewBag.Validation = "number of locked rooms cannot be less than or equal 0";
+                    ViewBag.Validation = "عدد الغرف المغلقة لا يمكن ان يكون اقل من او يساوى صفر";
                     return View(lockedRoom);
                 }
 
@@ -2217,7 +2312,7 @@ namespace Zmap.Controllers
 
                 if(lockedRoom.NumberOfLockedRooms > room.NumberOfRooms)
                 {
-                    ViewBag.Validation = "number of requested rooms is greater than number of actual rooms";
+                    ViewBag.Validation = "عدد الغرق المطلوب غلقها اكبر من عدد الغرف الحقيقى";
                     return View(lockedRoom);
                 }
 
@@ -2364,7 +2459,7 @@ namespace Zmap.Controllers
 
             try
             {
-                var childPolicy = await db.ChildPolicies.Where(c => c.Active == true && c.HotelId == id).ToListAsync();
+                var childPolicy = await db.ChildPolicies.Where(c => c.Active == true && c.RoomId == id).ToListAsync();
                 var childPolicyDto = new List<ChildPolicyDto>();
                 foreach (var item in childPolicy)
                 {
@@ -2374,7 +2469,7 @@ namespace Zmap.Controllers
                         Id = item.Id,
                         AgeTo = item.AgeTo,
                         AgeFrom = item.AgeFrom,
-                        AccommodationPercentage = item.AccommodationPercentage,
+                        PricePerNight = item.PricePerNight,
                         ChildPolicyCategoryId = cat.Id,
                         ChildPolicyCategory = cat.CategoryName
                     });
@@ -2383,7 +2478,7 @@ namespace Zmap.Controllers
                 childPolicyDetailsDto = new ChildPolicyDetailsDto()
                 {
                     ChildPolicies = childPolicyDto,
-                    HotelId = id
+                    RoomId = id
                 };
             }
             catch (Exception e)
@@ -2412,7 +2507,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
             }
 
-            int? hotelId;
+            int? roomId;
 
             try
             {
@@ -2423,7 +2518,7 @@ namespace Zmap.Controllers
                     return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "child policy is null", UserId = userId });
                 }
 
-                hotelId = childPolicy.HotelId;
+                roomId = childPolicy.RoomId;
 
                 childPolicy.ModifiedDate = DateTime.Now;
                 childPolicy.ModifiedByUserId = userId;
@@ -2436,7 +2531,7 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("ChildPolicy", "Hotels", new { id = hotelId });
+            return RedirectToAction("ChildPolicy", "Hotels", new { id = roomId });
         }
 
         public async Task<ActionResult> CreateChildPolicy(int? id, bool? added)
@@ -2460,13 +2555,19 @@ namespace Zmap.Controllers
             try
             {
                 ViewBag.ChildPolicyCategories = await db.ChildPolicyCategories.ToListAsync();
+                List<int> ages = new List<int>();
+                for (int i = 0; i < 18; i++)
+                {
+                    ages.Add(i);
+                }
+                ViewBag.Ages = ages;
             }
             catch (Exception e)
             {
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return View(new ChildPolicy() { HotelId = id });
+            return View(new ChildPolicy() { RoomId = id });
         }
 
         [HttpPost]
@@ -2489,15 +2590,28 @@ namespace Zmap.Controllers
                 if (!ModelState.IsValid)
                 {
                     ViewBag.ChildPolicyCategories = await db.ChildPolicyCategories.ToListAsync();
+                    //SelectList ages = new SelectList(new )();
+                    List<int> ages = new List<int>();
+                    for (int i = 0; i < 18; i++)
+                    {
+                        ages.Add(i);
+                    }
+                    ViewBag.Ages = ages;
                     return View(childPolicy);
                 }
 
-                var childPolicies = await db.ChildPolicies.Where(c => c.Active == true && c.ChildPolicyCategoryId == childPolicy.ChildPolicyCategoryId).ToListAsync();
+                var childPolicies = await db.ChildPolicies.Where(c => c.Active == true && c.ChildPolicyCategoryId == childPolicy.ChildPolicyCategoryId && c.RoomId == childPolicy.RoomId).ToListAsync();
 
                 if(childPolicies.Count > 0)
                 {
                     ViewBag.ChildPolicyCategories = await db.ChildPolicyCategories.ToListAsync();
                     ViewBag.Invalid = "تم اضافة النوع مسبقا";
+                    List<int> ages = new List<int>();
+                    for (int i = 0; i < 18; i++)
+                    {
+                        ages.Add(i);
+                    }
+                    ViewBag.Ages = ages;
                     return View(childPolicy);
                 }
 
@@ -2513,8 +2627,112 @@ namespace Zmap.Controllers
                 return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
             }
 
-            return RedirectToAction("CreateChildPolicy", "Hotels", new { id = childPolicy.HotelId, added = true });
+            return RedirectToAction("CreateChildPolicy", "Hotels", new { id = childPolicy.RoomId, added = true });
         }
+
+        public async Task<ActionResult> EditChildPolicy(int? id, bool? added)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "id is null", UserId = userId });
+            }
+
+            var childPolicy = new ChildPolicy();
+
+            try
+            {
+                childPolicy = await db.ChildPolicies.FindAsync(id);
+                ViewBag.ChildPolicyCategories = await db.ChildPolicyCategories.ToListAsync();
+                List<int> ages = new List<int>();
+                for (int i = 0; i < 18; i++)
+                {
+                    ages.Add(i);
+                }
+                ViewBag.Ages = ages;
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(childPolicy);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditChildPolicy(ChildPolicy childPolicy)
+        {
+            SetIdenitiy();
+            if (userId == 0 || userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userType != 1 && userType != 2)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = "not authorized", UserId = userId });
+            }
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.ChildPolicyCategories = await db.ChildPolicyCategories.ToListAsync();
+                    List<int> ages = new List<int>();
+                    for (int i = 0; i < 18; i++)
+                    {
+                        ages.Add(i);
+                    }
+                    ViewBag.Ages = ages;
+                    return View(childPolicy);
+                }
+
+                var childPolicies = await db.ChildPolicies.Where(c => c.Active == true && c.ChildPolicyCategoryId == childPolicy.ChildPolicyCategoryId && c.RoomId == childPolicy.RoomId).ToListAsync();
+
+                if (childPolicies.Count > 0)
+                {
+                    ViewBag.ChildPolicyCategories = await db.ChildPolicyCategories.ToListAsync();
+                    ViewBag.Invalid = "تم اضافة النوع مسبقا";
+                    List<int> ages = new List<int>();
+                    for (int i = 0; i < 18; i++)
+                    {
+                        ages.Add(i);
+                    }
+                    ViewBag.Ages = ages;
+                    return View(childPolicy);
+                }
+
+                var childPolicyOld = await db.ChildPolicies.FindAsync(childPolicy.Id);
+
+                childPolicyOld.ModifiedByUserId = userId;
+                childPolicyOld.ModifiedDate = DateTime.Now;
+                childPolicyOld.PricePerNight = childPolicy.PricePerNight;
+                childPolicyOld.AgeFrom = childPolicy.AgeFrom;
+                childPolicyOld.AgeTo = childPolicy.AgeTo;
+                childPolicyOld.ChildPolicyCategoryId = childPolicy.ChildPolicyCategoryId;
+
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in hotels", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return RedirectToAction("ChildPolicy", "Hotels", new { id = childPolicy.RoomId });
+        }
+
+
 
         //public async Task<ActionResult> EditChildPolicy(int? id)
         //{

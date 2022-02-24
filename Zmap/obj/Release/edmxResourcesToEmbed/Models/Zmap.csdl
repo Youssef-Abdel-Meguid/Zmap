@@ -694,7 +694,6 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="HotelId" Type="Int32" />
     <Property Name="AgeFrom" Type="Int32" />
     <Property Name="AgeTo" Type="Int32" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -702,8 +701,9 @@
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedByUserId" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
-    <Property Name="AccommodationPercentage" Type="Int32" />
     <Property Name="ChildPolicyCategoryId" Type="Int32" />
+    <Property Name="RoomId" Type="Int32" />
+    <Property Name="PricePerNight" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
   <EntityType Name="UserPayment">
     <Key>

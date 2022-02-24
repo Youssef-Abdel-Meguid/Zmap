@@ -683,8 +683,9 @@
     <EntitySetMapping Name="ChildPolicies">
       <EntityTypeMapping TypeName="ZmapModel.ChildPolicy">
         <MappingFragment StoreEntitySet="ChildPolicy">
+          <ScalarProperty Name="PricePerNight" ColumnName="PricePerNight" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
           <ScalarProperty Name="ChildPolicyCategoryId" ColumnName="ChildPolicyCategoryId" />
-          <ScalarProperty Name="AccommodationPercentage" ColumnName="AccommodationPercentage" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
@@ -692,7 +693,6 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="AgeTo" ColumnName="AgeTo" />
           <ScalarProperty Name="AgeFrom" ColumnName="AgeFrom" />
-          <ScalarProperty Name="HotelId" ColumnName="HotelId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

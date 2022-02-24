@@ -1,0 +1,102 @@
+﻿@model Zmap.Models.ChildPolicy
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string added = Request.QueryString["added"];
+}
+
+<div class="container">
+
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <a href="@Url.Action("ChildPolicy", "Hotels", new { id = Model.RoomId })" class="btn-floating btn-large waves-effect waves-light blue">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="page-head">
+                    <h2>تعديل سياسة اطفال </h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="head-typo book-form inn-com-form">
+                            <h2>بيانات السياسة</h2>
+                            @if (!string.IsNullOrEmpty(added))
+                            {
+                                <h3 class="" style="background-color: goldenrod">تم الاضافة بنجاح</h3>
+                            }
+                            @if (ViewBag.Invalid != null)
+                            {
+                                <h3 class="" style="background-color: indianred">@ViewBag.Invalid</h3>
+                            }
+                            <div class="">
+                                @using (Html.BeginForm("EditChildPolicy", "Hotels", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="input-field col l9">
+                                            @Html.DropDownList("ChildPolicyCategoryId", new SelectList(ViewBag.ChildPolicyCategories, "Id", "CategoryName"), new { @data_val = "true", @required = "required" })
+                                        </div>
+                                        <div class="input-field col l3">
+                                            <label>نوغ الطفل</label>
+                                        </div>
+                                    </div>
+                                    <form class="col l12">
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("AgeFrom", new SelectList(ViewBag.Ages), new { @required = "required", @class = "validate" })
+                                                @*<input type="text" name="AgeFrom" required class="validate" />*@
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>السن من</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                @Html.DropDownList("AgeTo", new SelectList(ViewBag.Ages), new { @data_val = "true", @required = "required", @class = "validate" })
+                                                @*<input type="text" name="AgeTo" required class="validate" />*@
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>السن الى</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col l9">
+                                                <input type="number" name="PricePerNight" required class="validate" step="0.01" value="@Model.PricePerNight"/>
+                                            </div>
+                                            <div class="input-field col l3">
+                                                <label>سعر الليلة</label>
+                                            </div>
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.RoomId)
+                                        @Html.HiddenFor(m => m.Id)
+                                        @Html.HiddenFor(m => m.Active)
+                                        @Html.HiddenFor(m => m.CreatedByUserId)
+                                        @Html.HiddenFor(m => m.CreatedDate)
+                                        <div class="row">
+                                            <div class="input-field col l12">
+                                                <input type="submit" value="تسجيل" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

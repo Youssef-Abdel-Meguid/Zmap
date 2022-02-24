@@ -185,8 +185,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HotelId" Type="int" />
-          <Property Name="AccommodationPercentage" Type="int" />
+          <Property Name="RoomId" Type="int" />
+          <Property Name="PricePerNight" Type="money" />
           <Property Name="AgeFrom" Type="int" />
           <Property Name="AgeTo" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -1510,7 +1510,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HotelId" Type="Int32" />
           <Property Name="AgeFrom" Type="Int32" />
           <Property Name="AgeTo" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -1518,8 +1517,9 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedByUserId" Type="Int32" />
           <Property Name="Active" Type="Boolean" />
-          <Property Name="AccommodationPercentage" Type="Int32" />
           <Property Name="ChildPolicyCategoryId" Type="Int32" />
+          <Property Name="RoomId" Type="Int32" />
+          <Property Name="PricePerNight" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="UserPayment">
           <Key>
@@ -2311,8 +2311,9 @@
           <EntitySetMapping Name="ChildPolicies">
             <EntityTypeMapping TypeName="ZmapModel.ChildPolicy">
               <MappingFragment StoreEntitySet="ChildPolicy">
+                <ScalarProperty Name="PricePerNight" ColumnName="PricePerNight" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
                 <ScalarProperty Name="ChildPolicyCategoryId" ColumnName="ChildPolicyCategoryId" />
-                <ScalarProperty Name="AccommodationPercentage" ColumnName="AccommodationPercentage" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
@@ -2320,7 +2321,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="AgeTo" ColumnName="AgeTo" />
                 <ScalarProperty Name="AgeFrom" ColumnName="AgeFrom" />
-                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

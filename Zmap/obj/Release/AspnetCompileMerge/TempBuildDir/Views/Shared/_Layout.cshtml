@@ -71,15 +71,18 @@
                     @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "2"))
                     {
                         <li>@Html.ActionLink("ادارة الفنادق", "Index", "Hotels")</li>
+                        <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
                     }
 
                     @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "3"))
                     {
                         <li>@Html.ActionLink("ادارة النقل", "Index", "Transportation")</li>
+                        <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
                     }
                     @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "4"))
                     {
                         <li>@Html.ActionLink("ادارة الانشطة", "Index", "Activites")</li>
+                        <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
                     }
 
                     @if (!string.IsNullOrEmpty(userType) && userType == "1")
@@ -87,6 +90,7 @@
                         <li>@Html.ActionLink("ادارة المستخدمين", "Index", "Users")</li>
                         <li>@Html.ActionLink("ادارة المدونة", "Index", "Blogs")</li>
                         <li>@Html.ActionLink("ادارة الموقع", "Index", "Admin")</li>
+                        <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
                     }
                 </ul>
             </div>
@@ -188,12 +192,19 @@
                             <li>@Html.ActionLink("ادارة الانشطة", "Index", "Activites")</li>
                         }
 
+                        @if (!string.IsNullOrEmpty(userType) && (userType == "1" || userType == "4" || userType == "2" || userType == "1"))
+                        {
+                            <li>@Html.ActionLink("الحجوزات", "Index", "Home")</li>
+                        }
+
                         @if (!string.IsNullOrEmpty(userType) && userType == "1")
                         {
                             <li>@Html.ActionLink("ادارة المستخدمين", "Index", "Users")</li>
                             <li>@Html.ActionLink("ادارة المدونة", "Index", "Blogs")</li>
                             <li>@Html.ActionLink("ادارة الموقع", "Index", "Admin")</li>
                         }
+
+
                     </ul>
                 </div>
             </div>

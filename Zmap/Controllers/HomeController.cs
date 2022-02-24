@@ -459,9 +459,129 @@ namespace Zmap.Controllers
             return RedirectToAction("TripDetails", "Home", new { id = userTripId });
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            SetIdenitiy();
+
+            var homeDto = new HomeDataDto();
+
+            try
+            {
+                if (userType != 0 && userType != 5)
+                {
+                    var userReservations = await db.UserReservations.Where(u => u.Active == true).ToListAsync();
+                    List<ReservationsDto> reservationsDtos = new List<ReservationsDto>();
+
+                    foreach (var item in userReservations)
+                    {
+                        var user = await db.Users.FindAsync(item.UserId);
+
+                        var hotel = new Hotel();
+                        var room = new Room();
+                        var roomType = new RoomType();
+                        var roomView = new RoomView();
+                        var transportationCompany = new Company();
+                        var station = new Station();
+                        var activityCompany = new Company();
+
+                        if (userType == 2 || userType == 1)
+                        {
+                            if (userType == 1)
+                            {
+                                hotel = await db.Hotels.FindAsync(item.HotelId);
+                                room = await db.Rooms.FindAsync(item.RoomId);
+                            }
+                            else
+                            {
+                                hotel = await db.Hotels.Where(h => h.Id == item.Id && h.CreateByUserId == userId).FirstOrDefaultAsync();
+                                room = await db.Rooms.Where(r => r.Id == item.RoomId && r.CreatedByUserId == userId).FirstOrDefaultAsync();
+                            }
+
+                            if (room != null)
+                            {
+                                roomType = await db.RoomTypes.FindAsync(room.RoomTypeId);
+                                roomView = await db.RoomViews.FindAsync(room.RoomViewId);
+                            }
+                        }
+
+                        if (userType == 3 || userType == 1)
+                        {
+                            if (userType == 1)
+                            {
+                                transportationCompany = await db.Companies.FindAsync(item.TransportationCompanyId);
+                                station = await db.Stations.FindAsync(item.StationId);
+                            }
+                            else
+                            {
+                                transportationCompany = await db.Companies.Where(c => c.Id == item.TransportationCompanyId && c.CreatedByUserId == userId).FirstOrDefaultAsync();
+                                station = await db.Stations.Where(s => s.id == item.StationId && s.CreatedByUserId == userId).FirstOrDefaultAsync();
+                            }
+                        }
+
+                        if (userId == 4 || userType == 1)
+                        {
+                            if (userType == 1)
+                            {
+                                activityCompany = await db.Companies.FindAsync(item.ActivityCompanyId);
+                            }
+                            else
+                            {
+                                activityCompany = await db.Companies.Where(a => a.Id == item.ActivityCompanyId && a.CreatedByUserId == userId).FirstOrDefaultAsync();
+                            }
+                        }
+
+                        var userPayment = await db.UserPayments.FindAsync(item.UserPaymentId);
+                        var paymentStatus = new PaymentStatu();
+
+                        if (userPayment != null)
+                        {
+                            paymentStatus = await db.PaymentStatus.FindAsync(userPayment.PaymentStatusId);
+                        }
+
+                        reservationsDtos.Add(new ReservationsDto
+                        {
+                            UserId = item.UserId,
+                            UserFirstName = user != null ? user.FirstName : "",
+                            UserLastName = user != null ? user.LastName : "",
+                            UserEmail = user != null ? user.Email : "",
+                            UserPhoneNumber = user != null ? user.PhoneNumber : "",
+                            AccommodationCost = item.AccommodationCost,
+                            ActivityCompanyId = item.ActivityCompanyId,
+                            ActivityCost = item.ActivityCost,
+                            BusId = item.BusId,
+                            CreatedDate = item.CreatedDate,
+                            DateFrom = item.DateFrom,
+                            DateTo = item.DateTo,
+                            HotelId = item.HotelId,
+                            NumberOfAdults = item.NumberOfAdults,
+                            NumberOfChilds = item.NumberOfAdults,
+                            NumberOfSeats = item.NumberOfSeats,
+                            RoomId = item.RoomId,
+                            UserPaymentId = item.UserPaymentId,
+                            TransportationCost = item.TransportationCost,
+                            TransportationComapnyId = item.TransportationCompanyId,
+                            RoomAvailibilityId = item.RoomAvailabilityId,
+                            Id = item.Id,
+                            TotalCost = item.TotalCost,
+                            StationId = item.StationId,
+                            RoomType = roomType != null ? roomType.ArabicName : "",
+                            RoomView = roomView != null ? roomView.ArabicName : "",
+                            HotelName = hotel != null ? hotel.Name : "",
+                            TransportationComapnyName = transportationCompany != null ? transportationCompany.Name : "",
+                            PaymentStatus = paymentStatus != null ? paymentStatus.PaymentStatus : "",
+                            ActivityCompanyName = activityCompany != null ? activityCompany.Name : ""
+                        });
+                    }
+
+                    homeDto.ReservationsDtos = reservationsDtos;
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in home index", Error = e.Message.ToString(), UserId = userId });
+            }
+
+            return View(homeDto);
         }
 
         public async Task<ActionResult> About()

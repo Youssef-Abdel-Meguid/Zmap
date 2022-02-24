@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string added = Request.QueryString["added"];
 }
 
 <div class="container">
@@ -11,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div>
-                    <a href="@Url.Action("Details", "Hotels", new { id = Model.HotelId })" class="btn-floating btn-large waves-effect waves-light blue">
+                    <a href="@Url.Action("ChildPolicy", "Hotels", new { id = Model.RoomId })" class="btn-floating btn-large waves-effect waves-light blue">
                         <i class="material-icons">arrow_back</i>
                     </a>
                 </div>
@@ -24,26 +25,43 @@
                     </div>
 
                     <div class="col-md-12">
-                        <div class="head-typo typo-com collap-expand book-form inn-com-form">
+                        <div class="head-typo book-form inn-com-form">
                             <h2>بيانات السياسة</h2>
-
-                            <div class="aminities">
+                            @if (!string.IsNullOrEmpty(added))
+                            {
+                                <h3 class="" style="background-color: goldenrod">تم الاضافة بنجاح</h3>
+                            }
+                            @if (ViewBag.Invalid != null    )
+                            {
+                                <h3 class="" style="background-color: indianred">@ViewBag.Invalid</h3>
+                            }
+                            <div class="">
                                 @using (Html.BeginForm("CreateChildPolicy", "Hotels", FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="input-field col l9">
+                                            @Html.DropDownList("ChildPolicyCategoryId", new SelectList(ViewBag.ChildPolicyCategories, "Id", "CategoryName"), new { @data_val = "true", @required = "required" })
+                                        </div>
+                                        <div class="input-field col l3">
+                                            <label>نوغ الطفل</label>
+                                        </div>
+                                    </div>
                                     <form class="col l12">
                                         <div class="row">
                                             <div class="input-field col l9">
-                                                <input type="text" name="AgeFrom" required class="validate" />
+                                                @Html.DropDownList("AgeFrom", new SelectList(ViewBag.Ages), new { @required = "required", @class="validate" })
+                                                @*<input type="text" name="AgeFrom" required class="validate" />*@
                                             </div>
                                             <div class="input-field col l3">
                                                 <label>السن من</label>
                                             </div>
                                         </div>
 
-                                         <div class="row">
+                                        <div class="row">
                                             <div class="input-field col l9">
-                                                <input type="text" name="AgeTo" required class="validate" />
+                                                @Html.DropDownList("AgeTo", new SelectList(ViewBag.Ages), new { @data_val = "true", @required = "required", @class = "validate" })
+                                                @*<input type="text" name="AgeTo" required class="validate" />*@
                                             </div>
                                             <div class="input-field col l3">
                                                 <label>السن الى</label>
@@ -52,13 +70,14 @@
 
                                         <div class="row">
                                             <div class="input-field col l9">
-                                                @Html.DropDownList("ChildAccommodationPercentageId", new SelectList(ViewBag.AccoPercentage, "Id", "AccommodationPercentage"), new { @data_val = "true", @required = "required" })
+                                                <input type="number" name="PricePerNight" required class="validate" step="0.01"/>
                                             </div>
                                             <div class="input-field col l3">
-                                                <label>نسبة الاقامة</label>
+                                                <label>سعر الليلة</label>
                                             </div>
                                         </div>
-                                        @Html.HiddenFor(m => m.HotelId)
+
+                                        @Html.HiddenFor(m => m.RoomId)
                                         <div class="row">
                                             <div class="input-field col l12">
                                                 <input type="submit" value="تسجيل" />

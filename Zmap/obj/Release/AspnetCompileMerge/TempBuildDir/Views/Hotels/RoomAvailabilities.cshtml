@@ -51,6 +51,11 @@
                             <td>@Html.DisplayFor(modelItem => item.ArabicName)</td>
                             <td>@Html.DisplayFor(modelItem => item.PricePerNight)</td>
                             <td>
+                                <a href="@Url.Action("EditRoomAvailability", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm orange">
+                                    <i class="material-icons">
+                                        edit
+                                    </i>
+                                </a>
                                 <a onclick="return confirm('هل تريد مسح البيانات')" href="@Url.Action("DeleteRoomAvailability", "Hotels", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
                                     <i class="material-icons">
                                         delete

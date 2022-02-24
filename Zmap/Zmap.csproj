@@ -252,6 +252,8 @@
     <Compile Include="Dtos\FAQDetailsDto.cs" />
     <Compile Include="Dtos\FAQDto.cs" />
     <Compile Include="Dtos\FilesDetailsDto.cs" />
+    <Compile Include="Dtos\HomeBlogsDto.cs" />
+    <Compile Include="Dtos\HomeDataDto.cs" />
     <Compile Include="Dtos\HotelCustomAddDto.cs" />
     <Compile Include="Dtos\HotelDetailsDto.cs" />
     <Compile Include="Dtos\HotelDto.cs" />
@@ -271,6 +273,7 @@
     <Compile Include="Dtos\PhotoDetailsDto.cs" />
     <Compile Include="Dtos\ProfileDto.cs" />
     <Compile Include="Dtos\RegisterDto.cs" />
+    <Compile Include="Dtos\ReservationsDto.cs" />
     <Compile Include="Dtos\ReservedSeatsDto.cs" />
     <Compile Include="Dtos\RoomDataDto.cs" />
     <Compile Include="Dtos\RoomDetailsDto.cs" />
@@ -935,6 +938,8 @@
     <Content Include="Views\Activites\CreateActivityCity.cshtml" />
     <Content Include="Views\Activites\EditActivityAvailability.cshtml" />
     <Content Include="Views\Transportation\EditBusTrip.cshtml" />
+    <Content Include="Views\Hotels\EditRoomAvailability.cshtml" />
+    <Content Include="Views\Hotels\EditChildPolicy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

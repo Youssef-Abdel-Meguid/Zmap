@@ -1,13 +1,11 @@
-﻿@{
+﻿@model Zmap.Dtos.HomeDataDto
+
+@{
     ViewBag.Title = "Home Page";
     string userType = Session["UserType"] == null ? null : Session["UserType"].ToString();
 }
 
-@*<div class="jumbotron">
-        <p>لا توجد حجوزات</p>
-    </div>*@
-
-@if (string.IsNullOrEmpty(userType)|| userType == "5")
+@if (string.IsNullOrEmpty(userType) || userType == "5")
 {
 
     <section>
@@ -416,12 +414,134 @@
 }
 else
 {
-    <div class="container">
 
-        <div class="inn-body-section pad-bot-55">
-            <div class="jumbotron">
-                <p>لا توجد حجوزات</p>
+    if (Model.ReservationsDtos == null || Model.ReservationsDtos.Count == 0)
+    {
+        <div class="container">
+            <div class="inn-body-section pad-bot-55">
+                <div class="jumbotron">
+                    <p>لا توجد حجوزات</p>
+                </div>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="inn-body-section pad-bot-55">
+                <div class="container">
+                    <div class="page-head">
+                        <h2>الحجوزات</h2>
+                        <div class="head-title">
+                            <div class="hl-1"></div>
+                            <div class="hl-2"></div>
+                            <div class="hl-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-bordered" id="reservations">
+                        <thead>
+                            <tr>
+                                <td>الاسم</td>
+                                <td>رقم الموبايل</td>
+                                <td>البريد الالكترونى</td>
+                                <td>تاريخ الانشاء</td>
+                                <td>التاريخ من</td>
+                                <td>التاريخ الى</td>
+                                <td>حالة الدفع</td>
+                                <td>عدد البالغين</td>
+                                <td>عدد الاطفال</td>
+                                @if (!string.IsNullOrEmpty(userType) || userType == "1")
+                                {
+                                    <td>التكلفة الكلية</td>
+                                    <td>تكلفة الاقامة</td>
+                                    <td>تكلفة النشاط</td>
+                                    <td>تكلفة المواصلات</td>
+                                    <td>اسم الفندق</td>
+                                    <td>نوع الغرفة</td>
+                                    <td>فيو الغرفة</td>
+                                    <td>اسم شركة المواصلات</td>
+                                    <td>اسم شركة الانشطة</td>
+                                }
+                                else if (!string.IsNullOrEmpty(userType) || userType == "2")
+                                {
+                                    <td>تكلفة الاقامة</td>
+                                    <td>اسم الفندق</td>
+                                    <td>نوع الغرفة</td>
+                                    <td>فيو الغرفة</td>
+                                }
+                                else if (!string.IsNullOrEmpty(userType) || userType == "3")
+                                {
+                                    <td>تكلفة المواصلات</td>
+                                    <td>اسم شركة المواصلات</td>
+                                }
+                                else if (!string.IsNullOrEmpty(userType) || userType == "4")
+                                {
+                                    <td>تكلفة النشاط</td>
+                                    <td>اسم شركة الانشطة</td>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ReservationsDtos)
+                            {
+                                <tr>
+                                    <td>@item.UserFirstName @item.UserLastName</td>
+                                    <td>@item.UserPhoneNumber</td>
+                                    <td>@item.UserEmail</td>
+                                    <td>@item.CreatedDate/td>
+                                    <td>@item.DateFrom</td>
+                                    <td>@item.DateTo</td>
+                                    <td>@item.PaymentStatus</td>
+                                    <td>@item.NumberOfAdults</td>
+                                    <td>@item.NumberOfChilds</td>
+                                    @if (!string.IsNullOrEmpty(userType) || userType == "1")
+                                    {
+                                        <td>@item.TotalCost</td>
+                                        <td>@item.AccommodationCost</td>
+                                        <td>@item.ActivityCost</td>
+                                        <td>@item.TransportationCost</td>
+                                        <td>@item.HotelName</td>
+                                        <td>@item.RoomType</td>
+                                        <td>@item.RoomView</td>
+                                        <td>@item.TransportationComapnyName</td>
+                                        <td>@item.ActivityCompanyName</td>
+                                    }
+                                    else if (!string.IsNullOrEmpty(userType) || userType == "2")
+                                    {
+                                        <td>@item.AccommodationCost</td>
+                                        <td>@item.HotelName</td>
+                                        <td>@item.RoomType</td>
+                                        <td>@item.RoomView</td>
+                                    }
+                                    else if (!string.IsNullOrEmpty(userType) || userType == "3")
+                                    {
+                                        <td>@item.TransportationCost</td>
+                                        <td>@item.TransportationComapnyName</td>
+                                    }
+                                    else if (!string.IsNullOrEmpty(userType) || userType == "4")
+                                    {
+                                        <td>@item.ActivityCost</td>
+                                        <td>@item.ActivityCompanyName</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#reservations').DataTable();
+        });
+    </script>
 }

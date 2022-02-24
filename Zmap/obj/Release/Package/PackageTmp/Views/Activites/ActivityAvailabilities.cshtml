@@ -56,6 +56,17 @@
                             <td>@Html.DisplayFor(modelItem => item.CostWithTransportation)</td>
                             <td>@Html.DisplayFor(modelItem => item.CostWithoutTrasnportation)</td>
                             <td>
+                                <a href="@Url.Action("EditActivityAvailability", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light orange">
+                                    <i class="material-icons">
+                                        edit
+                                    </i>
+                                </a>
+                                <a onclick="return confirm('هل تريد نسخ البيانات')"
+                                   href="@Url.Action("CopyActivityAvailability", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm blue-grey">
+                                    <i class="material-icons">
+                                        content_copy
+                                    </i>
+                                </a>
                                 <a onclick="return confirm('هل تريد مسح البيانات')"
                                    href="@Url.Action("DeleteActivityAvailability", "Activites", new { id = item.Id })" class="btn-floating waves-effect waves-light-sm purple">
                                     <i class="material-icons">

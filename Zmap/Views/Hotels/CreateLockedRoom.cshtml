@@ -31,6 +31,10 @@
                             {
                                 <h3 class="" style="background-color: goldenrod">تم الاضافة بنجاح</h3>
                             }
+                            @if (ViewBag.Validation != null)
+                            {
+                                <h3 class="" style="background-color: indianred">@ViewBag.Validation</h3>
+                            }
                             <div class="aminities">
                                 @using (Html.BeginForm("CreateLockedRoom", "Hotels", FormMethod.Post))
                                 {

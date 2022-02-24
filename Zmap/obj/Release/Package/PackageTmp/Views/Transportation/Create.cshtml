@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string added = Request.QueryString["added"];
 }
 <div class="container">
 
@@ -25,7 +26,10 @@
                     <div class="col-md-12">
                         <div class="head-typo typo-com collap-expand book-form inn-com-form">
                             <h2>بيانات الشركة</h2>
-
+                            @if (!string.IsNullOrEmpty(added))
+                            {
+                                <h3 class="" style="background-color: goldenrod">تم الاضافة بنجاح</h3>
+                            }
                             <div class="aminities">
                                 @using (Html.BeginForm("Create", "Transportation", FormMethod.Post))
                                 {
@@ -34,7 +38,7 @@
                                         <div class="row">
                                             <div class="input-field col l9">
                                                 @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required" } })*@
-                                                <input type="text" required name="Name" class="validate"/>
+                                                <input type="text" required name="Name" class="validate" />
                                             </div>
                                             <div class="input-field col l3">
                                                 <label>اسم الشركة</label>
@@ -64,7 +68,7 @@
                                         <div class="row">
                                             <div class="input-field col l9">
                                                 @*@Html.EditorFor(model => model.PrivacyPolicy, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required" } })*@
-                                                <input class="form-control" required name="ManagerEmail" type="email"/>
+                                                <input class="form-control" required name="ManagerEmail" type="email" />
                                             </div>
                                             <div class="input-field col l3">
                                                 <label>البريد الالكترونى للمسؤول</label>
@@ -74,7 +78,7 @@
                                         <div class="row">
                                             <div class="input-field col l9">
                                                 @*@Html.EditorFor(model => model.PrivacyPolicy, new { htmlAttributes = new { @class = "validate", @data_val = "true", @required = "required" } })*@
-                                                <input class="form-control" required name="ManagerPhonenumber" type="text"/>
+                                                <input class="form-control" required name="ManagerPhonenumber" type="text" />
                                             </div>
                                             <div class="input-field col l3">
                                                 <label>رقم تليفون السؤول</label>
