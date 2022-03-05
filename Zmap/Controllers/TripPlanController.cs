@@ -47,8 +47,10 @@ namespace Zmap.Controllers
                         tripPlan.Ages.Add(i);
                     }
                 }
-
-                return RedirectToAction("Index", "Home");
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception e)
             {
@@ -312,7 +314,9 @@ namespace Zmap.Controllers
                         UserPaymentId = userPayment.Id,
                         UserConfirmation = false,
                         HotelId = hotels.HotelId,
-                        NumberOfSeats = selectedTripPlan.Adults + selectedTripPlan.Child
+                        NumberOfSeats = selectedTripPlan.Adults + selectedTripPlan.Child,
+                        DestinationId = selectedTripPlan.DestinationId,
+                        HomeId = selectedTripPlan.HomeId
                     };
 
                     db.UserReservations.Add(userReservation);
@@ -348,6 +352,8 @@ namespace Zmap.Controllers
                         NumberOfSeats = selectedTripPlan.Adults + selectedTripPlan.Child,
                         ActivityCompanyId = activity.CompanyId,
                         ActivityCost =(double?)activity.TotalCost,
+                        DestinationId = selectedTripPlan.DestinationId,
+                        HomeId = selectedTripPlan.HomeId
                     };
 
                     db.UserReservations.Add(userReservation);
@@ -385,6 +391,8 @@ namespace Zmap.Controllers
                         TransportationCompanyId = transportation.CompanyId,
                         StationId = transportation.StationFromId,
                         BusId = transportation.BusId,
+                        DestinationId = selectedTripPlan.DestinationId,
+                        HomeId = selectedTripPlan.HomeId
                     };
 
                     db.UserReservations.Add(userReservation);

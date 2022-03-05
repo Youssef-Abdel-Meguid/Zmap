@@ -1,3 +1,86 @@
 ﻿@model Zmap.Dtos.TripPlanDataDto
 
+@using (Html.BeginForm("TripReservation", "TripPlan", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    if (Model.TripHotels.Count <= 0)
+    {
+        <h3>No data found for hotels</h3>
+    }
+    else
+    {
+        foreach (var item in Model.TripHotels)
+        {
+            <div> @* should be a checkbox *@
+                @item.HotelName,
+                @item.RoomAccommodation,
+                @item.RoomType,
+                @item.RoomView,
+                @item.TotalCost,
+                @foreach (var photo in item.PhotoUrl)
+                {
+                    <img src="~/Images/hotel/@photo" />
+                }
+            </div>
+        }
+    }
 
+    if (Model.TripActivities.Count <= 0)
+    {
+        <h3>No data found for activites</h3>
+    }
+    else
+    {
+        foreach (var item in Model.TripActivities)
+        {
+            <div> @* should be a checkbox *@
+                @item.DateFrom,
+                @item.DateTo,
+                @item.Area,
+                @item.ActivityCategory,
+                @item.ActivityName,
+                @item.TotalCost
+                @foreach (var photo in item.PhotoUrl)
+                {
+                    <img src="~/Images/Activities/@photo" />
+                }
+            </div>
+        }
+    }
+
+    if (Model.TripTransportations.Count <= 0)
+    {
+        <h3>No data found for transportations</h3>
+    }
+    else
+    {
+        foreach (var item in Model.TripTransportations)
+        {
+            <div> @* should be a checkbox *@
+                @item.BusCategory,
+                @item.BusName,
+                @item.CompanyName,
+                @item.From,
+                @item.To,
+                @item.TotalCost,
+                @item.StationFrom,
+                @item.StationTo,
+                @item.TotalCost
+                @foreach (var photo in item.PhotoUrl)
+                {
+                    <img src="~/Images/Transportation/@photo" />
+                }
+            </div>
+        }
+    }
+    Html.HiddenFor(m => m.Adults);
+    Html.HiddenFor(m => m.Child);
+    Html.HiddenFor(m => m.from);
+    Html.HiddenFor(m => m.to);
+    Html.HiddenFor(m => m.HomeId);
+    Html.HiddenFor(m => m.DestinationId);
+    Html.HiddenFor(m => m.HomeName);
+    Html.HiddenFor(m => m.DestinationName);
+    Html.HiddenFor(m => m.Ages);
+    <button type="submit">Submit</button>
+}

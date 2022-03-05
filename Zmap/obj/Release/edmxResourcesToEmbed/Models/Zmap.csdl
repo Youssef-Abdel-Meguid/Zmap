@@ -329,6 +329,8 @@
     <Property Name="ActivityNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ApprovedByAdmin" Type="Boolean" />
     <Property Name="UserConfirmation" Type="Boolean" />
+    <Property Name="HomeId" Type="Int32" />
+    <Property Name="DestinationId" Type="Int32" />
   </EntityType>
   <EntityType Name="User">
     <Key>

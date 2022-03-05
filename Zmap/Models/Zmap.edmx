@@ -678,6 +678,8 @@
           <Property Name="ActivityNote" Type="nvarchar(max)" />
           <Property Name="ApprovedByAdmin" Type="bit" />
           <Property Name="UserConfirmation" Type="bit" />
+          <Property Name="HomeId" Type="int" />
+          <Property Name="DestinationId" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -1145,6 +1147,8 @@
           <Property Name="ActivityNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ApprovedByAdmin" Type="Boolean" />
           <Property Name="UserConfirmation" Type="Boolean" />
+          <Property Name="HomeId" Type="Int32" />
+          <Property Name="DestinationId" Type="Int32" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1951,6 +1955,8 @@
           <EntitySetMapping Name="UserReservations">
             <EntityTypeMapping TypeName="ZmapModel.UserReservation">
               <MappingFragment StoreEntitySet="UserReservations">
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="HomeId" ColumnName="HomeId" />
                 <ScalarProperty Name="UserConfirmation" ColumnName="UserConfirmation" />
                 <ScalarProperty Name="ApprovedByAdmin" ColumnName="ApprovedByAdmin" />
                 <ScalarProperty Name="ActivityNote" ColumnName="ActivityNote" />

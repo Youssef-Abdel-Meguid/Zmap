@@ -323,6 +323,8 @@
     <EntitySetMapping Name="UserReservations">
       <EntityTypeMapping TypeName="ZmapModel.UserReservation">
         <MappingFragment StoreEntitySet="UserReservations">
+          <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+          <ScalarProperty Name="HomeId" ColumnName="HomeId" />
           <ScalarProperty Name="UserConfirmation" ColumnName="UserConfirmation" />
           <ScalarProperty Name="ApprovedByAdmin" ColumnName="ApprovedByAdmin" />
           <ScalarProperty Name="ActivityNote" ColumnName="ActivityNote" />

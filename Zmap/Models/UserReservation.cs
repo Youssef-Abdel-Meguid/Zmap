@@ -42,5 +42,7 @@ namespace Zmap.Models
         public string ActivityNote { get; set; }
         public Nullable<bool> ApprovedByAdmin { get; set; }
         public Nullable<bool> UserConfirmation { get; set; }
+        public Nullable<int> HomeId { get; set; }
+        public Nullable<int> DestinationId { get; set; }
     }
 }

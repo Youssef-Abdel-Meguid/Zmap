@@ -673,6 +673,8 @@
     <Property Name="ActivityNote" Type="nvarchar(max)" />
     <Property Name="ApprovedByAdmin" Type="bit" />
     <Property Name="UserConfirmation" Type="bit" />
+    <Property Name="HomeId" Type="int" />
+    <Property Name="DestinationId" Type="int" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
