@@ -575,6 +575,54 @@ namespace Zmap.Controllers
 
                     homeDto.ReservationsDtos = reservationsDtos;
                 }
+                else
+                {
+                    var areasDB = await db.Cities.ToListAsync();
+
+                    List<SelectListItem> home = new List<SelectListItem>();
+                    List<SelectListItem> destination = new List<SelectListItem>();
+                    home.Add(new SelectListItem() { Text = "بداية الرحلة", Value = "بداية الرحلة", Disabled = true, Selected = true });
+                    destination.Add(new SelectListItem() { Text = "الوجهة", Value = "الوجهة", Disabled = true, Selected = true });
+
+                    foreach (var item in areasDB)
+                    {
+                        home.Add(new SelectListItem()
+                        {
+                            Text = item.ArabicCityName,
+                            Value = item.Id.ToString()
+                        });
+
+                        destination.Add(new SelectListItem()
+                        {
+                            Text = item.ArabicCityName,
+                            Value = item.Id.ToString()
+                        });
+                    }
+
+                    List<SelectListItem> adults = new List<SelectListItem>();
+                    List<SelectListItem> child = new List<SelectListItem>();
+                    adults.Add(new SelectListItem() { Text = "عدد البالغين", Value = "عدد البالغين", Selected = true, Disabled = true});
+                    child.Add(new SelectListItem() { Text = "عدد الاطفال", Value = "عدد الاطفال", Selected = true, Disabled = true});
+
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        adults.Add(new SelectListItem()
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString()
+                        });
+                        child.Add(new SelectListItem()
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString()
+                        });
+                    }
+
+                    ViewBag.Home = home;
+                    ViewBag.Destination = destination;
+                    ViewBag.Adults = adults;
+                    ViewBag.Child = child;
+                }
             }
             catch (Exception e)
             {
@@ -639,340 +687,9 @@ namespace Zmap.Controllers
             return View();
         }
 
-        public async Task<ActionResult> TripPlan(TripPlanDto tripPlan)
-        {
-            try
-            {
-                List<int> adults = new List<int>();
-                adults.Add(1);
-                adults.Add(2);
-                adults.Add(3);
-                adults.Add(4);
-                adults.Add(5);
+       
 
-                List<int> child = new List<int>();
-                child.Add(0);
-                child.Add(1);
-                child.Add(2);
-
-                ViewBag.Cities = await db.Cities.ToListAsync();
-                ViewBag.Adults = new SelectList(adults.ToList());
-                ViewBag.Child = new SelectList(child.ToList());
-
-                if (TempData["TripPlan"] != null)
-                    tripPlan = (TripPlanDto)TempData["TripPlan"];
-
-                if (tripPlan == null)
-                    tripPlan = new TripPlanDto();
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in trip paln", Error = e.Message.ToString() });
-            }
-            return View(tripPlan);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> TripPlanData(TripPlanDto tripPlanDto, bool isSelected)
-        {
-            try
-            {
-                TempData["TripPlan"] = tripPlanDto;
-
-                if (isSelected == false)
-                {
-                    TimeSpan t = (DateTime)tripPlanDto.to - (DateTime)tripPlanDto.from;
-                    int numberOfDays = t.Days;
-
-                    var roomAvas = await db.RoomAvailabilities.Where(
-                        a => a.Active == true &&
-                        a.DateFrom <= tripPlanDto.from && a.DateTo >= tripPlanDto.to).ToListAsync();
-
-                    var activityAvas = await db.ActivityAvailabilities.Where(
-                        a => a.Active == true && a.DateTo >= tripPlanDto.to && a.DateFrom <= tripPlanDto.from).ToListAsync();
-
-                    var lines = await db.TransportationCompanyLines.Where(
-                        l => l.Active == true
-                        && l.DestinationCityId == tripPlanDto.DestinationId
-                        && l.HomeCityId == tripPlanDto.HomeId).ToListAsync();
-
-                    List<TripHotelDto> tripHotelDtos = new List<TripHotelDto>();
-                    List<TripActivityDto> tripActivityDtos = new List<TripActivityDto>();
-                    List<TripTransportationDto> tripTransportationDtos = new List<TripTransportationDto>();
-
-                    foreach (var item in lines)
-                    {
-                        var lineBuses = await db.LineBuses.Where(l => l.Active == true && l.LineId == item.Id).ToListAsync();
-                        foreach (var item1 in lineBuses)
-                        {
-                            var busShe = await db.BusTripSchedules.Where(
-                                b => b.Active == true
-                                && b.BusId == item1.BusId
-                                && b.DepartureDate == tripPlanDto.from).ToListAsync();
-
-                            foreach (var item2 in busShe)
-                            {
-                                var stationStart = await db.Stations.FindAsync(item.LineStartStationId);
-                                var stationEnd = await db.Stations.FindAsync(item.LineEndStationId);
-                                var bus = await db.Buses.FindAsync(item2.BusId);
-                                var busCat = await db.BusCategories.FindAsync(bus.CategoryId);
-                                var company = await db.Companies.FindAsync(bus.CompanyId);
-                                var busPhoto = await db.Galleries.Where(g => g.Active == true && g.BusId == bus.Id).FirstOrDefaultAsync();
-
-                                tripTransportationDtos.Add(new TripTransportationDto()
-                                {
-                                    From = item2.DepartureDate,
-                                    To = item2.ArrivalDate,
-                                    NumberOfSeats = tripPlanDto.NumberOfAdults,
-                                    TotalCost = item1.SeatPrice * tripPlanDto.NumberOfAdults,
-                                    StationFrom = stationStart.Name,
-                                    StationTo = stationEnd.Name,
-                                    BusName = bus.Name,
-                                    BusCategory = busCat.CategoryName,
-                                    CompanyName = company.Name,
-                                    BusId = bus.Id,
-                                    CompanyId = company.Id,
-                                    BusPhotoUrl = busPhoto == null ? "" : busPhoto.PhotoUrl
-                                });
-                            }
-                        }
-                    }
-
-                    foreach (var item in activityAvas)
-                    {
-                        var activity = await db.Activities.FindAsync(item.ActivityId);
-                        var area = await db.SubAreas.FindAsync(activity.SubAreaId);
-                        var company = await db.Companies.FindAsync(activity.CompanyId);
-
-                        if (area.CityId == tripPlanDto.DestinationId)
-                        {
-                            var photo = await db.Galleries.Where(g => g.Active == true && g.CompanyId == company.Id).FirstOrDefaultAsync();
-                            tripActivityDtos.Add(new TripActivityDto()
-                            {
-                                ActivityName = activity.ActivityName,
-                                Area = area.Name,
-                                CompanyId = company.Id,
-                                ActivtyId = activity.Id,
-                                PhotoUrl = photo == null ? "" : photo.PhotoUrl
-                            });
-                        }
-                    }
-
-                    foreach (var item in roomAvas)
-                    {
-                        var room = await db.Rooms.Where(r => r.Active == true && r.Id == item.RoomId && r.RoomTypeId == 18 || r.RoomTypeId == 17).FirstOrDefaultAsync();
-                        var hotel = await db.Hotels.FindAsync(room.HotleId);
-
-                        if (hotel.CityId == tripPlanDto.DestinationId)
-                        {
-                            var acco = await db.Accommodations.FindAsync(item.AccommodationId);
-                            var roomType = await db.RoomTypes.FindAsync(room.RoomTypeId);
-                            var roomView = await db.RoomViews.FindAsync(room.RoomViewId);
-                            var photo = await db.Galleries.Where(g => g.HotelId == hotel.Id && g.Active == true).FirstOrDefaultAsync();
-
-                            tripHotelDtos.Add(new TripHotelDto()
-                            {
-                                TotalCost = item.PricePerNght * numberOfDays,
-                                RoomAccommodation = acco.ArabicName,
-                                RoomType = roomType.ArabicName,
-                                RoomView = roomView.ArabicName,
-                                HotelName = hotel.Name,
-                                HotelId = hotel.Id,
-                                RoomId = room.Id,
-                                PhotoUrl = photo == null ? "" : photo.PhotoUrl
-                            });
-                        }
-                    }
-
-                    tripPlanDto.TripActivities = tripActivityDtos;
-                    tripPlanDto.TripHotels = tripHotelDtos;
-                    tripPlanDto.TripTransportations = tripTransportationDtos;
-                    tripPlanDto.IsSelected = false;
-
-                    TempData["TripPlan"] = tripPlanDto;
-                }
-                else if (isSelected == true)
-                {
-                    TimeSpan t = (DateTime)tripPlanDto.to - (DateTime)tripPlanDto.from;
-                    int numberOfDays = t.Days;
-
-                    var roomAvas = await db.RoomAvailabilities.Where(
-                       a => a.Active == true &&
-                       a.DateFrom <= tripPlanDto.from && a.DateTo >= tripPlanDto.to).ToListAsync();
-
-                    var activityAvas = await db.ActivityAvailabilities.Where(
-                        a => a.Active == true && a.DateTo >= tripPlanDto.to && a.DateFrom <= tripPlanDto.from).ToListAsync();
-
-                    var lines = await db.TransportationCompanyLines.Where(
-                        l => l.Active == true
-                        && l.DestinationCityId == tripPlanDto.DestinationId
-                        && l.HomeCityId == tripPlanDto.HomeId).ToListAsync();
-
-                    List<TripHotelDto> tripHotelDtos = new List<TripHotelDto>();
-                    List<TripActivityDto> tripActivityDtos = new List<TripActivityDto>();
-                    List<TripTransportationDto> tripTransportationDtos = new List<TripTransportationDto>();
-
-                    foreach (var item in lines)
-                    {
-                        var lineBuses = await db.LineBuses.Where(l => l.Active == true && l.LineId == item.Id).ToListAsync();
-                        foreach (var item1 in lineBuses)
-                        {
-                            var busShe = await db.BusTripSchedules.Where(
-                                b => b.Active == true
-                                && b.BusId == item1.BusId
-                                && b.DepartureDate == tripPlanDto.from).ToListAsync();
-
-                            foreach (var item2 in busShe)
-                            {
-                                var stationStart = await db.Stations.FindAsync(item.LineStartStationId);
-                                var stationEnd = await db.Stations.FindAsync(item.LineEndStationId);
-                                var bus = await db.Buses.FindAsync(item2.BusId);
-                                var busCat = await db.BusCategories.FindAsync(bus.CategoryId);
-                                var company = await db.Companies.FindAsync(bus.CompanyId);
-                                var busPhoto = await db.Galleries.Where(g => g.Active == true && g.BusId == bus.Id).FirstOrDefaultAsync();
-
-                                tripTransportationDtos.Add(new TripTransportationDto()
-                                {
-                                    From = item2.DepartureDate,
-                                    To = item2.ArrivalDate,
-                                    NumberOfSeats = tripPlanDto.NumberOfAdults,
-                                    TotalCost = item1.SeatPrice * tripPlanDto.NumberOfAdults,
-                                    StationFrom = stationStart.Name,
-                                    StationTo = stationEnd.Name,
-                                    BusName = bus.Name,
-                                    BusCategory = busCat.CategoryName,
-                                    CompanyName = company.Name,
-                                    BusId = bus.Id,
-                                    CompanyId = company.Id,
-                                    BusPhotoUrl = busPhoto == null ? "" : busPhoto.PhotoUrl
-                                });
-                            }
-                        }
-                    }
-
-                    foreach (var item in activityAvas)
-                    {
-                        var activity = await db.Activities.FindAsync(item.ActivityId);
-                        var area = await db.SubAreas.FindAsync(activity.SubAreaId);
-                        var company = await db.Companies.FindAsync(activity.CompanyId);
-
-                        if (area.CityId == tripPlanDto.DestinationId)
-                        {
-                            var photo = await db.Galleries.Where(g => g.Active == true && g.CompanyId == company.Id).FirstOrDefaultAsync();
-                            tripActivityDtos.Add(new TripActivityDto()
-                            {
-                                ActivityName = activity.ActivityName,
-                                Area = area.Name,
-                                CompanyId = company.Id,
-                                ActivtyId = activity.Id,
-                                PhotoUrl = photo == null ? "" : photo.PhotoUrl
-                            });
-                        }
-                    }
-
-                    foreach (var item in roomAvas)
-                    {
-                        var room = await db.Rooms.Where(r => r.Active == true && r.Id == item.RoomId && r.RoomTypeId == 18 || r.RoomTypeId == 17).FirstOrDefaultAsync();
-                        var hotel = await db.Hotels.FindAsync(room.HotleId);
-
-                        if (hotel.CityId == tripPlanDto.DestinationId)
-                        {
-                            var acco = await db.Accommodations.FindAsync(item.AccommodationId);
-                            var roomType = await db.RoomTypes.FindAsync(room.RoomTypeId);
-                            var roomView = await db.RoomViews.FindAsync(room.RoomViewId);
-                            var photo = await db.Galleries.Where(g => g.HotelId == hotel.Id && g.Active == true).FirstOrDefaultAsync();
-
-                            tripHotelDtos.Add(new TripHotelDto()
-                            {
-                                TotalCost = item.PricePerNght * numberOfDays,
-                                RoomAccommodation = acco.ArabicName,
-                                RoomType = roomType.ArabicName,
-                                RoomView = roomView.ArabicName,
-                                HotelName = hotel.Name,
-                                HotelId = hotel.Id,
-                                RoomId = room.Id,
-                                PhotoUrl = photo == null ? "" : photo.PhotoUrl
-                            });
-                        }
-                    }
-
-                    tripPlanDto.TripActivities = tripActivityDtos;
-                    tripPlanDto.TripHotels = tripHotelDtos;
-                    tripPlanDto.TripTransportations = tripTransportationDtos;
-                    tripPlanDto.IsSelected = true;
-                    tripPlanDto.TripHotelData = tripPlanDto.TripHotels[tripPlanDto.HotelId];
-                    tripPlanDto.TripActivityData = tripPlanDto.TripActivities[tripPlanDto.ActivityId];
-                    tripPlanDto.TransportationData = tripPlanDto.TripTransportations[tripPlanDto.TransportationId];
-                    TempData["TripPlan"] = tripPlanDto;
-                }
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in trip paln", Error = e.Message.ToString() });
-            }
-
-            return RedirectToAction("TripPlan", "Home");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult TripReservation(TripPlanDto tripPlanDto)
-        {
-            SetIdenitiy();
-            if (userId == 0 || userId == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            if (userType != 5)
-            {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in user profile", Error = "not authorized", UserId = userId });
-            }
-
-            try
-            {
-                var userPayment = new UserPayment()
-                {
-                    UserId = userId,
-                    Active = true,
-                    CreatedDate = DateTime.Now,
-                    PaymentStatusId = 2
-                };
-
-                db.UserPayments.Add(userPayment);
-                db.SaveChanges();
-
-                var userRes = new UserReservation()
-                {
-                    CreatedDate = DateTime.Now,
-                    AccommodationCost = (double?)tripPlanDto.TripHotelData.TotalCost,
-                    Active = true,
-                    ActivityCompanyId = tripPlanDto.TripActivityData.CompanyId,
-                    ActivityCost = tripPlanDto.TripActivityData.TotalCost,
-                    BusId = tripPlanDto.TransportationData.BusId,
-                    DateFrom = tripPlanDto.from,
-                    DateTo = tripPlanDto.to,
-                    HotelId = tripPlanDto.TripHotelData.HotelId,
-                    NumberOfSeats = tripPlanDto.TransportationData.NumberOfSeats,
-                    RoomId = tripPlanDto.TripHotelData.RoomId,
-                    TotalCost = (double?)tripPlanDto.TripHotelData.TotalCost + tripPlanDto.TransportationData.TotalCost + tripPlanDto.TripActivityData.TotalCost,
-                    TransportationCompanyId = tripPlanDto.TransportationData.CompanyId,
-                    TransportationCost = tripPlanDto.TransportationData.TotalCost,
-                    UserId = (int)userId,
-                    UserPaymentId = userPayment.Id,
-                };
-
-                db.UserReservations.Add(userRes);
-                db.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("TechnicalSupport", "Home", new ErrorLogger() { ActionName = "Error in trip paln", Error = e.InnerException.Message.ToString() });
-            }
-
-            return RedirectToAction("TripPlan", "Home");
-        }
+        
 
         public async Task<ActionResult> Hotels()
         {

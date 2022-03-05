@@ -1649,12 +1649,6 @@ namespace Zmap.Controllers
             return RedirectToAction("RoomAvailabilities", "Hotels", new { Id = roomAvailability.RoomId });
         }
 
-
-
-
-
-
-
         public ActionResult CreateFAQ(int? id, bool? added)
         {
             SetIdenitiy();

@@ -5,8 +5,11 @@ using System.Web;
 
 namespace Zmap.Dtos
 {
-    public class TripPlanDto
+    public class TripPlanDataDto
     {
+        public List<TripHotelDto> TripHotels { get; set; }
+        public List<TripTransportationDto> TripTransportations { get; set; }
+        public List<TripActivityDto> TripActivities { get; set; }
         public int HomeId { get; set; }
         public int DestinationId { get; set; }
         public int Adults { get; set; }

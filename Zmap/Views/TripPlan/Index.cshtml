@@ -1,0 +1,45 @@
+﻿@model Zmap.Dtos.TripPlanDto 
+<section dir="rtl">
+    <div class="inn-body-section pad-bot-55">
+        <div class="container">
+            <div class="row">
+                <div class="page-head">
+                    <h2>خطط رحلتك</h2>
+                    <div class="head-title">
+                        <div class="hl-1"></div>
+                        <div class="hl-2"></div>
+                        <div class="hl-3"></div>
+                    </div>
+                </div>
+                @using (Html.BeginForm("TripPlanData", "TripPlan", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <label>Home</label>
+                    <input type="text" disabled value="@Model.HomeName" />
+                    <label>Destination</label>
+                    <input type="text" disabled value="@Model.DestinationName" />
+                    <label>Date From</label>
+                    <input value="@Model.from" disabled />
+                    <label>Date To</label>
+                    <input value="@Model.to" disabled />
+                    <label>Number of adults</label>
+                    <input type="number" disabled value="@Model.Adults" />
+                    <label>Number of childern</label>
+                    <input type="number" disabled value="@Model.Child" />
+                    <label>Child Ages:</label>
+                    for (int i = 0; i < Model.Ages.Count; i++)
+                    {
+                        @Html.EditorFor(model => model.Ages[i])
+                    }
+                    @Html.HiddenFor(m => m.Adults);
+                    @Html.HiddenFor(m => m.Child);
+                    @Html.HiddenFor(m => m.to);
+                    @Html.HiddenFor(m => m.from);
+                    @Html.HiddenFor(m => m.HomeId);
+                    @Html.HiddenFor(m => m.DestinationId);
+                    <button type="submit">Submit</button>
+                }
+            </div>
+        </div>
+    </div>
+</section>

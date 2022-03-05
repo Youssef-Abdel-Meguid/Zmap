@@ -12,46 +12,30 @@
         <div class="inn-body-section inn-booking">
             <div class="container">
                 <div class="row">
-                    <!--TYPOGRAPHY SECTION-->
                     <div class="col-md-6">
                         <div class="book-title">
                             <h2>خطط رحلتك</h2>
                             <p style="color: white;">
                                 كل حجوزاتك في مره واحده اقامات - انتقالات -انشطه - مواصلات
                                 داخليه
-
                             </p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="book-form inn-com-form">
-                            <form class="col s12" style="direction: ltr;">
-
-
+                            @*<form class="col s12" style="direction: ltr;"></form>*@
+                            @using (Html.BeginForm("Index", "TripPlan", FormMethod.Post, new { @class = "col s12" }))
+                            {
+                                @Html.AntiForgeryToken()
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <!-- <input type="text" class="validate"> -->
                                         <label>الوجهة</label>
-                                        <select>
-                                            <option value="" disabled selected>الوجهة</option>
-                                            <option value="1">شرم الشيخ</option>
-                                            <option value="2">الغردقة</option>
-                                            <option value="3">دهب</option>
-                                        </select>
+                                        @Html.DropDownList("DestinationId", (IEnumerable<SelectListItem>)ViewBag.Destination, new { @required = "required" })
                                     </div>
                                     <div class="input-field col s6">
                                         <label>بداية الرحلة</label>
-                                        <select>
-                                            <option value="" disabled selected>بداية الرحلة</option>
-                                            <option value="1">القاهرة</option>
-                                            <option value="2">الأسكندرية</option>
-                                            <option value="3">بورسعيد</option>
-                                            <option value="4">الإقصر</option>
-                                            <option value="5">بنها </option>
-                                            <option value="6">سوهاج</option>
-                                        </select>
+                                        @Html.DropDownList("HomeId", (IEnumerable<SelectListItem>)ViewBag.Home, new { @required = "required" })
                                     </div>
-
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6">
@@ -62,25 +46,29 @@
                                         <input type="text" id="from" name="from">
                                         <label for="from">تاريخ الوصول</label>
                                     </div>
-
                                 </div>
-
                                 <div class="row">
-                                    <div class="input-field col s12">
-                                        <a href="@Url.Action("TripPlan", "Home")" class="btn form-btn">خطط رحلتك</a>
-                                        <!-- <input type="submit" value="خطط رحلتك" > -->
+                                    <div class="input-field col s6">
+                                        <label>عدد البالغين</label>
+                                        @Html.DropDownList("Adults", (IEnumerable<SelectListItem>)ViewBag.Adults, new { @required = "required" })
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <label>عدد الاطفال</label>
+                                        @Html.DropDownList("Child", (IEnumerable<SelectListItem>)ViewBag.Child, new { @required = "required" })
                                     </div>
                                 </div>
-                            </form>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        @*<a href="@Url.Action("Index", "TripPlan")" class="btn form-btn">خطط رحلتك</a>*@
+                                        <input type="submit" value="خطط رحلتك" />
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
-                    <!--END TYPOGRAPHY SECTION-->
                 </div>
             </div>
         </div>
-        <!--CHECK AVAILABILITY FORM-->
-        <!--END CHECK AVAILABILITY FORM-->
-        <!--End Check Availability SECTION-->
         <div class="blog hom-com pad-bot-0">
             <div class="container">
                 <div class="row">

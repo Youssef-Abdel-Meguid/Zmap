@@ -14,6 +14,7 @@ namespace Zmap.Dtos
         public string RoomAccommodation { get; set; }
         public int HotelId { get; set; }
         public int RoomId { get; set; }
-        public string PhotoUrl { get; set; }
+        public List<string> PhotoUrl { get; set; }
+        public int? RoomAvailibilityId { get; set; }
     }
 }

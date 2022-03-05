@@ -18,6 +18,10 @@ namespace Zmap.Dtos
         public int NumberOfSeats { get; set; }
         public int CompanyId { get; set; }
         public int BusId { get; set; }
-        public string BusPhotoUrl { get; set; }
+        public int StationFromId { get; set; }
+        public int StationToId { get; set; }
+        public string LineName { get; set; }
+        public int LineId { get; set; }
+        public List<string> PhotoUrl { get; set; }
     }
 }

@@ -62,7 +62,7 @@
 
                     @if (string.IsNullOrEmpty(userType) || userType == "5")
                     {
-                        <li><a href="#">خطط رحلتك</a></li>
+                        @*<li>@Html.ActionLink("خطط رحلتك", "Index", "TripPlan")</li>*@
                         <li>@Html.ActionLink("رحلات المابرز", "Trips", "Home")</li>
                         <li>@Html.ActionLink("خدماتنا", "Services", "Home")</li>
                         <li>@Html.ActionLink("المدونة", "Blogs", "Home")</li>
@@ -172,7 +172,7 @@
 
                         @if (string.IsNullOrEmpty(userType) || userType == "5")
                         {
-                            <li><a href="#">خطط رحلتك</a></li>
+                            @*<li>@Html.ActionLink("خطط رحلتك", "Index", "TripPlan")</li>*@
                             <li>@Html.ActionLink("رحلات المابرز", "Trips", "Home")</li>
                             <li>@Html.ActionLink("خدماتنا", "Services", "Home")</li>
                             <li>@Html.ActionLink("المدونة", "Blogs", "Home")</li>
