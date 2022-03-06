@@ -139,13 +139,13 @@ namespace Zmap.Controllers
                         activitiesIds.Add(item2.Id);
                     }
                 }
-                for (int i = 0; i < activitiesIds.Count; i++)
+                foreach (var id in activitiesIds)
                 {
                     var activityAva = await db.ActivityAvailabilities
-                        .Where(a => a.Active == true && a.ActivityId == activitiesIds[i] && tripPlanDto.from >= a.DateFrom && tripPlanDto.to <= a.DateTo)
+                        .Where(a => a.Active == true && a.ActivityId == id && tripPlanDto.from >= a.DateFrom && tripPlanDto.to <= a.DateTo)
                         .ToListAsync();
                     var activityLockDates = await db.ActivityLockedDates
-                        .Where(a => a.Active == true && a.ActivityId == activitiesIds[i] && tripPlanDto.from >= a.DateFrom && tripPlanDto.to <= a.DateTo)
+                        .Where(a => a.Active == true && a.ActivityId == id && tripPlanDto.from >= a.DateFrom && tripPlanDto.to <= a.DateTo)
                         .ToListAsync();
 
                     foreach (var item in activityAva)
